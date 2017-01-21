@@ -8,7 +8,6 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import { loadCourses } from './actions/courseActions';
 import { loadAuthors } from './actions/authorActions';
-import { getInitializedFirebaseApp} from './utils/AuthService';
 import './styles/styles.css'; //Webpack can import CSS files too!
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.min.css';
