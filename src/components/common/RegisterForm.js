@@ -4,20 +4,18 @@ import { connect } from 'react-redux';
 import * as registerActions from '../../actions/registerActions';
 import { bindActionCreators } from 'redux';
 import TextInput from '../common/TextInput';
-import ErrorMsg from '../common/ErrorMsg';
+import RegisterMsg from './RegisterMsg';
 import Button from 'react-button';
-import { Link } from 'react-router';
 
 export class RegisterForm extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.state = {
-            user: Object.assign({}, props.user),
+            user: {},
             error: false,
             validForm: false,
-            registering: false,
-            registerError: ''
+            isRegistered: false
         };
         this.updateRegisterForm = this.updateRegisterForm.bind(this);
         this.registerUser = this.registerUser.bind(this);
@@ -25,34 +23,29 @@ export class RegisterForm extends React.Component {
 
     componentWillReceiveProps(nextProps) { // update state when props change - called anytime props have changed
         debugger;
-        this.setState({
-                user: Object.assign({}, nextProps.user),
-                error: Object.assign({}, nextProps.error)
-            });
     }
     registerUser() {
         let email = this.state.user.email;
         let pw= this.state.user.password;
+
         this.props.actions.createUser(email, pw)
-            .then((params) => {
-                debugger;
-                // return this.setState({ registerError: '' });
+            .then((user) => {
+                debugger; // the async request is successful but execution doesn't pause here
             })
             .catch((error) => {
-                debugger;
-                // return this.setState({ registerError: error });
+                debugger; // instead i receive an error here that says, "Uncaught (in promise) RangeError: Maximum call stack size exceeded"
             });
     }
 
     updateRegisterForm(event) {
+        debugger;
         const field = event.target.name;
         let user = this.state.user;
 
         if (field == 'email')
             user.email = event.target.value;
-        else if (field == 'password') {
+        else if (field == 'password')
             user.password = event.target.value;
-        }
         return this.setState({
             user: {
                 email: user.email,
@@ -62,6 +55,12 @@ export class RegisterForm extends React.Component {
     }
 
     render () {
+        let registerMsg = this.props.registerMsg;
+        let registeredUser = this.props.registeredUser;
+
+        // if (registerMsg == 'Successful Registration!') {
+        // }
+        debugger;
         return (
             <form>
                 <h1>Register</h1>
@@ -85,33 +84,44 @@ export class RegisterForm extends React.Component {
                     label="Repeat Password"
                     onChange={this.updateRegisterForm}
                 />
-                <ErrorMsg errorMsg={this.state.registerError}/>
-                {/*<Button>Sign up</Button>*/}
-                <Button>Sign Up</Button>
-                <Link to="/" onClick={this.registerUser} className="btn btn-primary btn-lg">Sign Up!</Link>
+                <RegisterMsg registereduser={registeredUser} msg={registerMsg}/>
+                <Button onClick={this.registerUser}>Sign Up</Button>
+
             </form>
         );
     }
 }
 
+RegisterForm.defaultProps = {
+    registerMsg: 'Hello!',
+    registeredUser: {}
+};
 RegisterForm.propTypes = {
     actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(store) { // connect props to global state object
+    debugger;
+    let user, msg, mostRecentAttemptResponse;
 
-    let user = ownProps.params;
-    user = {
-        email: user.email,
-        password: user.password
+    if (store.registeredUser.length == 0) { // if a user hasn't attempted to register yet
+        user = {};
+        msg = 'Hello!';
+    } else {
+        mostRecentAttemptResponse = store.registeredUser[store.registeredUser.length - 1];
+        user = mostRecentAttemptResponse.registeredUser;
+        msg = mostRecentAttemptResponse.registerMsg;
+    }
+
+    return {
+        registeredUser: user,
+        registerMsg: msg
     };
-
-    return { user: user , registerError: ''};
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(registerActions, dispatch)
-    }
+    };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

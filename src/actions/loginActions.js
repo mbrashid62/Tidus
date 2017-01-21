@@ -3,26 +3,28 @@ import * as firebase from "firebase";
 
 //action creators
 export function signInUserSuccess(user) {
-    return { type: types.SIGNIN_USER_SUCCESS };
+    return { type: types.SIGNIN_USER_SUCCESS, user:user };
 }
 
 export function signOutUserSuccess() {
-    return { type: types.SIGNOUT_USER_SUCCESS}
+    return { type: types.SIGNOUT_USER_SUCCESS };
 }
 
-export function siginInUser(email, password) {
-    firebase.auth().signInWithUserEmailAndPassword
+export function signInUser(email, password) {
+    firebase.auth().signInWithUserEmailAndPassword(email, password)
+        .then((user) => {
+            signInUserSuccess(user);
+        })
         .catch(function (error) {
-            console.log('error code: ' + error.code);
-            console.log('error msg: ' + error.message);
+            throw (error);
         });
 }
 
 export function signOutUser() {
     firebase.auth().signOut()
         .then(function () {
-            console.log('sign out successful...');
+            signOutUser();
         }, function (error) {
-            console.log('error in signing out...');
+            throw(error);
         });
 }
