@@ -5,16 +5,16 @@ export default function registerReducer(state = initialState.registeredUser, act
     debugger;
     switch (action.type) {
         case types.CREATE_USER_SUCCESS:
-            return [
-                ...state, // es6 spread operator - explodes all values in array
-                Object.assign({}, action.payload)
-            ];
+            return Object.assign({}, state, action.payload);
 
         case types.CREATE_USER_ERROR:
-            return [
-                ...state,
-                Object.assign({}, action.payload)
-            ];
+            return Object.assign({}, state, action.payload);
+
+        case types.SIGNIN_USER_SUCCESS:
+            return Object.assign({}, state, action.payload);
+
+        case types.SIGNOUT_USER_SUCCESS:
+            return Object.assign({}, state, action.payload);
 
         default:
             return state;

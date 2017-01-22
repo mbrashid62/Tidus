@@ -1,61 +1,104 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as loginActions from '../../actions/loginActions';
+import * as authActions from '../../actions/authActions';
 import { bindActionCreators } from 'redux';
 import TextInput from '../common/TextInput';
+import Button from 'react-button';
+import { browserHistory } from 'react-router';
 
-const LoginForm = ({course, allAuthors, onSave, onChange, saving, errors}) => {
-    return (
-        <form>
-            <h1>Login</h1>
-            <TextInput
-                name="email"
-                label="Email"
+export class LoginForm extends React.Component {
 
-            />
+    constructor(props, context) {
+        super(props, context);
+        this.state = {
+            user: {
+                email: '',
+                password: ''
+            }
+        };
+        this.updateLoginForm = this.updateLoginForm.bind(this);
+        this.signInUser = this.signInUser.bind(this);
+        this.redirectToHomePage = this.redirectToHomePage.bind(this);
+    }
 
-            <TextInput
-                name="password"
-                label="Password"
-               />
+    componentWillMount() {
+        this.props.actions.initStateChangeHook();
+        if(this.props.isSignedIn) { // if user navigates to login form page while already being signed in
+            this.redirectToHomePage();
+        }
+    }
 
-            <input
-                type="submit"sa
-                value={'Go'}
-                className="btn btn-primary"
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isSignedIn) {
+            this.redirectToHomePage();
+        }
+    }
+
+    redirectToHomePage() {
+        browserHistory.push('/');
+    }
+
+    updateLoginForm(event) {
+        const field = event.target.name;
+        let user = this.state.user;
+
+        if (field == 'email')
+            user.email = event.target.value;
+        else if (field == 'password')
+            user.password = event.target.value;
+    }
+
+    signInUser() {
+        let email = this.state.user.email;
+        let pw = this.state.user.password;
+        this.props.actions.signInUser(email, pw);
+    }
+
+    render() {
+        return (
+            <form>
+                <h1>Login</h1>
+                <TextInput
+                    name="email"
+                    type="text"
+                    label="Email"
+                    onChange={this.updateLoginForm}
                 />
-        </form>
-    );
+
+                <TextInput
+                    name="password"
+                    type="password"
+                    label="Password"
+                    onChange={this.updateLoginForm}
+                />
+                <Button onClick={this.signInUser}>Login</Button>
+            </form>
+        );
+    }
+}
+
+LoginForm.defaultProps = {
+    isSignedIn: false,
+    signInMsg: ''
 };
 
-// ManageCoursePage.propTypes = {
-//     course: PropTypes.object.isRequired,
-//     authors: PropTypes.array.isRequired,
-//     actions: PropTypes.object.isRequired
-// };
 LoginForm.propTypes = {
-    // course: React.PropTypes.object.isRequired,
-    // allAuthors: React.PropTypes.array,
-    // onSave: React.PropTypes.func.isRequired,
-    // onChange: React.PropTypes.func.isRequired,
-    // saving: React.PropTypes.bool,
-    // errors: React.PropTypes.object
-    actions: PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired,
+    isSignedIn: PropTypes.bool.isRequired,
+    signInMsg: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-
-    let user = ownProps.params;
-    user = {email: user.email, pw: user.password};
-
+function mapStateToProps(store, ownProps) {
     return {
-        user: user
+        user: store.registeredUser.user,
+        isSignedIn: store.registeredUser.isSignedIn,
+        signInMsg: store.registeredUser.msg
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(loginActions, dispatch)
-    }
+        actions: bindActionCreators(authActions, dispatch)
+    };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
