@@ -6,7 +6,8 @@ class HomePage extends React.Component {
     return (
       <div className="jumbotron">
         <h1>Welcome to Tidus!</h1>
-        <p>React, Redux and React Router in ES6 for ultra-responsive web apps.</p>
+        <p>Tidus is built with React, Redux and React Router in ES6.</p>
+        <p>The app integrates with Google Firebase to perform various backend services.</p>
         <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
       </div>
     );
