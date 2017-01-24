@@ -27,14 +27,14 @@ export function signInUserSuccess(user) {
 }
 
 export function signInUserError(error) {
-    return { type: types.SIGNIN_USER_ERROR, payload: { user: {}, isSignedIn: false, msg: error.msg  }};
+    return { type: types.SIGNIN_USER_ERROR, payload: { user: {}, isSignedIn: false, msg: error.message  }};
 }
 
 export function signOutUserSuccess() {
     return { type: types.SIGNOUT_USER_SUCCESS, payload: { user: {}, isSignedIn: false, msg: ''}};
 }
 export function signOutUserError(error) {
-    return { type: types.SIGNOUT_USER_ERROR, payload: { isSignedIn: true, msg: error.msg }};
+    return { type: types.SIGNOUT_USER_ERROR, payload: { isSignedIn: true, msg: error.message }};
 }
 
 export function createUser(email, pw) { // async

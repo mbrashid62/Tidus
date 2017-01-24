@@ -8,19 +8,28 @@ import {connect} from 'react-redux';
 
 class App extends React.Component {
 
-  render() {
-    return (
-      <div className="container-fluid">
-        <Header
-          loading={this.props.loading}
-          isSignedIn={this.props.isSignedIn}
-          user={this.props.signedInUser}
-          signOutFunc={this.props.actions.signOutUser}
-        />
-        {this.props.children}
-      </div>
-    );
-  }
+    constructor(props, context) {
+        super(props, context);
+        this.signOutUser = this.signOutUser.bind(this);
+    }
+
+    signOutUser() {
+        this.props.actions.signOutUser();
+    }
+
+    render() {
+      return (
+          <div className="container-fluid">
+            <Header
+              loading={this.props.loading}
+              isSignedIn={this.props.isSignedIn}
+              user={this.props.signedInUser}
+              signOutFunc={this.signOutUser}
+            />
+            {this.props.children}
+          </div>
+      );
+    }
 }
 
 App.defaultPropTypes = {
@@ -35,8 +44,7 @@ App.propTypes = {
     children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
-    signedInUser: PropTypes.object.isRequired,
-    signOutFunc: PropTypes.function
+    signedInUser: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

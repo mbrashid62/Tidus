@@ -1,7 +1,7 @@
 // import React from 'react';
 // import expect from 'expect';
 // import {mount, shallow} from 'enzyme';
-// import {RegisterPage} from './RegisterPage';
+// import {LoginForm} from './LoginForm';
 //
 // describe ('Register Form Component', () => {
 //     it('sets error message when trying to register mismatching passwords', () => {
