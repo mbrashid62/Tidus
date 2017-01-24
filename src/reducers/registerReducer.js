@@ -12,6 +12,9 @@ export default function registerReducer(state = initialState.registeredUser, act
         case types.SIGNIN_USER_SUCCESS:
             return Object.assign({}, state, action.payload);
 
+        case types.SIGNIN_USER_ERROR:
+            return Object.assign({}, state, action.payload);
+
         case types.SIGNOUT_USER_SUCCESS:
             return Object.assign({}, state, action.payload);
 

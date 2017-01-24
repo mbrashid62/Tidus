@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const RegisterMsg = ({msg, errors}) => {
+const StatusMsg = ({msg, errors}) => {
     return (
         <div>
             <p className="bg-danger">{msg}</p>
@@ -9,9 +9,9 @@ const RegisterMsg = ({msg, errors}) => {
     );
 };
 
-RegisterMsg.propTypes = {
-    msg: PropTypes.string.isRequired,
-    errors: PropTypes.object.isRequired
+StatusMsg.propTypes = {
+    msg: PropTypes.string,
+    errors: PropTypes.object
 };
 
-export default RegisterMsg;
+export default StatusMsg;

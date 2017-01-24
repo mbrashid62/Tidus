@@ -14,11 +14,11 @@ function setup(isSignedIn) {
     return shallow(<Header {...props} />);
 }
 
-describe('RegisterPage Component', () => {
+describe('LoginForm Component', () => {
     it('renders appropriate signed out header items', () => {
         const wrapper = setup(false);
         const listItems = wrapper.find('li');
-        expect(listItems.length).toBe(5); // renders 4 'li' elements in nav
+        expect(listItems.length).toBe(4); // renders 4 'li' elements in nav
     });
 
     it('renders appropriate signed in header items', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import TextInput from '../common/TextInput';
 import Button from 'react-button';
-import RegisterMsg from './RegisterMsg';
+import StatusMsg from './StatusMsg';
 
 
 const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
@@ -32,7 +32,7 @@ const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
                 onChange={onChange}
             />
             <Button className="btn btn-default" onClick={registerUser}>Sign Up</Button>
-            <RegisterMsg msg={registerMsg} errors={errors}/>
+            <StatusMsg msg={registerMsg} errors={errors}/>
         </form>
     );
 };
@@ -41,7 +41,7 @@ RegisterForm.propTypes = {
     user: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     registerMsg: React.PropTypes.string.isRequired,
-    registerUser: React.PropTypes.function,
+    registerUser: React.PropTypes.func,
     errors: React.PropTypes.object
 };
 

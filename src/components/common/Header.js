@@ -32,7 +32,7 @@ Header.propTypes = {
     loading: PropTypes.bool.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
-    signOutFunc: PropTypes.function
+    signOutFunc: PropTypes.func
 };
 
 export default Header;

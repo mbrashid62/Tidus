@@ -16,7 +16,7 @@ function setup() {
     return shallow(<RegisterForm {...props} />);
 }
 
-describe('RegisterPage Component', () => {
+describe('LoginForm Component', () => {
     it('renders a form and a Register header', () => {
         const wrapper = setup();
         const registerForm = wrapper.find('form');
