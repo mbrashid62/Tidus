@@ -2,7 +2,6 @@ import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
 export default function registerReducer(state = initialState.registeredUser, action) {
-    debugger;
     switch (action.type) {
         case types.CREATE_USER_SUCCESS:
             return Object.assign({}, state, action.payload);

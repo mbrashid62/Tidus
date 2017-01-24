@@ -35,14 +35,15 @@ App.propTypes = {
     children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
-    signedInUser: PropTypes.object.isRequired
+    signedInUser: PropTypes.object.isRequired,
+    signOutFunc: PropTypes.function
 };
 
 function mapStateToProps(state, ownProps) {
   return {
       loading: state.ajaxCallsInProgress > 0,
-      isSignedIn: state.registeredUser.isSignedIn,
-      signedInUser: state.registeredUser.user
+      isSignedIn: state.registerReducer.isSignedIn,
+      signedInUser: state.registerReducer.user
   };
 }
 

@@ -18,24 +18,24 @@ export class LoginForm extends React.Component {
         };
         this.updateLoginForm = this.updateLoginForm.bind(this);
         this.signInUser = this.signInUser.bind(this);
-        this.redirectToHomePage = this.redirectToHomePage.bind(this);
+        this.redirectToDashboard = this.redirectToDashboard.bind(this);
     }
 
     componentWillMount() {
         this.props.actions.initStateChangeHook();
         if(this.props.isSignedIn) { // if user navigates to login form page while already being signed in
-            this.redirectToHomePage();
+            this.redirectToDashboard();
         }
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isSignedIn) {
-            this.redirectToHomePage();
+            this.redirectToDashboard();
         }
     }
 
-    redirectToHomePage() {
-        browserHistory.push('/');
+    redirectToDashboard() {
+        browserHistory.push('/dashboard');
     }
 
     updateLoginForm(event) {
@@ -90,9 +90,9 @@ LoginForm.propTypes = {
 
 function mapStateToProps(store, ownProps) {
     return {
-        user: store.registeredUser.user,
-        isSignedIn: store.registeredUser.isSignedIn,
-        signInMsg: store.registeredUser.msg
+        user: store.registerReducer.user,
+        isSignedIn: store.registerReducer.isSignedIn,
+        signInMsg: store.registerReducer.msg
     };
 }
 

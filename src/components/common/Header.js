@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { Link, IndexLink } from 'react-router';
+import Dashboard from '../main/Dashboard';
 import LoadingDots from './LoadingDots';
 import Button from 'react-button';
 
@@ -9,20 +10,19 @@ const Header = ({loading, isSignedIn, user, signOutFunc}) => {
         <div className="container-fluid">
             <ul className="nav navbar-nav navbar-right">
                 <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
-                <li>{!isSignedIn && <Link to="/login" activeClassName="active">Login</Link>}</li>
-                <li>{!isSignedIn && <Link to="/register" activeClassName="active">Register</Link>}</li>
-                <li><Link to="/courses" activeClassName="active">Courses</Link></li>
+                {!isSignedIn && <li><Link to="/login" activeClassName="active">Login</Link></li>}
+                {!isSignedIn && <li><Link to="/register" activeClassName="active">Register</Link></li>}
                 <li><Link to="/about" activeClassName="active">About</Link></li>
+                {isSignedIn && <li><Link to="/dashboard" activeClassName="active">Dashboard</Link></li>}
                 {isSignedIn && <li><p className="navbar-text">You are logged in as {user.email}!</p></li>}
                 {isSignedIn && <li><Button className="btn btn-default navbar-btn" onClick={signOutFunc}>Logout</Button></li>}
-                <li></li>
             </ul>
         </div>
     </nav>
   );
 };
-Header.defaultPropTypes = {
 
+Header.defaultPropTypes = {
     loading: false,
     isSignedIn: false,
     user: {}
@@ -31,7 +31,8 @@ Header.defaultPropTypes = {
 Header.propTypes = {
     loading: PropTypes.bool.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    signOutFunc: PropTypes.function
 };
 
 export default Header;
