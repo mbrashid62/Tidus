@@ -1,13 +1,23 @@
 import {combineReducers} from 'redux';
-import courses from './courseReducer';
-import authors from './authorReducer';
 import ajaxCallsInProgress from './ajaxStatusReducer';
-import registeredUser from './registerReducer';
+import registerReducer from './registerReducer';
+import * as firebase from 'firebase';
+
+let hasInitialized = false;
+
+if(!hasInitialized) {
+    const config = {
+        apiKey: "AIzaSyBBaYtvWenoWPJrBF__dalQHzLXGFyJW-Y",
+        authDomain: "tidus-7b418.firebaseapp.com",
+        databaseURL: "https://tidus-7b418.firebaseio.com/",
+        storageBucket: "tidus-7b418.appspot.com"
+    };
+    firebase.initializeApp(config);
+}
+hasInitialized=true;
 
 const rootReducer = combineReducers({
-  courses,
-  authors,
-  registeredUser,
+  registerReducer,
   ajaxCallsInProgress
 });
 

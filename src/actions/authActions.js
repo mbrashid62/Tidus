@@ -1,15 +1,6 @@
 import * as types from './actionTypes';
 import * as firebase from 'firebase';
 
-const config = {
-    apiKey: "AIzaSyBBaYtvWenoWPJrBF__dalQHzLXGFyJW-Y",
-    authDomain: "tidus-7b418.firebaseapp.com",
-    databaseURL: "https://tidus-7b418.firebaseio.com/",
-    storageBucket: "tidus-7b418.appspot.com"
-};
-
-firebase.initializeApp(config);
-
 export function initStateChangeHook() {
     return (dispatch) => {
         firebase.auth().onAuthStateChanged((user) => {
@@ -40,7 +31,7 @@ export function signInUserError(error) {
 }
 
 export function signOutUserSuccess() {
-    return { type: types.SIGNOUT_USER_SUCCESS, payload: { user: {}, isSignedIn: false, msg: 'Successful Logout'}};
+    return { type: types.SIGNOUT_USER_SUCCESS, payload: { user: {}, isSignedIn: false, msg: ''}};
 }
 export function signOutUserError(error) {
     return { type: types.SIGNOUT_USER_ERROR, payload: { isSignedIn: true, msg: error.msg }};
