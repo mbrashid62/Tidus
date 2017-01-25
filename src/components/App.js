@@ -2,7 +2,6 @@
 import React, {PropTypes} from 'react';
 import Header from './common/Header';
 import * as authActions from '.././actions/authActions';
-
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 
@@ -11,6 +10,10 @@ class App extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.signOutUser = this.signOutUser.bind(this);
+    }
+
+    componentWillMount() {
+        this.props.actions.initStateChangeHook();
     }
 
     signOutUser() {

@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 import ajaxCallsInProgress from './ajaxStatusReducer';
 import registerReducer from './registerReducer';
+import spotifyReducer from'./spotifyReducer';
 import * as firebase from 'firebase';
 
 let hasInitialized = false;
@@ -18,6 +19,7 @@ hasInitialized=true;
 
 const rootReducer = combineReducers({
   registerReducer,
+  spotifyReducer,
   ajaxCallsInProgress
 });
 

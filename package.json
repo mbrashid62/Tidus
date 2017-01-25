@@ -1,7 +1,7 @@
 {
   "name": "ps-redux",
   "version": "1.0.0",
-  "description": "Starter kit for React and Redux Pluralsight course by Cory House",
+  "description": "Spotify App built with react, redux, es6, and more",
   "scripts": {
     "prestart": "babel-node tools/startMessage.js",
     "start": "npm-run-all --parallel test:watch open:src lint:watch",
@@ -32,6 +32,8 @@
     "react-router-redux": "4.0.4",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
+    "spotify-web-api-js": "^0.21.2",
+    "spotify-web-api-node": "^2.3.6",
     "toastr": "2.1.2"
   },
   "devDependencies": {

@@ -7,13 +7,13 @@ import RegisterPage from './components/common/RegisterPage';
 import Dashboard from'./components/main/Dashboard';
 import AboutPage from './components/about/AboutPage';
 
-
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={HomePage} />
         <Route path="login" component={LoginPage} />
         <Route path="register" component={RegisterPage} />
         <Route path="dashboard" component={Dashboard} />
+        <Route path="callback" component={Dashboard} />
         <Route path="about" component={AboutPage} />
     </Route>
 );
