@@ -17,7 +17,6 @@
     "postbuild": "babel-node tools/distServer.js"
   },
   "author": "Bill Rashid",
-  "license": "MIT",
   "dependencies": {
     "babel-polyfill": "6.8.0",
     "bootstrap": "3.3.6",
