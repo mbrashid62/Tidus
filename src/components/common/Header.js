@@ -6,7 +6,7 @@ import Button from 'react-button';
 
 const Header = ({loading, isSignedIn, user, signOutFunc}) => {
   return (
-    <nav className="navbar navbar-default">
+    <nav className="navbar navbar-light">
         <div className="container-fluid">
             <ul className="nav navbar-nav navbar-right">
                 <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
@@ -15,7 +15,7 @@ const Header = ({loading, isSignedIn, user, signOutFunc}) => {
                 <li><Link to="/about" activeClassName="active">About</Link></li>
                 {isSignedIn && <li><Link to="/dashboard" activeClassName="active">Dashboard</Link></li>}
                 {isSignedIn && <li><p className="navbar-text">You are logged in as {user.email}!</p></li>}
-                {isSignedIn && <li><Button className="btn btn-default navbar-btn" onClick={signOutFunc}>Logout</Button></li>}
+                {isSignedIn && <li><Button className="btn btn-default btn-sm navbar-btn" onClick={signOutFunc}>Logout</Button></li>}
             </ul>
         </div>
     </nav>

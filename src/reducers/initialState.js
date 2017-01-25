@@ -5,5 +5,14 @@ export default { // this is what the store looks like
       isRegistered: false,
       isSignedIn: false
   },
+  spotifyData: {
+      url: '',
+      code: '',
+      accessToken: '',
+      hasAccessToken: false,
+      spotifyUserID: '',
+      hasSpotifyID: false,
+      playlists: []
+  },
   ajaxCallsInProgress: 0
 };

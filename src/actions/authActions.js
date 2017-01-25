@@ -1,11 +1,13 @@
 import * as types from './actionTypes';
 import * as firebase from 'firebase';
+import SpotifyWebApi from 'spotify-web-api-node';
 
 export function initStateChangeHook() {
     return (dispatch) => {
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 dispatch(signInUserSuccess(user));
+
             } else {
                 dispatch(signOutUserSuccess(user));
             }
@@ -35,6 +37,14 @@ export function signOutUserSuccess() {
 }
 export function signOutUserError(error) {
     return { type: types.SIGNOUT_USER_ERROR, payload: { isSignedIn: true, msg: error.message }};
+}
+
+export function createCustomTokenSuccess(token) {
+    return { type: types.CREATE_CUSTOM_TOKEN_SUCCESS, payload: { token }};
+}
+
+export function createCustomTokenError(error) {
+    return { type: types.CREATE_CUSTOM_TOKEN_ERROR, payload: { error }};
 }
 
 export function createUser(email, pw) { // async
