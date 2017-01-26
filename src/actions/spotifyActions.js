@@ -25,6 +25,14 @@ export function fetchSpotifyPlaylistsError(error) {
     return { type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR, payload: { error }};
 }
 
+export function fetchSpotifyPlaylistTracksSuccess(tracks) {
+    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_SUCCESS, payload: { selectedPlaylistTracks: tracks, hasFoundTracks: true }};
+}
+
+export function fetchSpotifyPlaylistTracksError(error) {
+    return { type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR, payload: { error: error }};
+}
+
 const spotifyApi = new SpotifyWebApi({
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
     clientSecret: '564da0f10a104edd9ca4f0aabb479ea0',
@@ -35,8 +43,8 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
-        // const redirect_uri = "http://www.localhost:3000/callback"; // for local
-        const redirect_uri =  "https://tidus-music.herokuapp.com/callback";
+        const redirect_uri = "http://www.localhost:3000/callback"; // for local
+        // const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
         const state = 'my-state';
         let url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
@@ -75,6 +83,18 @@ export function fetchSpotifyPlaylists(spotifyID) {
             })
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistsError(error));
+            });
+    };
+}
+
+export function fetchPlaylistTracks(spotifyUserId, playlistId) {
+    return (dispatch) => {
+        spotifyApi.getPlaylistTracks(spotifyUserId, playlistId)
+            .then((tracks) => {
+                dispatch(fetchSpotifyPlaylistTracksSuccess(tracks.body.items));
+            })
+            .catch((error) => {
+                dispatch(fetchSpotifyPlaylistTracksError(error));
             });
     };
 }

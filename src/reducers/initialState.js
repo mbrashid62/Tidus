@@ -12,7 +12,9 @@ export default { // this is what the store looks like
       hasAccessToken: false,
       spotifyUserID: '',
       hasSpotifyID: false,
-      playlists: []
+      playlists: [],
+      selectedPlaylistTracks: [],
+      hasFoundTracks: false
   },
   ajaxCallsInProgress: 0
 };

@@ -1,4 +1,3 @@
-
 import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
@@ -21,6 +20,12 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
 
         case types.FETCH_SPOTIFY_PLAYLISTS_ERROR:
             return Object.assign({}, state, action.payload);
+
+        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_SUCCESS:
+            return Object.assign({}, state, action.payload);
+
+        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ERROR:
+            return Object.assign({}, state , action.payload);
 
         default:
             return state;
