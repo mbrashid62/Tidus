@@ -1,8 +1,17 @@
-// export function authorsFormattedForDropdown(authors) {
-//   return authors.map(author => {
-//     return {
-//       value: author.id,
-//       text: author.firstName + ' ' + author.lastName
-//     };
-//   });
-// }
+export function playlistFormatted(playlists) {
+    return playlists.map(playlist => {
+        return {
+            name: playlist.name,
+            id: playlist.id
+        };
+    });
+}
+
+export function selectedTracksFormatted(tracks) {
+    return tracks.map(track => {
+        return {
+            name: track.track.name,
+            id: track.track.id
+        }
+    })
+}
