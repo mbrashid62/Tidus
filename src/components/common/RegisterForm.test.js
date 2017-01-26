@@ -1,7 +1,6 @@
 import expect from 'expect';
 import React from 'react';
 import {mount, shallow} from 'enzyme';
-import TestUtils from 'react-addons-test-utils';
 import RegisterForm from './RegisterForm';
 
 function setup() {
@@ -16,7 +15,7 @@ function setup() {
     return shallow(<RegisterForm {...props} />);
 }
 
-describe('LoginForm Component', () => {
+describe('RegisterForm Component', () => {
     it('renders a form and a Register header', () => {
         const wrapper = setup();
         const registerForm = wrapper.find('form');

@@ -14,7 +14,7 @@ function setup(isSignedIn) {
     return shallow(<Header {...props} />);
 }
 
-describe('LoginForm Component', () => {
+describe('StatusMsg Component', () => {
     it('renders appropriate signed out header items', () => {
         const wrapper = setup(false);
         const listItems = wrapper.find('li');

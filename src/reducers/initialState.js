@@ -14,7 +14,8 @@ export default { // this is what the store looks like
       hasSpotifyID: false,
       playlists: [],
       selectedPlaylistTracks: [],
-      hasFoundTracks: false
+      hasFoundTracks: false,
+      error: {}
   },
   ajaxCallsInProgress: 0
 };
