@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 const StatusMsg = ({msg, errors}) => {
     return (
         <div>
-            <p className="bg-danger">{msg}</p>
-            <p className="bg-warning">{errors.title}</p>
+            <p id="status-msg" className="bg-danger">{msg}</p>
+            <p id="status-error" className="bg-warning">{errors.title}</p>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 // import React from 'react';
 // import expect from 'expect';
 // import {mount, shallow} from 'enzyme';
-// import {LoginForm} from './LoginForm';
+// import {StatusMsg} from './StatusMsg';
 //
 // describe ('Register Form Component', () => {
 //     it('sets error message when trying to register mismatching passwords', () => {
@@ -12,7 +12,7 @@
 //             },
 //             isSignedIn: false,
 //             registerMsg: '',
-//             registerReducer: {}
+//             spotifyReducer: {}
 //         };
 //
 //         const wrapper = mount(<RegisterPage {...props}/>);
