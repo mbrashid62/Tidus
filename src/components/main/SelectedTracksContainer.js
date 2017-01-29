@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import SpotifyTrack from '../main/SpotifyTrack';
 
 const SelectedTracksContainer = ({tracks, selectedPlaylistName}) => {
-    debugger;
     return (
         <div>
             <h1 className="text-right">{selectedPlaylistName}</h1>

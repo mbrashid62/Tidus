@@ -35,6 +35,7 @@
     "css-loader": "0.23.1",
     "express": "4.13.4",
     "firebase": "^3.6.5",
+    "google-oauth2-web-client": "^0.1.2",
     "jquery": "2.2.3",
     "lodash": "^4.17.4",
     "open": "0.0.5",

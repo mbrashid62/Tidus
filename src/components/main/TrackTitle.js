@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 
 const TrackTitle= ({track}) => {
     return (
-        <div>
-            <h5 className="track-name">{track.name}</h5>
+        <div className="spotify-track">
+            <h5 className="spotify-track-item ">{track.artist} - {track.name}</h5>
         </div>
     );
 };

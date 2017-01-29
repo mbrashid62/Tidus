@@ -7,6 +7,7 @@ export default { // this is what the store looks like
   },
   spotifyData: {
       url: '',
+      ytAuthUrl: '',
       code: '',
       accessToken: '',
       hasAccessToken: false,

@@ -6,7 +6,10 @@ const SpotifyPlaylist= ({playlist, handlePlaylistSelect}) => {
         <div>
             <div className="row">
                 <div className="col-md-12 text-left">
-                    <PlaylistTitle playlist={playlist} handlePlaylistSelect={handlePlaylistSelect}/>
+                    <PlaylistTitle
+                        playlist={playlist}
+                        handlePlaylistSelect={handlePlaylistSelect}
+                    />
                 </div>
             </div>
         </div>

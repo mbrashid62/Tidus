@@ -1,10 +1,17 @@
 import * as types from './actionTypes';
 import SpotifyWebApi from 'spotify-web-api-node';
+// import GO2 from 'google-oauth2-web-client';
+import gapi from '../gapi';
 
 // action creators
 export function createSpotifyAuthorizeUrlSuccess(url) {
     return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS, payload: { url: url }};
 }
+
+export function createYouTubeAuthorizeUrlSuccess(url) {
+    return { type: types.CREATE_YOUTUBE_AUTHORIZE_URL_SUCCESS, payload: { ytAuthUrl: url }};
+}
+
 export function createAccessTokenSuccess(accessToken) {
     return { type: types.CREATE_SPOTIFY_ACCESS_TOKEN_SUCCESS, payload: { accessToken: accessToken, hasAccessToken: true }};
 }
@@ -33,6 +40,10 @@ export function fetchSpotifyPlaylistTracksError(error) {
     return { type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR, payload: { error: error }};
 }
 
+export function connectYouTubeSuccess(ytAccessToken) {
+    return { type: types.CONNECT_YOUTUBE_SUCCESS, payload: { ytAccessToken: ytAccessToken }}
+}
+
 const spotifyApi = new SpotifyWebApi({
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
     clientSecret: '564da0f10a104edd9ca4f0aabb479ea0',
@@ -43,8 +54,8 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
-        const redirect_uri = "http://www.localhost:3000/callback"; // for local
-        // const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
+        // const redirect_uri = "http://www.localhost:3000/callback"; // for local
+        const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
         const state = 'my-state';
         let url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
@@ -96,5 +107,25 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistTracksError(error));
             });
+    };
+}
+
+export function connectToYouTube() {
+    return(dispatch) => {
+        function start() {
+            const apiKey = 'AIzaSyC1Axs4L5U2c9AoCdLBap8TCrlUcNMy89g';
+            const googleClientId = '917361040545-j1c02ddv0onvfa7sfdv1qjern26pjnoh.apps.googleusercontent.com';
+            const scope = ['https://www.googleapis.com/auth/youtube'];
+            // const redirect_uri = "http://www.localhost:3000/callback"; // for local
+            const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
+
+            let url = 'https://accounts.google.com/o/oauth2/auth';
+            url += '?client_id=' + encodeURIComponent(googleClientId);
+            url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+            url += '&response_type=token';
+            url += '&scope=' + encodeURIComponent(scope);
+            dispatch(createYouTubeAuthorizeUrlSuccess(url));
+        }
+        start();
     };
 }

@@ -2,15 +2,20 @@
 #app {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
-  min-width: 550px;
-  max-width: 850px;
+  min-width: auto;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 a.active {
-  color: orange;
+  /*color: orange;*/
 }
 
 nav {
   padding-top: 20px;
+}
+
+.spotify-track-item{
+  border-bottom: 1px darkslategray solid;
+  padding-bottom: 10px;
 }
