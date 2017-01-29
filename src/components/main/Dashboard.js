@@ -32,11 +32,10 @@ export class Dashboard extends React.Component {
             const pathname = this.props.location.pathname;
             if(access_token !== '' && access_token !== undefined) {
 
-                debugger;
                 if(pathname.includes('spotify')) { // spotify redirect
                     this.props.actions.handleSpotifyAccessToken(access_token);
                 } else if(pathname.includes('youtube')) { // youtube redirect
-                    this.props.actions.handleYouTubeAccessToken(access_token, this.state.selectedPlaylistName, this.props.selectedPlaylistTracks);
+                    this.props.actions.handleYouTubeAccessToken(access_token);
                 }
             }
         }
@@ -75,7 +74,6 @@ export class Dashboard extends React.Component {
         }
 
         if(nextProps.ytAuthUrl !== '') {
-            debugger;
             window.location = nextProps.ytAuthUrl;
         }
     }
@@ -88,7 +86,7 @@ export class Dashboard extends React.Component {
         this.props.actions.connectToSpotify();
     }
     connectToYouTube() {
-        this.props.actions.connectToYouTube();
+        this.props.actions.connectToYouTube(this.state.selectedPlaylistName, this.props.selectedPlaylistTracks);
     }
 
     handlePlaylistSelect(event) {

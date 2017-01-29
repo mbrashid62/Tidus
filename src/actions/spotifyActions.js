@@ -53,6 +53,7 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
+        debugger;
         // const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
         const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
         const state = 'my-state';
@@ -109,7 +110,15 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
     };
 }
 
-export function connectToYouTube() {
+let playListName = '';
+let playListTracks = [];
+
+function setSelectedSpotifyData(playlist, tracks) {
+    playListName = playlist;
+    playListTracks = tracks;
+}
+
+export function connectToYouTube(spotifyPlaylistName, spotifyPlaylistTracks) {
     return(dispatch) => {
         function start() {
             const googleClientId = '917361040545-j1c02ddv0onvfa7sfdv1qjern26pjnoh.apps.googleusercontent.com';
@@ -122,15 +131,17 @@ export function connectToYouTube() {
             url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
             url += '&response_type=token';
             url += '&scope=' + encodeURIComponent(scope);
+
+            setSelectedSpotifyData(spotifyPlaylistName, spotifyPlaylistTracks);
             dispatch(createYouTubeAuthorizeUrlSuccess(url));
         }
         start();
     };
 }
-
-export function handleYouTubeAccessToken(accessToken, spotifyPlaylistName, spotifyPlaylistTracks) {
-
+export function handleYouTubeAccessToken(accessToken) {
     debugger;
+    const playlist = playListName;
+    const tracks = playListTracks;
     return (dispatch) => {
 
     };
