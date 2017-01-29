@@ -20,7 +20,7 @@ const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
 
 SpotifyPlaylistsContainer.propTypes = {
     playlists: React.PropTypes.array.isRequired,
-    handlePlaylistSelect: React.PropTypes.func.isRequired,
+    handlePlaylistSelect: React.PropTypes.func.isRequired
 };
 
 export default SpotifyPlaylistsContainer;

@@ -14,7 +14,7 @@ const initialState = {
         selectedPlaylistTracks: [],
         hasFoundTracks: false,
         error: {}
-    },
+    }
 };
 
 describe('Spotify Reducer', () => {

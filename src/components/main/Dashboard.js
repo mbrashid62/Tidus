@@ -187,3 +187,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+// npm start: npm-run-all --parallel test:watch open:src lint:watch

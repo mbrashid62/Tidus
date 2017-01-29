@@ -13,6 +13,6 @@ export function selectedTracksFormatted(tracks) {
             artist: track.track.artists[0].name,
             name: track.track.name,
             id: track.track.id
-        }
-    })
+        };
+    });
 }
