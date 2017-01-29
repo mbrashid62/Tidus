@@ -53,8 +53,8 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
-        const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
-        // const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
+        // const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
+        const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
         const state = 'my-state';
         let url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
@@ -115,7 +115,7 @@ export function connectToYouTube() {
             const googleClientId = '917361040545-j1c02ddv0onvfa7sfdv1qjern26pjnoh.apps.googleusercontent.com';
             const scope = ['https://www.googleapis.com/auth/youtube'];
             // const redirect_uri = "http://www.localhost:3000/callback"; // for local
-            const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
+            const redirect_uri =  "https://tidus-music.herokuapp.com/youtube/callback"; // for prod
 
             let url = 'https://accounts.google.com/o/oauth2/auth';
             url += '?client_id=' + encodeURIComponent(googleClientId);
