@@ -26,11 +26,18 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        if(this.props.location.hash.split('=')[1] !== undefined) {
-            const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
+        if(this.props.location.hash.split('=')[1] !== undefined) { // if redirected with access token
 
+            const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
+            const pathname = this.props.location.pathname;
             if(access_token !== '' && access_token !== undefined) {
-                this.props.actions.handleSpotifyAccessToken(access_token);
+
+                debugger;
+                if(pathname.includes('spotify')) { // spotify redirect
+                    this.props.actions.handleSpotifyAccessToken(access_token);
+                } else if(pathname.includes('youtube')) { // youtube redirect
+                    this.props.actions.handleYouTubeAccessToken(access_token, this.state.selectedPlaylistName, this.props.selectedPlaylistTracks);
+                }
             }
         }
     }

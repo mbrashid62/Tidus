@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import SpotifyWebApi from 'spotify-web-api-node';
-// import GO2 from 'google-oauth2-web-client';
 import gapi from '../gapi';
 
 // action creators
@@ -54,8 +53,8 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
-        // const redirect_uri = "http://www.localhost:3000/callback"; // for local
-        const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
+        const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
+        // const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
         const state = 'my-state';
         let url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
@@ -113,7 +112,6 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
 export function connectToYouTube() {
     return(dispatch) => {
         function start() {
-            const apiKey = 'AIzaSyC1Axs4L5U2c9AoCdLBap8TCrlUcNMy89g';
             const googleClientId = '917361040545-j1c02ddv0onvfa7sfdv1qjern26pjnoh.apps.googleusercontent.com';
             const scope = ['https://www.googleapis.com/auth/youtube'];
             // const redirect_uri = "http://www.localhost:3000/callback"; // for local
@@ -127,5 +125,13 @@ export function connectToYouTube() {
             dispatch(createYouTubeAuthorizeUrlSuccess(url));
         }
         start();
+    };
+}
+
+export function handleYouTubeAccessToken(accessToken, spotifyPlaylistName, spotifyPlaylistTracks) {
+
+    debugger;
+    return (dispatch) => {
+
     };
 }
