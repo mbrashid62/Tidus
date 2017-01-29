@@ -6,11 +6,11 @@ import { browserHistory } from 'react-router';
 import Button from 'react-button';
 import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
 import SelectedTracksContainer from './SelectedTracksContainer';
-import {playlistFormatted} from '../../selectors/selectors';
-import * as spotifySelectors from '../../selectors/selectors'
+import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
+import $ from 'jquery';
 
-export class RegisterPage extends React.Component {
+export class Dashboard extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -21,12 +21,13 @@ export class RegisterPage extends React.Component {
         this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
+        this.connectToYouTube = this.connectToYouTube.bind(this);
+        this.initPlaylistHoverCSS = this.initPlaylistHoverCSS.bind(this);
     }
 
     componentWillMount() {
         if(this.props.location.hash.split('=')[1] !== undefined) {
             const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
-            // const state = this.props.location.query.state;
 
             if(access_token !== '' && access_token !== undefined) {
                 this.props.actions.handleSpotifyAccessToken(access_token);
@@ -38,7 +39,7 @@ export class RegisterPage extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
 
-        if(nextProps.spotifyUrl !== '') { // if redirect url has not be clearned
+        if(nextProps.spotifyUrl !== '') { // if redirect url has not be cleared
             window.location = nextProps.spotifyUrl;
         }
 
@@ -46,20 +47,29 @@ export class RegisterPage extends React.Component {
             this.props.actions.fetchSpotifyUserID();
         }
 
-        if(nextProps.hasAccessToken && !nextProps.hasSpotifyID) { // if we have teh access token and have fetched the user already
+        if(nextProps.hasAccessToken && !nextProps.hasSpotifyID) { // if we have the access token and have fetched the user already
             this.props.actions.fetchSpotifyPlaylists();
         }
 
         if(nextProps.playlists.length > 0) { // if we have fetched the playlists
             this.setState({
-                shouldRenderPlaylists: true,
+                shouldRenderPlaylists: true
             });
         }
 
-        if(nextProps.selectedPlaylistTracks.length > 0) { // if we have fetched the track for the user selected playlist
+        if(nextProps.selectedPlaylistTracks.length > 0) { // if we have fetched the tracks for the user selected playlist
             this.setState({
                 shouldRenderSelectedPlaylistTracks: true
             });
+        }
+
+        if ($('.playlist-name').length > 0 ) {
+            this.initPlaylistHoverCSS();
+        }
+
+        if(nextProps.ytAuthUrl !== '') {
+            debugger;
+            window.location = nextProps.ytAuthUrl;
         }
     }
 
@@ -69,6 +79,9 @@ export class RegisterPage extends React.Component {
 
     connectToSpotify() {
         this.props.actions.connectToSpotify();
+    }
+    connectToYouTube() {
+        this.props.actions.connectToYouTube();
     }
 
     handlePlaylistSelect(event) {
@@ -84,22 +97,33 @@ export class RegisterPage extends React.Component {
         this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId);
     }
 
+    initPlaylistHoverCSS(event) {
+        const playListNameEls = $('.playlist-name');
+        playListNameEls.mouseover(function() {
+            $(this).css('cursor', 'pointer');
+            $(this).css('color', '#777777'); // same color as login/logout button
+        });
+        playListNameEls.mouseout(function () {
+            $(this).css('color', '');
+        });
+    }
+
     render () {
         return (
             <div className="container-fluid">
-                <div className="jumbotron">
-                    <h1>Welcome to the Tidus dashboard</h1>
-                    <p>Here you can connect your Spotify playlists.</p>
-                    {this.props.playlists.length == 0 && <Button className="btn btn-lg" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
+                <div className="center-block">
+                    <div className="jumbotron">
+                        <h1>Welcome to the Tidus dashboard</h1>
+                        <p>Here you can connect your Spotify playlists.</p>
+                        {this.props.playlists.length == 0 && <Button className="btn btn-lg" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
+                    </div>
                 </div>
-
-
                 {
                     this.state.shouldRenderSelectedPlaylistTracks &&
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h4>To build a corresponding YouTube playlist for {this.state.selectedPlaylistName} click the button below</h4>
-                            <Button className="text-center">Use Tidus for {this.state.selectedPlaylistName}</Button>
+                            <Button className="text-center" onClick={this.connectToYouTube}>Use Tidus for {this.state.selectedPlaylistName}</Button>
                         </div>
                     </div>
                 }
@@ -121,12 +145,13 @@ export class RegisterPage extends React.Component {
                         />
                     </div>
                 }
+
             </div>
         );
     }
 }
 
-RegisterPage.propTypes = {
+Dashboard.propTypes = {
     registeredUser: React.PropTypes.object.isRequired,
     isSignedIn: React.PropTypes.bool.isRequired,
     spotifyUrl: React.PropTypes.string,
@@ -135,7 +160,9 @@ RegisterPage.propTypes = {
     hasSpotifyID: React.PropTypes.bool,
     playlists: React.PropTypes.array,
     selectedPlaylistTracks: React.PropTypes.array,
-    hasFoundTracks: React.PropTypes.bool
+    hasFoundTracks: React.PropTypes.bool,
+    ytAccessToken: React.PropTypes.string,
+    ytAuthUrl: React.PropTypes.string
 };
 function mapStateToProps(store) { // connect props to global state object
     return {
@@ -147,7 +174,9 @@ function mapStateToProps(store) { // connect props to global state object
         hasSpotifyID: store.spotifyReducer.hasSpotifyID,
         playlists: spotifySelectors.playlistFormatted(store.spotifyReducer.playlists),
         selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),
-        hasFoundTracks: store.spotifyReducer.hasFoundTracks
+        hasFoundTracks: store.spotifyReducer.hasFoundTracks,
+        ytAccessToken: store.spotifyReducer.ytAccessToken,
+        ytAuthUrl: store.spotifyReducer.ytAuthUrl
     };
 }
 
@@ -157,4 +186,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

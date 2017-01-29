@@ -8,7 +8,10 @@ const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
             <p className="text-left">Double click to select one</p>
             <div>
                 {playlists.map(playlist =>
-                    <SpotifyPlaylist key={playlist.id} playlist={playlist} handlePlaylistSelect={handlePlaylistSelect}/>
+                    <SpotifyPlaylist key={playlist.id}
+                                     playlist={playlist}
+                                     handlePlaylistSelect={handlePlaylistSelect}
+                    />
                 )}
             </div>
         </div>
@@ -17,7 +20,7 @@ const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
 
 SpotifyPlaylistsContainer.propTypes = {
     playlists: React.PropTypes.array.isRequired,
-    handlePlaylistSelect: React.PropTypes.func.isRequired
+    handlePlaylistSelect: React.PropTypes.func.isRequired,
 };
 
 export default SpotifyPlaylistsContainer;

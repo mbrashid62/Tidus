@@ -8,6 +8,7 @@ class HomePage extends React.Component {
         <h1>Welcome to Tidus!</h1>
         <p>Tidus is built with React, Redux and React Router in ES6.</p>
         <p>The app integrates with Google Firebase to perform various backend services.</p>
+        <p>Tidus connects your Spotify and YouTube experience!</p>
         <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
       </div>
     );

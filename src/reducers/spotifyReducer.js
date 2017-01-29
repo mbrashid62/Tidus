@@ -27,6 +27,12 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
         case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ERROR:
             return Object.assign({}, state , action.payload);
 
+        case types.CONNECT_YOUTUBE_SUCCESS:
+            return Object.assign({}, state, action.payload);
+
+        case types.CREATE_YOUTUBE_AUTHORIZE_URL_SUCCESS:
+            return Object.assign({}, state, action.payload);
+
         default:
             return state;
     }
