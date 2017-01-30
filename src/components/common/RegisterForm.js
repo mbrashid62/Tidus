@@ -6,34 +6,39 @@ import StatusMsg from './StatusMsg';
 
 const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
     return (
-        <form>
-            <h1>Register</h1>
-            <TextInput
-                name="email"
-                type="text"
-                label="Email"
-                value={user.email}
-                onChange={onChange}
-            />
+        <div className="container">
+            <form className="form">
+                <div className="jumbotron">
+                    <h1>Register</h1>
+                    <p>You can sign up by filling out the form below.</p>
+                </div>
+                <TextInput
+                    name="email"
+                    type="text"
+                    label="Email"
+                    value={user.email}
+                    onChange={onChange}
+                />
 
-            <TextInput
-                name="password"
-                type="password"
-                label="Password"
-                value={user.password}
-                onChange={onChange}
-            />
+                <TextInput
+                    name="password"
+                    type="password"
+                    label="Password"
+                    value={user.password}
+                    onChange={onChange}
+                />
 
-            <TextInput
-                name="passwordRepeat"
-                type="password"
-                label="Repeat Password"
-                value={user.passwordRepeat}
-                onChange={onChange}
-            />
-            <Button className="btn btn-default" onClick={registerUser}>Sign Up</Button>
-            <StatusMsg msg={registerMsg} errors={errors}/>
-        </form>
+                <TextInput
+                    name="passwordRepeat"
+                    type="password"
+                    label="Repeat Password"
+                    value={user.passwordRepeat}
+                    onChange={onChange}
+                />
+                <Button className="btn btn-default" onClick={registerUser}>Sign Up</Button>
+                <StatusMsg msg={registerMsg} errors={errors}/>
+            </form>
+        </div>
     );
 };
 

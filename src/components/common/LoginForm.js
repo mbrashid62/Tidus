@@ -5,25 +5,29 @@ import StatusMsg from '../common/StatusMsg';
 
 const LoginForm = ({onChange, loginUser, loginMsg, errors}) => {
     return (
-        <form>
-            <h1>Login</h1>
-            <TextInput
-                name="email"
-                type="text"
-                label="Email"
-                onChange={onChange}
-            />
+        <div className="container">
+            <div className="jumbotron">
+                <h1>Login</h1>
+                <p>Please login to access this applications' features.</p>
+            </div>
+            <form className="form">
+                <TextInput
+                    name="email"
+                    type="text"
+                    label="Email"
+                    onChange={onChange}
+                />
 
-            <TextInput
-                name="password"
-                type="password"
-                label="Password"
-                onChange={onChange}
-            />
-            <Button onClick={loginUser}>Login</Button>
-
-            <StatusMsg msg={loginMsg} errors={errors}/>
-        </form>
+                <TextInput
+                    name="password"
+                    type="password"
+                    label="Password"
+                    onChange={onChange}
+                />
+                <Button onClick={loginUser}>Login</Button>
+                <StatusMsg msg={loginMsg} errors={errors}/>
+            </form>
+        </div>
     );
 };
 

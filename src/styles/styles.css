@@ -19,3 +19,7 @@ nav {
   border-bottom: 1px darkslategray solid;
   padding-bottom: 10px;
 }
+
+.form {
+  width: 60%;
+}
