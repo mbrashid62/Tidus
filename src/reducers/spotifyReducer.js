@@ -33,6 +33,12 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
         case types.CREATE_YOUTUBE_AUTHORIZE_URL_SUCCESS:
             return Object.assign({}, state, action.payload);
 
+        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_SUCCESS:
+            return Object.assign({}, state, action.payload);
+
+        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR:
+            return Object.assign({}, state, action.payload);
+
         default:
             return state;
     }

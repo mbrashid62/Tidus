@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import TrackTitle from './TrackTitle'
+import TrackTitle from './TrackTitle';
 
 const SpotifyTrack= ({track}) => {
     return (

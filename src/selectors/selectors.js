@@ -2,7 +2,8 @@ export function playlistFormatted(playlists) {
     return playlists.map(playlist => {
         return {
             name: playlist.name,
-            id: playlist.id
+            id: playlist.id,
+            hasAnalyzed: false
         };
     });
 }

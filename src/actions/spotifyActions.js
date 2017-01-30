@@ -1,14 +1,10 @@
 import * as types from './actionTypes';
 import SpotifyWebApi from 'spotify-web-api-node';
-import gapi from '../gapi';
+import _ from 'lodash';
 
 // action creators
 export function createSpotifyAuthorizeUrlSuccess(url) {
     return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS, payload: { url: url }};
-}
-
-export function createYouTubeAuthorizeUrlSuccess(url) {
-    return { type: types.CREATE_YOUTUBE_AUTHORIZE_URL_SUCCESS, payload: { ytAuthUrl: url }};
 }
 
 export function createAccessTokenSuccess(accessToken) {
@@ -39,9 +35,14 @@ export function fetchSpotifyPlaylistTracksError(error) {
     return { type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR, payload: { error: error }};
 }
 
-export function connectYouTubeSuccess(ytAccessToken) {
-    return { type: types.CONNECT_YOUTUBE_SUCCESS, payload: { ytAccessToken: ytAccessToken }}
+export function fetchAudioFeaturesForPlaylistSuccess(playlistName, analyzedTracks) {
+    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_SUCCESS, payload: { analyzedPlaylistName: playlistName, analyzedTracks: analyzedTracks }};
 }
+
+export function fetchAudiFeaturesForPlaylistError(error) {
+    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR, payload: { error }};
+}
+
 
 const spotifyApi = new SpotifyWebApi({
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
@@ -53,9 +54,8 @@ export function connectToSpotify() {
     return (dispatch) => {
         const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
         const scope = 'user-read-private user-read-email';
-        debugger;
-        // const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
-        const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
+        const redirect_uri = "http://www.localhost:3000/spotify/callback"; // for local
+        // const redirect_uri =  "https://tidus-music.herokuapp.com/spotify/callback"; // for prod
         const state = 'my-state';
         let url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
@@ -110,39 +110,26 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
     };
 }
 
-let playListName = '';
-let playListTracks = [];
+export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracks) {
 
-function setSelectedSpotifyData(playlist, tracks) {
-    playListName = playlist;
-    playListTracks = tracks;
-}
+    let trackIds = [];
 
-export function connectToYouTube(spotifyPlaylistName, spotifyPlaylistTracks) {
+    _.forEach(spotifyPlaylistTracks, ((track) => {
+           trackIds.push(track.id);
+    }));
+
     return(dispatch) => {
-        function start() {
-            const googleClientId = '917361040545-j1c02ddv0onvfa7sfdv1qjern26pjnoh.apps.googleusercontent.com';
-            const scope = ['https://www.googleapis.com/auth/youtube'];
-            // const redirect_uri = "http://www.localhost:3000/callback"; // for local
-            const redirect_uri =  "https://tidus-music.herokuapp.com/youtube/callback"; // for prod
-
-            let url = 'https://accounts.google.com/o/oauth2/auth';
-            url += '?client_id=' + encodeURIComponent(googleClientId);
-            url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-            url += '&response_type=token';
-            url += '&scope=' + encodeURIComponent(scope);
-
-            setSelectedSpotifyData(spotifyPlaylistName, spotifyPlaylistTracks);
-            dispatch(createYouTubeAuthorizeUrlSuccess(url));
-        }
-        start();
-    };
-}
-export function handleYouTubeAccessToken(accessToken) {
-    debugger;
-    const playlist = playListName;
-    const tracks = playListTracks;
-    return (dispatch) => {
-
+        spotifyApi.getAudioFeaturesForTracks(trackIds)
+            .then((data) => {
+                _.forEach(data.body.audio_features, ((trackAudioData) => { // add track name and artist to trackAudioData array
+                    const id = trackAudioData.id;
+                    const track = _.find(spotifyPlaylistTracks, {id: id});
+                    trackAudioData.name = track.name;
+                    trackAudioData.artist = track.artist;
+                }));
+                dispatch(fetchAudioFeaturesForPlaylistSuccess(spotifyPlaylistName, data.body.audio_features));
+            }).catch((error) => {
+                dispatch(fetchAudiFeaturesForPlaylistError(error));
+            });
     };
 }
