@@ -13,8 +13,7 @@ export default (
         <Route path="login" component={LoginPage} />
         <Route path="register" component={RegisterPage} />
         <Route path="dashboard" component={Dashboard} />
-        <Route path="spotify/callback" component={Dashboard} />
-        <Route path="youtube/callback" component={Dashboard} />
+        <Route path="callback" component={Dashboard} />
         <Route path="about" component={AboutPage} />
     </Route>
 );

@@ -31,8 +31,10 @@ export class Dashboard extends React.Component {
         if(this.props.location.hash.split('=')[1] !== undefined) { // if redirected with access token
             const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
             const pathname = this.props.location.pathname;
+            debugger;
             if(access_token !== '' && access_token !== undefined) {
-                if(pathname.includes('spotify')) { // spotify redirect
+                debugger;
+                if(pathname.includes('callback')) { // spotify redirect
                     this.props.actions.handleSpotifyAccessToken(access_token);
                 }
             }
@@ -79,7 +81,13 @@ export class Dashboard extends React.Component {
     }
 
     connectToSpotify() {
-        this.props.actions.connectToSpotify();
+        if(!this.props.isSignedIn) {
+            this.state.shouldRenderPlaylists = false;
+            this.state.shouldShowAnalyzedData = false;
+            browserHistory.push('/login');
+        } else {
+            this.props.actions.connectToSpotify();
+        }
     }
     fetchAudioFeaturesDataForPlaylist() {
         this.props.actions.fetchAudioFeaturesDataForPlaylist(this.state.selectedPlaylistName, this.props.selectedPlaylistTracks);

@@ -1,6 +1,5 @@
 import * as types from './actionTypes';
 import * as firebase from 'firebase';
-import SpotifyWebApi from 'spotify-web-api-node';
 
 export function initStateChangeHook() {
     return (dispatch) => {

@@ -4,6 +4,7 @@
   "description": "Spotify App built with react, redux, es6, and more",
   "scripts": {
     "start": "babel-node tools/distServer.js",
+    "start-local": "npm-run-all --parallel test:watch open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
