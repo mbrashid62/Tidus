@@ -3,8 +3,10 @@ import React, { PropTypes } from 'react';
 const StatusMsg = ({msg, errors}) => {
     return (
         <div>
-            <p id="status-msg" className="bg-danger">{msg}</p>
-            <p id="status-error" className="bg-warning">{errors.title}</p>
+            {msg && <p> Uh Oh! We got an error. Please try again.</p>}
+            {errors.statusCode && <p id="status-error" className="error">{errors.statusCode}</p>}
+            {errors.title && <p id="status-error" className="error">{errors.title}</p>}
+            <p id="status-msg" className="error">{msg}</p>
         </div>
     );
 };

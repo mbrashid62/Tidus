@@ -20,7 +20,7 @@ export function fetchSpotifyIDError(error) {
 }
 
 export function fetchSpotifyPlaylistsSuccess(playlists) {
-    return { type: types.FETCH_SPOTIFY_PLAYLISTS_SUCCESS, payload: { playlists: playlists }};
+    return { type: types.FETCH_SPOTIFY_PLAYLISTS_SUCCESS, payload: { playlists: playlists}};
 }
 
 export function fetchSpotifyPlaylistsError(error) {
@@ -28,7 +28,7 @@ export function fetchSpotifyPlaylistsError(error) {
 }
 
 export function fetchSpotifyPlaylistTracksSuccess(tracks) {
-    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_SUCCESS, payload: { selectedPlaylistTracks: tracks, hasFoundTracks: true }};
+    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_SUCCESS, payload: { selectedPlaylistTracks: tracks, hasFoundTracks: true,  error: {}  }};
 }
 
 export function fetchSpotifyPlaylistTracksError(error) {
@@ -40,7 +40,7 @@ export function fetchAudioFeaturesForPlaylistSuccess(playlistName, analyzedTrack
 }
 
 export function fetchAudiFeaturesForPlaylistError(error) {
-    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR, payload: { error }};
+    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR, payload: { error: error }};
 }
 
 

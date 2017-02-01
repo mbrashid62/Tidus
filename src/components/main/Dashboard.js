@@ -7,6 +7,7 @@ import Button from 'react-button';
 import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
 import SelectedTracksContainer from './SelectedTracksContainer';
 import AnalyzedTrackTable from './AnalyzedTrackTable';
+import StatusMsg from '../common/StatusMsg';
 import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
 import $ from 'jquery';
@@ -18,7 +19,10 @@ export class Dashboard extends React.Component {
             shouldRenderPlaylists: false,
             shouldRenderSelectedPlaylistTracks: false,
             selectedPlaylistName: '',
-            shouldShowAnalyzedData: false
+            shouldShowAnalyzedData: false,
+            shouldHandleError: false,
+            errorMsg: '',
+            error: {}
         };
         this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.connectToSpotify = this.connectToSpotify.bind(this);
@@ -31,9 +35,7 @@ export class Dashboard extends React.Component {
         if(this.props.location.hash.split('=')[1] !== undefined) { // if redirected with access token
             const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
             const pathname = this.props.location.pathname;
-            debugger;
             if(access_token !== '' && access_token !== undefined) {
-                debugger;
                 if(pathname.includes('callback')) { // spotify redirect
                     this.props.actions.handleSpotifyAccessToken(access_token);
                 }
@@ -72,7 +74,21 @@ export class Dashboard extends React.Component {
         }
 
         if(nextProps.analyzedTracks.length > 0) {
-            this.setState({ shouldShowAnalyzedData: true});
+            this.setState({ shouldShowAnalyzedData: true });
+        }
+
+        if(!_.isEmpty(nextProps.error)) {
+            this.setState({
+                shouldHandleError: true,
+                errorMsg: nextProps.error.message,
+                errors: nextProps.error
+            });
+        } else {
+            this.setState({
+                shouldHandleError: false,
+                errorMsg: '',
+                errors: {}
+            });
         }
     }
 
@@ -82,8 +98,10 @@ export class Dashboard extends React.Component {
 
     connectToSpotify() {
         if(!this.props.isSignedIn) {
-            this.state.shouldRenderPlaylists = false;
-            this.state.shouldShowAnalyzedData = false;
+            this.setState({
+                shouldRenderPlaylists: false,
+                shouldShowAnalyzedData: false
+            });
             browserHistory.push('/login');
         } else {
             this.props.actions.connectToSpotify();
@@ -127,8 +145,17 @@ export class Dashboard extends React.Component {
                         {<Button className="btn btn-lg" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
                     </div>
                 </div>
+
                 {
-                    this.state.shouldShowAnalyzedData &&
+                    this.state.shouldHandleError &&
+                        <div className="row">
+                            <div className="col-md-12 text-center">
+                                <StatusMsg msg={this.state.errorMsg} errors={this.state.errors}/>
+                            </div>
+                        </div>
+                }
+                {
+                    this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <AnalyzedTrackTable tracks={this.props.analyzedTracks} playlistName={this.props.analyzedPlaylistName}/>
@@ -137,7 +164,7 @@ export class Dashboard extends React.Component {
                 }
 
                 {
-                    this.state.shouldRenderSelectedPlaylistTracks &&
+                    this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h4>To view Spotify audio analysis data for {this.state.selectedPlaylistName} click the button below</h4>
@@ -156,7 +183,7 @@ export class Dashboard extends React.Component {
                     </div>
                 }
                 {
-                    this.state.shouldRenderSelectedPlaylistTracks &&
+                    this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
                     <div className="col-lg-6">
                         <SelectedTracksContainer
                             selectedPlaylistName={this.state.selectedPlaylistName}
@@ -181,7 +208,10 @@ Dashboard.propTypes = {
     selectedPlaylistTracks: React.PropTypes.array,
     hasFoundTracks: React.PropTypes.bool,
     analyzedPlaylistName: React.PropTypes.string,
-    analyzedTracks: React.PropTypes.array
+    analyzedTracks: React.PropTypes.array,
+    error: React.PropTypes.object,
+    actions: React.PropTypes.object,
+    location: React.PropTypes.object
 };
 function mapStateToProps(store) { // connect props to global state object
     return {
@@ -195,7 +225,8 @@ function mapStateToProps(store) { // connect props to global state object
         selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),
         hasFoundTracks: store.spotifyReducer.hasFoundTracks,
         analyzedPlaylistName: store.spotifyReducer.analyzedPlaylistName,
-        analyzedTracks: store.spotifyReducer.analyzedTracks
+        analyzedTracks: store.spotifyReducer.analyzedTracks,
+        error: store.spotifyReducer.error
     };
 }
 
@@ -206,5 +237,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-
-// npm start: npm-run-all --parallel test:watch open:src lint:watch
