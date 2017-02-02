@@ -15,7 +15,7 @@ const Header = ({loading, isSignedIn, user, signOutFunc}) => {
                 <li><Link to="/about" activeClassName="active">About</Link></li>
                 {isSignedIn && <li><Link to="/dashboard" activeClassName="active">Dashboard</Link></li>}
                 {isSignedIn && <li><p className="navbar-text">You are logged in as {user.email}!</p></li>}
-                {isSignedIn && <li><Button className="btn btn-default btn-sm navbar-btn" onClick={signOutFunc}>Logout</Button></li>}
+                {isSignedIn && <li><Button className="btn btn-default btn-sm navbar-btn logout-btn" onClick={signOutFunc}>Logout</Button></li>}
             </ul>
         </div>
     </nav>
