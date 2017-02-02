@@ -4,13 +4,15 @@ import {Link} from 'react-router';
 class HomePage extends React.Component {
   render() {
     return (
-      <div className="jumbotron">
-        <h1>Welcome to Tidus!</h1>
-        <p>Tidus is built with React, Redux and React Router in ES6.</p>
-        <p>The app integrates with Google Firebase to perform various backend services.</p>
-        <p>Tidus is a tool that lets you analyze your Spotify playlists.</p>
-        <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
-      </div>
+        <div className="container-fluid">
+            <div className="jumbotron">
+                <h1>Welcome to Tidus!</h1>
+                <p>As you may or may not know, Spotify uses a variety of different attributes
+                    to categorize songs</p>
+                <p>This app lets you view all of this data for your carefully curated playlists. Go to the Dashboard to try it out!</p>
+                <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
+            </div>
+        </div>
     );
   }
 }

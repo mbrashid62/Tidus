@@ -142,7 +142,7 @@ export class Dashboard extends React.Component {
                     <div className="jumbotron">
                         <h1>Welcome to the Tidus dashboard</h1>
                         <p>Here you can connect your Spotify playlists.</p>
-                        {<Button className="btn btn-lg" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
+                        {<Button className="btn btn-lg action-btn" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
                     </div>
                 </div>
 
@@ -168,7 +168,7 @@ export class Dashboard extends React.Component {
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <h4>To view Spotify audio analysis data for {this.state.selectedPlaylistName} click the button below</h4>
-                            <Button className="text-center" onClick={this.fetchAudioFeaturesDataForPlaylist}>Analyze audio features for {this.state.selectedPlaylistName}</Button>
+                            <Button className="text-center action-btn" onClick={this.fetchAudioFeaturesDataForPlaylist}>View audio features for {this.state.selectedPlaylistName}</Button>
                         </div>
                     </div>
                 }

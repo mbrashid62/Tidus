@@ -27,3 +27,17 @@ nav {
 .error {
   color: red;
 }
+
+.action-btn{
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+    height: 50px;
+    border-radius: 15px;
+    padding: 20px !important;
+    font-size: 18px;
+    line-height: 24px;
+}
+.logout-btn{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
