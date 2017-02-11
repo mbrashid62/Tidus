@@ -24,7 +24,7 @@ const LoginForm = ({onChange, loginUser, loginMsg, errors}) => {
                     label="Password"
                     onChange={onChange}
                 />
-                <Button onClick={loginUser}>Login</Button>
+                <Button className="action-btn" onClick={loginUser}>Login</Button>
                 <StatusMsg msg={loginMsg} errors={errors}/>
             </form>
         </div>

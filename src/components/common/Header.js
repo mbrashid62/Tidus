@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import { Link, IndexLink } from 'react-router';
-import Dashboard from '../main/Dashboard';
 import LoadingDots from './LoadingDots';
 import Button from 'react-button';
 

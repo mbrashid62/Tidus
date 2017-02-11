@@ -47,6 +47,9 @@ export class Dashboard extends React.Component {
     }
     componentWillReceiveProps(nextProps) {
 
+        if(!nextProps.isSignedIn) {
+            this.redirectToLoginPage();
+        }
         if(nextProps.spotifyUrl !== '') { // if redirect url has not be cleared
             window.location = nextProps.spotifyUrl;
         }
@@ -94,6 +97,10 @@ export class Dashboard extends React.Component {
 
     redirectToHomePage() {
         browserHistory.push('/');
+    }
+
+    redirectToLoginPage() {
+        browserHistory.push('/login');
     }
 
     connectToSpotify() {

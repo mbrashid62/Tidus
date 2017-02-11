@@ -3,16 +3,15 @@ import TextInput from '../common/TextInput';
 import Button from 'react-button';
 import StatusMsg from './StatusMsg';
 
-
 const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
     return (
         <div className="container">
+            <div className="jumbotron">
+                <h1>Register</h1>
+                <p>You can sign up by filling out the form below.</p>
+            </div>
             <form className="form">
-                <div className="jumbotron">
-                    <h1>Register</h1>
-                    <p>You can sign up by filling out the form below.</p>
-                </div>
-                <TextInput
+               <TextInput
                     name="email"
                     type="text"
                     label="Email"
@@ -35,7 +34,7 @@ const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
                     value={user.passwordRepeat}
                     onChange={onChange}
                 />
-                <Button className="btn btn-default" onClick={registerUser}>Sign Up</Button>
+                <Button className="action-btn" onClick={registerUser}>Sign Up</Button>
                 <StatusMsg msg={registerMsg} errors={errors}/>
             </form>
         </div>

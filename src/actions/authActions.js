@@ -38,14 +38,6 @@ export function signOutUserError(error) {
     return { type: types.SIGNOUT_USER_ERROR, payload: { isSignedIn: true, msg: error.message }};
 }
 
-export function createCustomTokenSuccess(token) {
-    return { type: types.CREATE_CUSTOM_TOKEN_SUCCESS, payload: { token }};
-}
-
-export function createCustomTokenError(error) {
-    return { type: types.CREATE_CUSTOM_TOKEN_ERROR, payload: { error }};
-}
-
 export function createUser(email, pw) { // async
     return (dispatch) => {
         return firebase.auth().createUserWithEmailAndPassword(email, pw)
