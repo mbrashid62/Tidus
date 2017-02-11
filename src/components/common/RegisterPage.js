@@ -1,9 +1,7 @@
-
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as authActions from '../../actions/authActions';
 import { bindActionCreators } from 'redux';
-import TextInput from '../common/TextInput';
 import RegisterForm from'./RegisterForm';
 
 import { browserHistory } from 'react-router';
