@@ -33,6 +33,9 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
         case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR:
             return Object.assign({}, state, action.payload);
 
+        case types.SORT_SPOTIFY_ANALYZED_TRACKS:
+            return Object.assign({}, state, action.payload);
+
         default:
             return state;
     }

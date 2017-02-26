@@ -66,7 +66,7 @@ a.action-btn{
 }
 
 a.action-btn:hover {
-    background-color: #fff !important;
+    background-color: #ddd !important;
     color: black !important;
 }
 
@@ -131,6 +131,7 @@ a.active {
 
 .tidus-footer p{
     margin-top: 10px;
+    letter-spacing: 0.05rem;
 }
 
 /*Moving onto playlist stuff*/
@@ -145,7 +146,7 @@ a.active {
 }
 
 .playlist-name:hover {
-    color: midnightblue;
+    color: #dddddd;
     cursor: pointer;
 }
 
@@ -156,8 +157,22 @@ a.active {
 }
 
 /*Data table*/
-
 .data-table {
     font-family: 'Lato', sans-serif;
     letter-spacing: 0.05rem;
+}
+
+.data-table tr th{
+    letter-spacing: 0.15rem;
+}
+.data-table-header tr th:hover{
+    cursor: pointer;
+    background-color: darkslategrey;
+    color: #eee;
+}
+
+/*About Page*/
+.attribute-info {
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.15rem;
 }

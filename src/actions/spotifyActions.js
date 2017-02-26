@@ -44,6 +44,10 @@ export function fetchAudiFeaturesForPlaylistError(error) {
     return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR, payload: { error: error }};
 }
 
+export function sortSpotifyAnalyzedTracks(sortedTracks) {
+    return { type: types.SORT_SPOTIFY_ANALYZED_TRACKS, payload: { analyzedTracks: sortedTracks }};
+}
+
 
 const spotifyApi = new SpotifyWebApi({
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
@@ -149,4 +153,14 @@ export function getOnlyUserPlaylists(playlists, id) {
     }));
 
     return userOnlyPlaylists;
+}
+
+export function sortTracks(attribute, tracks) {
+    return (dispatch) => {
+        const newlySortedTracks = _.sortBy(tracks, [attribute]);
+        if (_.isEqual(newlySortedTracks, tracks)) { // if array is already sorted by selected attribute, reverse it
+            _.reverse(newlySortedTracks);
+        }
+        dispatch(sortSpotifyAnalyzedTracks(newlySortedTracks));
+    };
 }

@@ -28,6 +28,7 @@ export class Dashboard extends React.Component {
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
         this.fetchAudioFeaturesDataForPlaylist = this.fetchAudioFeaturesDataForPlaylist.bind(this);
+        this.sortTracks = this.sortTracks.bind(this);
     }
 
     componentWillMount() { // called before render method
@@ -136,6 +137,12 @@ export class Dashboard extends React.Component {
         this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId);
     }
 
+    sortTracks(event) {
+        const attributeSelected = event.target.innerHTML.toLowerCase();
+        const tracks = this.props.analyzedTracks;
+        this.props.actions.sortTracks(attributeSelected, tracks);
+
+    }
     render () {
         return (
             <div className="container-fluid">
@@ -158,7 +165,7 @@ export class Dashboard extends React.Component {
                     this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
                     <div className="row">
                         <div className="col-md-12 text-center">
-                            <AnalyzedTrackTable tracks={this.props.analyzedTracks} playlistName={this.props.analyzedPlaylistName}/>
+                            <AnalyzedTrackTable tracks={this.props.analyzedTracks} playlistName={this.props.analyzedPlaylistName} sortTracks={this.sortTracks}/>
                         </div>
                     </div>
                 }
