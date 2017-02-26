@@ -8,6 +8,9 @@ import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
 import SelectedTracksContainer from './SelectedTracksContainer';
 import AnalyzedTrackTable from './AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
+import DashJumboTron from '../common/DashJumboTron';
+import Loading from 'react-loading-animation';
+import InstructionsForAudioAnalysis from './InstructionsForAudioAnalysis';
 import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
 import $ from 'jquery';
@@ -31,49 +34,31 @@ export class Dashboard extends React.Component {
         this.initPlaylistHoverCSS = this.initPlaylistHoverCSS.bind(this);
     }
 
-    componentWillMount() {
+    componentWillMount() { // called before render method
         if(this.props.location.hash.split('=')[1] !== undefined) { // if redirected with access token
-            const access_token = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
+            const accessToken = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
             const pathname = this.props.location.pathname;
-            if(access_token !== '' && access_token !== undefined) {
+            if(accessToken !== '' && accessToken !== undefined) {
                 if(pathname.includes('callback')) { // spotify redirect
-                    this.props.actions.handleSpotifyAccessToken(access_token);
+                    this.props.actions.handleSpotifyAccessToken(accessToken);
                 }
             }
         }
     }
-    componentDidMount() {
-
+    componentDidMount() { // called after render method. DOM can be accessed in this method + data fetch
+        // if ($('.playlist-name').length > 0 ) {
+        //     this.initPlaylistHoverCSS();
+        // }
     }
-    componentWillReceiveProps(nextProps) {
 
-        if(!nextProps.isSignedIn) {
-            this.redirectToLoginPage();
-        }
-        if(nextProps.spotifyUrl !== '') { // if redirect url has not be cleared
-            window.location = nextProps.spotifyUrl;
-        }
-
-        if(nextProps.hasAccessToken && !nextProps.hasSpotifyID) { // if we have the access token but haven't fetched the user yet
-            this.props.actions.fetchSpotifyUserID();
-        }
-
-        if(nextProps.hasAccessToken && !nextProps.hasSpotifyID) { // if we have the access token and have fetched the user already
-            this.props.actions.fetchSpotifyPlaylists();
-        }
+    componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
 
         if(nextProps.playlists.length > 0) { // if we have fetched the playlists
-            this.setState({
-                shouldRenderPlaylists: true
-            });
+            this.setState({ shouldRenderPlaylists: true });
         }
 
         if(nextProps.selectedPlaylistTracks.length > 0) { // if we have fetched the tracks for the user selected playlist
             this.setState({ shouldRenderSelectedPlaylistTracks: true });
-        }
-
-        if ($('.playlist-name').length > 0 ) {
-            this.initPlaylistHoverCSS();
         }
 
         if(nextProps.analyzedTracks.length > 0) {
@@ -95,6 +80,29 @@ export class Dashboard extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
+
+        if(!prevProps.isSignedIn) {
+            this.redirectToLoginPage();
+        }
+        if(prevProps.spotifyUrl == '' && this.props.spotifyUrl !== '') { // if redirect url has been set and has not be cleared
+            window.location = this.props.spotifyUrl;
+        }
+
+        if(this.props.hasAccessToken && !this.props.hasSpotifyID) { // if we have the access token but haven't fetched the user yet
+            if(!this.props.loading) { // this prevents stacking multiple requests in call stack. same technique used below
+                this.props.actions.fetchSpotifyUserID();
+            }
+        }
+
+        if(this.props.hasAccessToken && this.props.hasSpotifyID) { // if we have the access token and have fetched the user already
+            if(!this.props.loading  && this.props.playlists.length == 0) { // todo fix this for the case a user logs in and doesn't have any playlists
+                this.props.actions.fetchSpotifyPlaylists(this.props.spotifyUserID);
+            }
+
+        }
+    }
+
     redirectToHomePage() {
         browserHistory.push('/');
     }
@@ -110,7 +118,12 @@ export class Dashboard extends React.Component {
                 shouldShowAnalyzedData: false
             });
             browserHistory.push('/login');
-        } else {
+        }
+
+        else if(this.props.spotifyUserID !== "") { // if we already have the spotify data fetched, no need to reconnect
+            this.setState({ shouldRenderPlaylists: true });
+        }
+        else {
             this.props.actions.connectToSpotify();
         }
     }
@@ -120,9 +133,7 @@ export class Dashboard extends React.Component {
 
     handlePlaylistSelect(event) {
         const playlistSelected = event.target.innerHTML;
-        this.setState({
-            selectedPlaylistName: playlistSelected
-        });
+        this.setState({ selectedPlaylistName: playlistSelected });
         const playListIndex = _.findIndex(this.props.playlists, function (p) { // I LOVE LODASH
             return p.name == playlistSelected;
         });
@@ -146,11 +157,7 @@ export class Dashboard extends React.Component {
         return (
             <div className="container-fluid">
                 <div className="center-block">
-                    <div className="jumbotron">
-                        <h1>Welcome to the Tidus dashboard</h1>
-                        <p>Here you can connect your Spotify playlists.</p>
-                        {<Button className="btn btn-lg action-btn" onClick={this.connectToSpotify}>Click here to connect to Spotify</Button>}
-                    </div>
+                    <DashJumboTron connectToSpotify={this.connectToSpotify} loading={this.props.loading} />
                 </div>
 
                 {
@@ -174,8 +181,10 @@ export class Dashboard extends React.Component {
                     this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
                     <div className="row">
                         <div className="col-md-12 text-center">
-                            <h4>To view Spotify audio analysis data for {this.state.selectedPlaylistName} click the button below</h4>
-                            <Button className="text-center action-btn" onClick={this.fetchAudioFeaturesDataForPlaylist}>View audio features for {this.state.selectedPlaylistName}</Button>
+                            <InstructionsForAudioAnalysis
+                                selectedPlaylistName={this.state.selectedPlaylistName}
+                                fetchAudioFeaturesDataForPlaylist={this.fetchAudioFeaturesDataForPlaylist}
+                            />
                         </div>
                     </div>
                 }
@@ -213,12 +222,13 @@ Dashboard.propTypes = {
     hasSpotifyID: React.PropTypes.bool,
     playlists: React.PropTypes.array,
     selectedPlaylistTracks: React.PropTypes.array,
-    hasFoundTracks: React.PropTypes.bool,
+    hasFoundSelectedPlaylistTracks: React.PropTypes.bool,
     analyzedPlaylistName: React.PropTypes.string,
     analyzedTracks: React.PropTypes.array,
     error: React.PropTypes.object,
     actions: React.PropTypes.object,
-    location: React.PropTypes.object
+    location: React.PropTypes.object,
+    loading: React.PropTypes.bool.isRequired
 };
 function mapStateToProps(store) { // connect props to global state object
     return {
@@ -230,10 +240,11 @@ function mapStateToProps(store) { // connect props to global state object
         hasSpotifyID: store.spotifyReducer.hasSpotifyID,
         playlists: spotifySelectors.playlistFormatted(store.spotifyReducer.playlists),
         selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),
-        hasFoundTracks: store.spotifyReducer.hasFoundTracks,
+        hasFoundSelectedPlaylistTracks: store.spotifyReducer.hasFoundTracks,
         analyzedPlaylistName: store.spotifyReducer.analyzedPlaylistName,
         analyzedTracks: store.spotifyReducer.analyzedTracks,
-        error: store.spotifyReducer.error
+        error: store.spotifyReducer.error,
+        loading: store.ajaxCallsInProgress > 0
     };
 }
 
