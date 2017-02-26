@@ -1,8 +1,7 @@
-
 import React, { PropTypes } from 'react';
 import AnalyzedTrackRow from '../main/AnalyzedTrackRow';
 
-const AnalyzedTrackTable = ({tracks, playlistName}) => {
+const AnalyzedTrackTable = ({tracks, playlistName, sortTracks}) => {
     return (
         <div>
             <div className="instructions">
@@ -10,19 +9,18 @@ const AnalyzedTrackTable = ({tracks, playlistName}) => {
                 <p className="text-center">The data is below</p>
             </div>
             <table className="table data-table">
-                <thead>
+                <thead className="data-table-header">
                 <tr>
-                    {/*<th>&nbsp;</th>*/}
-                    <th>Artist</th>
-                    <th>Song</th>
-                    <th>Acousticness</th>
-                    <th>Danceability</th>
-                    <th>Energy</th>
-                    <th>Liveness</th>
-                    <th>Loudness</th>
-                    <th>Speechiness</th>
-                    <th>Tempo</th>
-                    <th>Valence</th>
+                    <th onClick={sortTracks}>Artist</th>
+                    <th onClick={sortTracks}>Name</th>
+                    <th onClick={sortTracks}>Acousticness</th>
+                    <th onClick={sortTracks}>Danceability</th>
+                    <th onClick={sortTracks}>Energy</th>
+                    <th onClick={sortTracks}>Liveness</th>
+                    <th onClick={sortTracks}>Loudness</th>
+                    <th onClick={sortTracks}>Speechiness</th>
+                    <th onClick={sortTracks}>Tempo</th>
+                    <th onClick={sortTracks}>Valence</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,7 +35,8 @@ const AnalyzedTrackTable = ({tracks, playlistName}) => {
 
 AnalyzedTrackTable.propTypes = {
     tracks: React.PropTypes.array.isRequired,
-    playlistName: React.PropTypes.string.isRequired
+    playlistName: React.PropTypes.string.isRequired,
+    sortTracks: React.PropTypes.func.isRequired
 };
 
 export default AnalyzedTrackTable;

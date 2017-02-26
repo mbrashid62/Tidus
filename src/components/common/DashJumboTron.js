@@ -6,7 +6,7 @@ const DashJumboTron = ({connectToSpotify, loading, shouldShowSpotifyButton}) => 
     return (
         <div className="container-fluid">
             <div className="jumbotron">
-                <h1>Welcome to the Tidus Dashboard</h1>
+                <h1>Welcome to the Tidus Dashboard.</h1>
                 <p>Here you can connect your Spotify playlists.</p>
                 {shouldShowSpotifyButton && <Button className="btn btn-lg action-btn" onClick={connectToSpotify} theme={{overStyle:{background:'black'}}}>Connect to Spotify</Button>}
             </div>

@@ -1,4 +1,3 @@
-
 import expect from 'expect';
 import * as authActions from './authActions';
 import * as types from './actionTypes';
@@ -34,6 +33,8 @@ describe('Auth Actions', () => {
     });
 });
 
+
+
 // const middleware = [thunk];
 // const mockStore = configureMockStore(middleware);
 //
@@ -54,7 +55,7 @@ describe('Auth Actions', () => {
 //         ];
 //
 //         const store = mockStore({courses: []}, expectedActions, done);
-//         store.dispatch(authActions.loadCourses()).then(() => {
+//         store.dispatch(spotifyActions.loadCourses()).then(() => {
 //             const actions = store.getActions();
 //             expect(actions[0].type).toEqual(types.BEGIN_AJAX_CALL);
 //             expect(actions[1].type).toEqual(types.LOAD_COURSES_SUCCESS);
@@ -62,3 +63,5 @@ describe('Auth Actions', () => {
 //         });
 //     });
 // });
+
+

@@ -7,10 +7,10 @@ class HomePage extends React.Component {
         <div className="container-fluid">
             <div className="jumbotron">
                 <h1>Welcome to Tidus.</h1>
-                <p>Have you ever wondered how Spotify knows what songs are <strong>energetic</strong> enough to put on your workout playlist?</p>
-                <p>The answer is because Spotify's engineering team collects attribute data for all of their songs. This helps them
-                determine what tracks sound energetic, chill, lively, etc.</p>
-                <p>This app lets you peak underneath the hood and analyze some of the data Spotify has collected for your playlists.</p>
+                <p>How does Spotify know what songs are <strong>energetic</strong> enough for your workout playlist?</p>
+                <p>The answer is because Spotify's engineering team collects audio data for all of their songs. This helps them
+                determine what tracks are appropriate for the gym, for a party, for a lazy sunday at home, and more.</p>
+                <p>This app lets you peak underneath the hood and see some audio data Spotify has for your playlists.</p>
                 <p>Please login and then visit the Dashboard to try it out.</p>
             </div>
         </div>
