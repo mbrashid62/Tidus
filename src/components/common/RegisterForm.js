@@ -2,14 +2,16 @@ import React from 'react';
 import TextInput from '../common/TextInput';
 import Button from 'react-button';
 import StatusMsg from './StatusMsg';
+import Loading from 'react-loading-animation';
 
-const RegisterForm = ({user, onChange, registerMsg, registerUser, errors}) => {
+const RegisterForm = ({user, onChange, registerMsg, registerUser, errors, loading}) => {
     return (
         <div className="container">
             <div className="jumbotron">
                 <h1>Register</h1>
                 <p>You can sign up by filling out the form below.</p>
             </div>
+            <Loading isLoading={loading} />
             <form className="form">
                <TextInput
                     name="email"
@@ -46,7 +48,8 @@ RegisterForm.propTypes = {
     onChange: React.PropTypes.func.isRequired,
     registerMsg: React.PropTypes.string.isRequired,
     registerUser: React.PropTypes.func,
-    errors: React.PropTypes.object
+    errors: React.PropTypes.object,
+    loading: React.PropTypes.bool.isRequired
 };
 
 export default RegisterForm;

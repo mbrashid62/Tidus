@@ -1,14 +1,15 @@
 import * as types from './actionTypes';
 import SpotifyWebApi from 'spotify-web-api-node';
 import _ from 'lodash';
+import { beginAjaxCall } from './ajaxStatusActions';
 
 // action creators
-export function createSpotifyAuthorizeUrlSuccess(url) {
-    return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS, payload: { url: url }};
+export function createSpotifyAuthorizeUrl(url) {
+    return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL, payload: { url: url }};
 }
 
-export function createAccessTokenSuccess(accessToken) {
-    return { type: types.CREATE_SPOTIFY_ACCESS_TOKEN_SUCCESS, payload: { accessToken: accessToken, hasAccessToken: true }};
+export function createAccessToken(accessToken) {
+    return { type: types.CREATE_SPOTIFY_ACCESS_TOKEN, payload: { accessToken: accessToken, hasAccessToken: true }};
 }
 
 export function fetchSpotifyIDSuccess(userID) {
@@ -64,19 +65,20 @@ export function connectToSpotify() {
         url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
         url += '&state=' + encodeURIComponent(state);
 
-        dispatch(createSpotifyAuthorizeUrlSuccess(url));
+        dispatch(createSpotifyAuthorizeUrl(url));
     };
 }
 
 export function handleSpotifyAccessToken(accessToken) {
     return (dispatch) => {
         spotifyApi.setAccessToken(accessToken);
-        dispatch(createAccessTokenSuccess(accessToken));
+        dispatch(createAccessToken(accessToken));
     };
 }
 
 export function fetchSpotifyUserID() {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         spotifyApi.getMe()
             .then((data)=> {
                 dispatch(fetchSpotifyIDSuccess(data.body.id));
@@ -88,9 +90,11 @@ export function fetchSpotifyUserID() {
 
 export function fetchSpotifyPlaylists(spotifyID) {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         spotifyApi.getUserPlaylists(spotifyID)
             .then((data) => {
-                dispatch(fetchSpotifyPlaylistsSuccess(data.body.items));
+                const userOnlyPlaylists = getOnlyUserPlaylists(data.body.items, spotifyID);
+                dispatch(fetchSpotifyPlaylistsSuccess(userOnlyPlaylists));
             })
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistsError(error));
@@ -100,6 +104,7 @@ export function fetchSpotifyPlaylists(spotifyID) {
 
 export function fetchPlaylistTracks(spotifyUserId, playlistId) {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         spotifyApi.getPlaylistTracks(spotifyUserId, playlistId)
             .then((tracks) => {
                 dispatch(fetchSpotifyPlaylistTracksSuccess(tracks.body.items));
@@ -111,7 +116,6 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
 }
 
 export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracks) {
-
     let trackIds = [];
 
     _.forEach(spotifyPlaylistTracks, ((track) => {
@@ -119,6 +123,7 @@ export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPl
     }));
 
     return(dispatch) => {
+        dispatch(beginAjaxCall());
         spotifyApi.getAudioFeaturesForTracks(trackIds)
             .then((data) => {
                 _.forEach(data.body.audio_features, ((trackAudioData) => { // add track name and artist to trackAudioData array
@@ -132,4 +137,16 @@ export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPl
                 dispatch(fetchAudiFeaturesForPlaylistError(error));
             });
     };
+}
+
+export function getOnlyUserPlaylists(playlists, id) {
+    let userOnlyPlaylists = [];
+
+    _.forEach(playlists, ((playlist) => {
+        if(playlist.owner.id == id) {
+            userOnlyPlaylists.push(playlist);
+        }
+    }));
+
+    return userOnlyPlaylists;
 }

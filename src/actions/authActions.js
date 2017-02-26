@@ -1,8 +1,10 @@
 import * as types from './actionTypes';
 import * as firebase from 'firebase';
+import { beginAjaxCall } from './ajaxStatusActions';
 
 export function initStateChangeHook() {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         firebase.auth().onAuthStateChanged((user) => {
             if(user) {
                 dispatch(signInUserSuccess(user));
@@ -40,6 +42,7 @@ export function signOutUserError(error) {
 
 export function createUser(email, pw) { // async
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         return firebase.auth().createUserWithEmailAndPassword(email, pw)
             .then((user) => {
                 dispatch(createUserSuccess(user));
@@ -52,6 +55,7 @@ export function createUser(email, pw) { // async
 
 export function signInUser(email, password) {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
                 // sign in state change will be handled but hook
@@ -64,6 +68,7 @@ export function signInUser(email, password) {
 
 export function signOutUser() {
     return (dispatch) => {
+      dispatch(beginAjaxCall());
       return firebase.auth().signOut()
           .then(() => {
               // state change handled by hook

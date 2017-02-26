@@ -100,6 +100,7 @@ export class RegisterPage extends React.Component {
                 registerMsg={this.props.registerMsg}
                 registerUser={this.registerUser}
                 errors={this.state.errors}
+                loading={this.props.loading}
             />
         );
     }
@@ -115,14 +116,16 @@ RegisterPage.propTypes = {
     actions: PropTypes.object.isRequired,
     isSignedIn: PropTypes.bool.isRequired,
     registerMsg: PropTypes.string.isRequired,
-    registeredUser: PropTypes.object.isRequired
+    registeredUser: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(store) { // connect props to global state object
     return {
         registeredUser: store.registerReducer.user,
         registerMsg: store.registerReducer.msg,
-        isSignedIn: store.registerReducer.isSignedIn
+        isSignedIn: store.registerReducer.isSignedIn,
+        loading: store.ajaxCallsInProgress > 0
     };
 }
 
