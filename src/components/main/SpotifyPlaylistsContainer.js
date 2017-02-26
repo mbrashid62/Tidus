@@ -4,8 +4,11 @@ import SpotifyPlaylist from '../main/SpotifyPlaylist';
 const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
     return (
         <div>
-            <h1 className="text-left">Your Spotify Playlists</h1>
-            <p className="text-left">Double click to select one</p>
+            <div className="instructions">
+                <h1 className="text-left">Your Spotify Playlists</h1>
+                <p className="text-left">Double click to select one</p>
+            </div>
+
             <div>
                 {playlists.map(playlist =>
                     <SpotifyPlaylist key={playlist.id}

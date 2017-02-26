@@ -5,14 +5,15 @@ import StatusMsg from './StatusMsg';
 import Loading from 'react-loading-animation';
 
 const RegisterForm = ({user, onChange, registerMsg, registerUser, errors, loading}) => {
+    const buttonTheme = { overStyle: { background: 'black' } };
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="jumbotron">
                 <h1>Register</h1>
                 <p>You can sign up by filling out the form below.</p>
             </div>
             <Loading isLoading={loading} />
-            <form className="form">
+            <form className="form tidus-form">
                <TextInput
                     name="email"
                     type="text"
@@ -36,7 +37,7 @@ const RegisterForm = ({user, onChange, registerMsg, registerUser, errors, loadin
                     value={user.passwordRepeat}
                     onChange={onChange}
                 />
-                <Button className="action-btn" onClick={registerUser}>Sign Up</Button>
+                <Button className="action-btn" onClick={registerUser} theme={buttonTheme}>Sign Up</Button>
                 <StatusMsg msg={registerMsg} errors={errors}/>
             </form>
         </div>

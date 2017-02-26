@@ -30,6 +30,12 @@ class App extends React.Component {
               signOutFunc={this.signOutUser}
             />
             {this.props.children}
+
+            <div className="tidus-footer">
+                <a href="http://tidus-music.herokuapp.com/">http://tidus-music.herokuapp.com/</a>
+                <p>This app is developed by <a href="https://github.com/mbrashid62">mbrashid62</a></p>
+            </div>
+
           </div>
       );
     }
