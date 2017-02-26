@@ -6,11 +6,12 @@ class HomePage extends React.Component {
     return (
         <div className="container-fluid">
             <div className="jumbotron">
-                <h1>Welcome to Tidus!</h1>
-                <p>As you may or may not know, Spotify uses a variety of different attributes
-                    to categorize songs</p>
-                <p>This app lets you view all of this data for your carefully curated playlists. Go to the Dashboard to try it out!</p>
-                <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
+                <h1>Welcome to Tidus.</h1>
+                <p>Have you ever wondered how Spotify knows what songs are <strong>energetic</strong> enough to put on your workout playlist?</p>
+                <p>The answer is because Spotify's engineering team collects attribute data for all of their songs. This helps them
+                determine what tracks sound energetic, chill, lively, etc.</p>
+                <p>This app lets you peak underneath the hood and analyze some of the data Spotify has collected for your playlists.</p>
+                <p>Please login and then visit the Dashboard to try it out.</p>
             </div>
         </div>
     );

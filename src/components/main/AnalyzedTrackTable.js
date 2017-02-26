@@ -5,9 +5,11 @@ import AnalyzedTrackRow from '../main/AnalyzedTrackRow';
 const AnalyzedTrackTable = ({tracks, playlistName}) => {
     return (
         <div>
-            <h1 className="text-center">{playlistName}</h1>
-            <p className="text-center">The data is below</p>
-            <table className="table">
+            <div className="instructions">
+                <h1 className="text-center">{playlistName}</h1>
+                <p className="text-center">The data is below</p>
+            </div>
+            <table className="table data-table">
                 <thead>
                 <tr>
                     {/*<th>&nbsp;</th>*/}

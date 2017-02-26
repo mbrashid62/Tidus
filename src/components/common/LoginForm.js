@@ -5,14 +5,15 @@ import StatusMsg from '../common/StatusMsg';
 import Loading from 'react-loading-animation';
 
 const LoginForm = ({onChange, loginUser, loginMsg, errors, loading}) => {
+    const buttonTheme = { overStyle: { background: 'black' } };
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="jumbotron">
                 <h1>Login</h1>
                 <p>Please login to access this applications' features.</p>
             </div>
             <Loading isLoading={loading} />
-            <form className="form">
+            <form className="form tidus-form">
                 <TextInput
                     name="email"
                     type="text"
@@ -26,7 +27,7 @@ const LoginForm = ({onChange, loginUser, loginMsg, errors, loading}) => {
                     label="Password"
                     onChange={onChange}
                 />
-                <Button className="action-btn" onClick={loginUser}>Login</Button>
+                <Button className="action-btn" onClick={loginUser} theme={buttonTheme}>Login</Button>
                 <StatusMsg msg={loginMsg} errors={errors}/>
             </form>
         </div>

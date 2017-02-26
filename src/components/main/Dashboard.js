@@ -3,17 +3,14 @@ import { connect } from 'react-redux';
 import * as spotifyActions from '../../actions/spotifyActions';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import Button from 'react-button';
 import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
 import SelectedTracksContainer from './SelectedTracksContainer';
 import AnalyzedTrackTable from './AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
 import DashJumboTron from '../common/DashJumboTron';
-import Loading from 'react-loading-animation';
 import InstructionsForAudioAnalysis from './InstructionsForAudioAnalysis';
 import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
-import $ from 'jquery';
 
 export class Dashboard extends React.Component {
     constructor(props, context) {
@@ -31,7 +28,6 @@ export class Dashboard extends React.Component {
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
         this.fetchAudioFeaturesDataForPlaylist = this.fetchAudioFeaturesDataForPlaylist.bind(this);
-        this.initPlaylistHoverCSS = this.initPlaylistHoverCSS.bind(this);
     }
 
     componentWillMount() { // called before render method
@@ -46,9 +42,7 @@ export class Dashboard extends React.Component {
         }
     }
     componentDidMount() { // called after render method. DOM can be accessed in this method + data fetch
-        // if ($('.playlist-name').length > 0 ) {
-        //     this.initPlaylistHoverCSS();
-        // }
+
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
@@ -142,22 +136,14 @@ export class Dashboard extends React.Component {
         this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId);
     }
 
-    initPlaylistHoverCSS(event) {
-        const playListNameEls = $('.playlist-name');
-        playListNameEls.mouseover(function() {
-            $(this).css('cursor', 'pointer');
-            $(this).css('color', '#777777'); // same color as login/logout button
-        });
-        playListNameEls.mouseout(function () {
-            $(this).css('color', '');
-        });
-    }
-
     render () {
         return (
             <div className="container-fluid">
                 <div className="center-block">
-                    <DashJumboTron connectToSpotify={this.connectToSpotify} loading={this.props.loading} />
+                    <DashJumboTron connectToSpotify={this.connectToSpotify}
+                                   loading={this.props.loading}
+                                   shouldShowSpotifyButton={true}
+                    />
                 </div>
 
                 {
