@@ -48,6 +48,10 @@ export function sortSpotifyAnalyzedTracks(sortedTracks) {
     return { type: types.SORT_SPOTIFY_ANALYZED_TRACKS, payload: { analyzedTracks: sortedTracks }};
 }
 
+export function handleSelectedPlaylist(selectedPlaylist) {
+    return { type: types.HANDLE_PLAYLIST_SELECT, payload: { selectedPlaylistName: selectedPlaylist }};
+}
+
 
 const spotifyApi = new SpotifyWebApi({
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
@@ -77,6 +81,12 @@ export function handleSpotifyAccessToken(accessToken) {
     return (dispatch) => {
         spotifyApi.setAccessToken(accessToken);
         dispatch(createAccessToken(accessToken));
+    };
+}
+
+export function handlePlaylistSelect(selectedPlaylist) {
+    return (dispatch) => {
+      dispatch(handleSelectedPlaylist(selectedPlaylist));
     };
 }
 

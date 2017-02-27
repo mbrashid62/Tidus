@@ -6,7 +6,7 @@ const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
         <div>
             <div className="instructions">
                 <h1 className="text-left">Your Spotify Playlists</h1>
-                <p className="text-left">Double click to select one</p>
+                <p className="text-left">Click to select one</p>
             </div>
 
             <div>

@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const PlaylistTitle= ({playlist, handlePlaylistSelect}) => {
     return (
         <div>
-            <h3 onDoubleClick={handlePlaylistSelect}
+            <h3 onClick={handlePlaylistSelect}
                 className="playlist-name">{playlist.name}</h3>
 
         </div>

@@ -15,6 +15,7 @@ export default { // this is what the store looks like
       playlists: [],
       analyzedPlaylistName: '',
       analyzedTracks: [],
+      selectedPlaylistName: '',
       selectedPlaylistTracks: [],
       hasFoundTracks: false,
       error: {}

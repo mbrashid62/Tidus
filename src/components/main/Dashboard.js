@@ -18,8 +18,8 @@ export class Dashboard extends React.Component {
         this.state = {
             shouldRenderPlaylists: false,
             shouldRenderSelectedPlaylistTracks: false,
-            selectedPlaylistName: '',
             shouldShowAnalyzedData: false,
+            shouldShowSpotifyButton: true,
             shouldHandleError: false,
             errorMsg: '',
             error: {}
@@ -41,12 +41,30 @@ export class Dashboard extends React.Component {
                 }
             }
         }
+        // these if statements allows data to persist if user navigates away from the Dashboard and back
+        if(this.props.spotifyUserID !== "") {
+            this.setState({
+                shouldRenderPlaylists: true,
+                shouldShowSpotifyButton: false
+            });
+        }
+
+        if(this.props.selectedPlaylistTracks.length > 0) {
+            this.setState({ shouldRenderSelectedPlaylistTracks: true });
+        }
+
+        if(this.props.analyzedTracks.length > 0) {
+            this.setState({ shouldShowAnalyzedData: true });
+        }
     }
     componentDidMount() { // called after render method. DOM can be accessed in this method + data fetch
-
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
+
+        if(this.props.hasSpotifyID) {
+            this.setState({ shouldShowSpotifyButton: false });
+        }
 
         if(nextProps.playlists.length > 0) { // if we have fetched the playlists
             this.setState({ shouldRenderPlaylists: true });
@@ -76,7 +94,6 @@ export class Dashboard extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-
         if(!prevProps.isSignedIn) {
             this.redirectToLoginPage();
         }
@@ -94,7 +111,6 @@ export class Dashboard extends React.Component {
             if(!this.props.loading  && this.props.playlists.length == 0) { // todo fix this for the case a user logs in and doesn't have any playlists
                 this.props.actions.fetchSpotifyPlaylists(this.props.spotifyUserID);
             }
-
         }
     }
 
@@ -107,29 +123,21 @@ export class Dashboard extends React.Component {
     }
 
     connectToSpotify() {
-        if(!this.props.isSignedIn) {
-            this.setState({
-                shouldRenderPlaylists: false,
-                shouldShowAnalyzedData: false
-            });
-            browserHistory.push('/login');
+        this.props.actions.connectToSpotify();
+
+        if(_.isEmpty(this.state.error)) {
+            this.setState({ shouldShowSpotifyButton: false });
         }
 
-        else if(this.props.spotifyUserID !== "") { // if we already have the spotify data fetched, no need to reconnect
-            this.setState({ shouldRenderPlaylists: true });
-        }
-        else {
-            this.props.actions.connectToSpotify();
-        }
     }
     fetchAudioFeaturesDataForPlaylist() {
-        this.props.actions.fetchAudioFeaturesDataForPlaylist(this.state.selectedPlaylistName, this.props.selectedPlaylistTracks);
+        this.props.actions.fetchAudioFeaturesDataForPlaylist(this.props.selectedPlaylistName, this.props.selectedPlaylistTracks);
     }
 
     handlePlaylistSelect(event) {
         const playlistSelected = event.target.innerHTML;
-        this.setState({ selectedPlaylistName: playlistSelected });
-        const playListIndex = _.findIndex(this.props.playlists, function (p) { // I LOVE LODASH
+        this.props.actions.handlePlaylistSelect(playlistSelected);
+        const playListIndex = _.findIndex(this.props.playlists, function (p) { // Lodash rules
             return p.name == playlistSelected;
         });
         const playListId = this.props.playlists[playListIndex].id;
@@ -141,7 +149,6 @@ export class Dashboard extends React.Component {
         const attributeSelected = event.target.innerHTML.toLowerCase();
         const tracks = this.props.analyzedTracks;
         this.props.actions.sortTracks(attributeSelected, tracks);
-
     }
     render () {
         return (
@@ -149,7 +156,7 @@ export class Dashboard extends React.Component {
                 <div className="center-block">
                     <DashJumboTron connectToSpotify={this.connectToSpotify}
                                    loading={this.props.loading}
-                                   shouldShowSpotifyButton={true}
+                                   shouldShowSpotifyButton={this.state.shouldShowSpotifyButton}
                     />
                 </div>
 
@@ -175,7 +182,7 @@ export class Dashboard extends React.Component {
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <InstructionsForAudioAnalysis
-                                selectedPlaylistName={this.state.selectedPlaylistName}
+                                selectedPlaylistName={this.props.selectedPlaylistName}
                                 fetchAudioFeaturesDataForPlaylist={this.fetchAudioFeaturesDataForPlaylist}
                             />
                         </div>
@@ -195,7 +202,7 @@ export class Dashboard extends React.Component {
                     this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
                     <div className="col-lg-6">
                         <SelectedTracksContainer
-                            selectedPlaylistName={this.state.selectedPlaylistName}
+                            selectedPlaylistName={this.props.selectedPlaylistName}
                             tracks={this.props.selectedPlaylistTracks}
                         />
                     </div>
@@ -207,15 +214,15 @@ export class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-    registeredUser: React.PropTypes.object.isRequired,
+
     isSignedIn: React.PropTypes.bool.isRequired,
     spotifyUrl: React.PropTypes.string,
     hasAccessToken: React.PropTypes.bool,
     spotifyUserID: React.PropTypes.string,
     hasSpotifyID: React.PropTypes.bool,
     playlists: React.PropTypes.array,
+    selectedPlaylistName: React.PropTypes.string,
     selectedPlaylistTracks: React.PropTypes.array,
-    hasFoundSelectedPlaylistTracks: React.PropTypes.bool,
     analyzedPlaylistName: React.PropTypes.string,
     analyzedTracks: React.PropTypes.array,
     error: React.PropTypes.object,
@@ -225,15 +232,14 @@ Dashboard.propTypes = {
 };
 function mapStateToProps(store) { // connect props to global state object
     return {
-        registeredUser: store.registerReducer.user,
         isSignedIn: store.registerReducer.isSignedIn,
         spotifyUrl: store.spotifyReducer.url,
         hasAccessToken: store.spotifyReducer.hasAccessToken,
         spotifyUserID: store.spotifyReducer.spotifyUserID,
-        hasSpotifyID: store.spotifyReducer.hasSpotifyID,
+        hasSpotifyID: store.spotifyReducer.hasSpotifyID, // todo: unnecessary prop
         playlists: spotifySelectors.playlistFormatted(store.spotifyReducer.playlists),
+        selectedPlaylistName: store.spotifyReducer.selectedPlaylistName,
         selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),
-        hasFoundSelectedPlaylistTracks: store.spotifyReducer.hasFoundTracks,
         analyzedPlaylistName: store.spotifyReducer.analyzedPlaylistName,
         analyzedTracks: store.spotifyReducer.analyzedTracks,
         error: store.spotifyReducer.error,
