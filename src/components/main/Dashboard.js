@@ -24,7 +24,6 @@ export class Dashboard extends React.Component {
             errorMsg: '',
             error: {}
         };
-        this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
         this.fetchAudioFeaturesDataForPlaylist = this.fetchAudioFeaturesDataForPlaylist.bind(this);
@@ -61,6 +60,9 @@ export class Dashboard extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
+        if(!nextProps.isSignedIn) {
+            this.redirectToLoginPage();
+        }
 
         if(this.props.hasSpotifyID) {
             this.setState({ shouldShowSpotifyButton: false });
@@ -94,9 +96,6 @@ export class Dashboard extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-        if(!prevProps.isSignedIn) {
-            this.redirectToLoginPage();
-        }
         if(prevProps.spotifyUrl == '' && this.props.spotifyUrl !== '') { // if redirect url has been set and has not be cleared
             window.location = this.props.spotifyUrl;
         }
@@ -112,10 +111,6 @@ export class Dashboard extends React.Component {
                 this.props.actions.fetchSpotifyPlaylists(this.props.spotifyUserID);
             }
         }
-    }
-
-    redirectToHomePage() {
-        browserHistory.push('/');
     }
 
     redirectToLoginPage() {
@@ -214,7 +209,6 @@ export class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-
     isSignedIn: React.PropTypes.bool.isRequired,
     spotifyUrl: React.PropTypes.string,
     hasAccessToken: React.PropTypes.bool,

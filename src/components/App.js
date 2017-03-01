@@ -4,20 +4,27 @@ import Header from './common/Header';
 import * as authActions from '.././actions/authActions';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
+import { browserHistory } from 'react-router';
 
 class App extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.signOutUser = this.signOutUser.bind(this);
+        this.redirectToHome = this.redirectToHome.bind(this);
     }
 
     componentWillMount() {
         this.props.actions.initStateChangeHook();
     }
 
+    redirectToHome() {
+        browserHistory.push('/');
+    }
+
     signOutUser() {
         this.props.actions.signOutUser();
+        this.redirectToHome();
     }
 
     render() {
@@ -30,13 +37,11 @@ class App extends React.Component {
               signOutFunc={this.signOutUser}
             />
             {this.props.children}
-
             <div className="tidus-footer">
                 <p>Tidus is built with React, Redux, ES6, and other cool technologies.</p>
                 <a href="http://tidus-music.herokuapp.com/">http://tidus-music.herokuapp.com/</a>
                 <p>This app is developed by <a href="https://github.com/mbrashid62">mbrashid62</a>.</p>
             </div>
-
           </div>
       );
     }

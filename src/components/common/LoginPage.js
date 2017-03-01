@@ -19,10 +19,6 @@ export class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.actions.initStateChangeHook();
-        if(this.props.isSignedIn) { // if user navigates to register form page while already being signed in
-            this.redirectToDashboard();
-        }
     }
 
     componentWillReceiveProps(nextProps) { // update state when props change - called anytime props have changed
