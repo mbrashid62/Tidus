@@ -15,5 +15,6 @@ export default (
         <Route path="dashboard" component={Dashboard} />
         <Route path="callback" component={Dashboard} />
         <Route path="about" component={AboutPage} />
+        <Route path="*" component={HomePage} />
     </Route>
 );

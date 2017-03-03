@@ -4,12 +4,14 @@ import Header from './common/Header';
 import * as authActions from '.././actions/authActions';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
+import { browserHistory } from 'react-router';
 
 class App extends React.Component {
 
     constructor(props, context) {
         super(props, context);
         this.signOutUser = this.signOutUser.bind(this);
+        this.redirectToHomePage = this.redirectToHomePage.bind(this);
     }
 
     componentWillMount() {
@@ -18,6 +20,11 @@ class App extends React.Component {
 
     signOutUser() {
         this.props.actions.signOutUser();
+        this.redirectToHomePage();
+    }
+
+    redirectToHomePage() {
+        browserHistory.push('/');
     }
 
     render() {
