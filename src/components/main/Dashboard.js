@@ -94,9 +94,6 @@ export class Dashboard extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-        // if(!prevProps.isSignedIn) {
-        //     this.redirectToLoginPage();
-        // }
         if(prevProps.spotifyUrl == '' && this.props.spotifyUrl !== '') { // if redirect url has been set and has not be cleared
             window.location = this.props.spotifyUrl;
         }
@@ -116,10 +113,6 @@ export class Dashboard extends React.Component {
 
     redirectToHomePage() {
         browserHistory.push('/');
-    }
-
-    redirectToLoginPage() {
-        browserHistory.push('/login');
     }
 
     connectToSpotify() {
