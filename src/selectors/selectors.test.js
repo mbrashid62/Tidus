@@ -18,7 +18,7 @@ describe('sortTracks function', () => {
         expect(actualTracks[2].artist).toEqual("Bee Gees");
         expect(actualTracks[1].artist).toEqual("Adele");
         expect(actualTracks[0].artist).toEqual("Snoop Dog");
-        // toggle tracks
+        // now we toggle tracks
         const toggledTracks = spotifySelectors.sortTracks('acousticness', actualTracks);
         expect(toggledTracks[0].artist).toEqual("Jack Johnson");
         expect(toggledTracks[1].artist).toEqual("Bee Gees");
