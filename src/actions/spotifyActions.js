@@ -2,6 +2,8 @@ import * as types from './actionTypes';
 import SpotifyWebApi from 'spotify-web-api-node';
 import _ from 'lodash';
 import { beginAjaxCall } from './ajaxStatusActions';
+import * as spotifySelectors from '.././selectors/selectors';
+import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAuth';
 
 // action creators
 export function createSpotifyAuthorizeUrl(url) {
@@ -52,27 +54,11 @@ export function handleSelectedPlaylist(selectedPlaylist) {
     return { type: types.HANDLE_PLAYLIST_SELECT, payload: { selectedPlaylistName: selectedPlaylist }};
 }
 
-
-const spotifyApi = new SpotifyWebApi({
-    clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
-    clientSecret: '564da0f10a104edd9ca4f0aabb479ea0',
-    redirectUri: 'http://www.localhost:3000/callback'
-});
+const spotifyApi = new SpotifyWebApi(wrapperCredentials);
 
 export function connectToSpotify() {
     return (dispatch) => {
-        const clientId = 'b3295b28bbbd4d598f32515c7fdad7bf';
-        const scope = 'user-read-private user-read-email';
-        // const redirect_uri = "http://www.localhost:3000/callback"; // for local
-        const redirect_uri =  "https://tidus-music.herokuapp.com/callback"; // for prod
-        const state = 'my-state';
-        let url = 'https://accounts.spotify.com/authorize';
-        url += '?response_type=token';
-        url += '&client_id=' + encodeURIComponent(clientId);
-        url += '&scope=' + encodeURIComponent(scope);
-        url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-        url += '&state=' + encodeURIComponent(state);
-
+        const url = spotifySelectors.buildSpotifyAuthURL(spotifyCredentials);
         dispatch(createSpotifyAuthorizeUrl(url));
     };
 }
@@ -167,10 +153,7 @@ export function getOnlyUserPlaylists(playlists, id) {
 
 export function sortTracks(attribute, tracks) {
     return (dispatch) => {
-        const newlySortedTracks = _.sortBy(tracks, [attribute]);
-        if (_.isEqual(newlySortedTracks, tracks)) { // if array is already sorted by selected attribute, reverse it
-            _.reverse(newlySortedTracks);
-        }
-        dispatch(sortSpotifyAnalyzedTracks(newlySortedTracks));
+        const sortedTracks = spotifySelectors.sortTracks(attribute, tracks);
+        dispatch(sortSpotifyAnalyzedTracks(sortedTracks));
     };
 }
