@@ -31,7 +31,7 @@ export function buildSpotifyAuthURL(credentials) {
 }
 
 export function sortTracks(attribute, tracks) {
-    const newlySortedTracks = _.reverse(_.sortBy(tracks, [attribute])); // By default lodash sorts by ascending order. I want descending to be user's first
+    const newlySortedTracks = _.sortBy(tracks, [attribute]);
     if (_.isEqual(newlySortedTracks, tracks)) { // if array is already sorted by selected attribute, reverse it
         _.reverse(newlySortedTracks);
     }

@@ -14,15 +14,15 @@ describe('buildSpotifyAuthURL function', () => {
 describe('sortTracks function', () => {
     it('should properly sort a set of tracks by acousticness', () => {
         const actualTracks = spotifySelectors.sortTracks('acousticness', unsortedTracks);
-        expect(actualTracks[0].artist).toEqual("Jack Johnson");
-        expect(actualTracks[1].artist).toEqual("Bee Gees");
-        expect(actualTracks[2].artist).toEqual("Adele");
-        expect(actualTracks[3].artist).toEqual("Snoop Dog");
-        // toggle tracks
+        expect(actualTracks[3].artist).toEqual("Jack Johnson");
+        expect(actualTracks[2].artist).toEqual("Bee Gees");
+        expect(actualTracks[1].artist).toEqual("Adele");
+        expect(actualTracks[0].artist).toEqual("Snoop Dog");
+        // now we toggle tracks
         const toggledTracks = spotifySelectors.sortTracks('acousticness', actualTracks);
-        expect(toggledTracks[3].artist).toEqual("Jack Johnson");
-        expect(toggledTracks[2].artist).toEqual("Bee Gees");
-        expect(toggledTracks[1].artist).toEqual("Adele");
-        expect(toggledTracks[0].artist).toEqual("Snoop Dog");
+        expect(toggledTracks[0].artist).toEqual("Jack Johnson");
+        expect(toggledTracks[1].artist).toEqual("Bee Gees");
+        expect(toggledTracks[2].artist).toEqual("Adele");
+        expect(toggledTracks[3].artist).toEqual("Snoop Dog");
     });
 });
