@@ -94,9 +94,9 @@ export class Dashboard extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-        if(!prevProps.isSignedIn) {
-            this.redirectToLoginPage();
-        }
+        // if(!prevProps.isSignedIn) {
+        //     this.redirectToLoginPage();
+        // }
         if(prevProps.spotifyUrl == '' && this.props.spotifyUrl !== '') { // if redirect url has been set and has not be cleared
             window.location = this.props.spotifyUrl;
         }
@@ -214,8 +214,6 @@ export class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-
-    isSignedIn: React.PropTypes.bool.isRequired,
     spotifyUrl: React.PropTypes.string,
     hasAccessToken: React.PropTypes.bool,
     spotifyUserID: React.PropTypes.string,
@@ -232,7 +230,6 @@ Dashboard.propTypes = {
 };
 function mapStateToProps(store) { // connect props to global state object
     return {
-        isSignedIn: store.registerReducer.isSignedIn,
         spotifyUrl: store.spotifyReducer.url,
         hasAccessToken: store.spotifyReducer.hasAccessToken,
         spotifyUserID: store.spotifyReducer.spotifyUserID,
