@@ -1,28 +1,25 @@
 import expect from 'expect';
 import React from 'react';
-import {mount, shallow} from 'enzyme';
-import TestUtils from 'react-addons-test-utils';
+import {shallow} from 'enzyme';
 import Header from './Header';
 
-function setup(isSignedIn) {
+function setup(loading) {
     const props = {
-        isSignedIn: isSignedIn,
-        user: {},
-        signOutFunc: () => {}
+        loading: loading
     };
 
     return shallow(<Header {...props} />);
 }
 
-describe('StatusMsg Component', () => {
-    it('renders appropriate signed out header items', () => {
+describe('Header Component', () => {
+    it('renders appropriate header items when done loading', () => {
         const wrapper = setup(false);
         const listItems = wrapper.find('li');
-        expect(listItems.length).toBe(4); // renders 4 'li' elements in nav
+        expect(listItems.length).toBe(3); // renders 4 'li' elements in nav
     });
 
-    it('renders appropriate signed in header items', () => {
+    it('renders appropriate header items when loading', () => {
         const wrapper = setup(true);
-        expect(wrapper.find('li').length).toBe(5); // renders 5 'li' elements in nav
+        expect(wrapper.find('li').length).toBe(3); // renders 5 'li' elements in nav
     });
 });

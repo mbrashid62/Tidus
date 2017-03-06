@@ -1,38 +1,38 @@
-import expect from 'expect';
-import * as authActions from './authActions';
-import * as types from './actionTypes';
-
-import thunk from 'redux-thunk';
-import nock from 'nock';
-import configureMockStore from 'redux-mock-store';
-
-// Test a sync action
-describe('Auth Actions', () => {
-    describe('createUserSuccess', () => {
-        it('should create a CREATE_USER_SUCCESS action', () => {
-            const payload = { user: {}, msg: 'Successful Registration!', isRegistered: true }; //arrange
-            const expectedAction = {
-                type: types.CREATE_USER_SUCCESS,
-                payload: payload
-            };
-            const action = authActions.createUserSuccess({}); // call the action
-            expect(action).toEqual(expectedAction); // make the assertion
-        });
-    });
-    describe('createUserError', () => {
-        it('should create a CREATE_USER_ERROR action', () => {
-            const mockError = { message: 'Uh oh, error!' };
-            const payload = { user: {}, msg: mockError.message, isRegistered: false  }; // arrange
-            const expectedAction = {
-                type: types.CREATE_USER_ERROR,
-                payload: payload
-            };
-            const action = authActions.createUserError(mockError); // call the action
-            expect(action).toEqual(expectedAction); // make the assertion
-        });
-    });
-});
-
+// import expect from 'expect';
+// import * as authActions from './authActions';
+// import * as types from './actionTypes';
+//
+// import thunk from 'redux-thunk';
+// import nock from 'nock';
+// import configureMockStore from 'redux-mock-store';
+//
+// // Test a sync action
+// describe('Auth Actions', () => {
+//     describe('createUserSuccess', () => {
+//         it('should create a CREATE_USER_SUCCESS action', () => {
+//             const payload = { user: {}, msg: 'Successful Registration!', isRegistered: true }; //arrange
+//             const expectedAction = {
+//                 type: types.CREATE_USER_SUCCESS,
+//                 payload: payload
+//             };
+//             const action = authActions.createUserSuccess({}); // call the action
+//             expect(action).toEqual(expectedAction); // make the assertion
+//         });
+//     });
+//     describe('createUserError', () => {
+//         it('should create a CREATE_USER_ERROR action', () => {
+//             const mockError = { message: 'Uh oh, error!' };
+//             const payload = { user: {}, msg: mockError.message, isRegistered: false  }; // arrange
+//             const expectedAction = {
+//                 type: types.CREATE_USER_ERROR,
+//                 payload: payload
+//             };
+//             const action = authActions.createUserError(mockError); // call the action
+//             expect(action).toEqual(expectedAction); // make the assertion
+//         });
+//     });
+// });
+//
 
 
 // const middleware = [thunk];
