@@ -9,7 +9,6 @@ const initialState = {
         accessToken: '',
         hasAccessToken: false,
         spotifyUserID: '',
-        hasSpotifyID: false,
         playlists: [],
         selectedPlaylistTracks: [],
         hasFoundTracks: false,
@@ -46,7 +45,6 @@ describe('Spotify Reducer', () => {
         const action = actions.fetchSpotifyIDSuccess(spotifyUserId);
         const newState = spotifyReducer(initialState, action);
         expect(newState.spotifyUserID).toEqual(spotifyUserId);
-        expect(newState.hasSpotifyID).toEqual(true);
     });
 
     it('should add an error on FETCH_SPOTIFY_ID_ERROR', () => {

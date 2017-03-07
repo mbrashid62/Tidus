@@ -1,7 +1,26 @@
 import expect from 'expect';
 import * as spotifySelectors from './selectors';
 import {spotifyCredentials} from '../constants/spotifyAuth';
-import {unsortedTracks} from '../constants/testData';
+import {unsortedTracks, spotifyPlaylistTracksObj, justTracks, audioFeatures, justTracksGramatik} from '../constants/testData';
+
+describe('formatTacksObjForIdsAndJustTracks function', () => {
+   it('should return an object containing a trackIds array and a justTracks array', () => {
+       const actual = spotifySelectors.formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj);
+       const expectedTrackIds = ['7CJrXIu3mwtSmxzmpe8NlX', '0LyfQWJT6nXafLPZqxe9Of'];
+       expect(actual.trackIds).toEqual(expectedTrackIds);
+       const expectedJustTracks = justTracks;
+       expect(actual.justTracks).toEqual(expectedJustTracks);
+   });
+});
+// todo: fix this test
+// describe('addTracknameAndArtist function', () => {
+//    it('should return an audio features object with the a track name and arist key value pair', () => {
+//         const actual = spotifySelectors.addTrackNameAndArtist(audioFeatures, justTracksGramatik);
+//         debugger;
+//         const expectedArtistName = 'Gramatik';
+//         expect(actual.name).toEqual(expectedArtistName);
+//    });
+// });
 
 describe('buildSpotifyAuthURL function', () => {
     it('should return a properly formatted url for spotify redirect', () => {
@@ -26,3 +45,5 @@ describe('sortTracks function', () => {
         expect(toggledTracks[3].artist).toEqual("Snoop Dog");
     });
 });
+
+
