@@ -24,9 +24,15 @@ describe('formatTacksObjForIdsAndJustTracks function', () => {
 
 describe('buildSpotifyAuthURL function', () => {
     it('should return a properly formatted url for spotify redirect', () => {
-        const expectedURL = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private%20user-read-email&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000%2Fcallback&state=my-state';
+        const expectedURLDev = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private%20user-read-email&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000%2Fcallback&state=my-state';
+        const expectedURLProd = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private%20user-read-email&redirect_uri=https%3A%2F%2Ftidus-music.herokuapp.com%2Fcallback%20&state=my-state';
         const actualURL = spotifySelectors.buildSpotifyAuthURL(spotifyCredentials);
-        expect(actualURL).toEqual(expectedURL);
+
+        if(spotifyCredentials.redirect_uri.includes("localhost")) {
+            expect(actualURL).toEqual(expectedURLDev);
+        } else {
+            expect(actualURL).toEqual(expectedURLProd);
+        }
     });
 });
 
@@ -37,7 +43,7 @@ describe('sortTracks function', () => {
         expect(actualTracks[2].artist).toEqual("Bee Gees");
         expect(actualTracks[1].artist).toEqual("Adele");
         expect(actualTracks[0].artist).toEqual("Snoop Dog");
-        // now we toggle tracks
+        // now toggle tracks
         const toggledTracks = spotifySelectors.sortTracks('acousticness', actualTracks);
         expect(toggledTracks[0].artist).toEqual("Jack Johnson");
         expect(toggledTracks[1].artist).toEqual("Bee Gees");

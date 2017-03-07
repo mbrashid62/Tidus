@@ -37,8 +37,8 @@ App.defaultPropTypes = {
     children: {},
     loading: false
 };
+
 App.propTypes = {
-    actions: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired
 };
@@ -48,11 +48,5 @@ function mapStateToProps(state, ownProps) {
       loading: state.ajaxCallsInProgress > 0
   };
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//       actions: bindActionCreators(authActions, dispatch)
-//   };
-// }
 
 export default connect(mapStateToProps)(App);
