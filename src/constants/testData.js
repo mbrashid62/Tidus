@@ -58,3 +58,147 @@ export let unsortedTracks = [{
     uri: "spotify:track:7CJrXIu3mwtSmxzmpe8NlX",
     valence: 23
 }];
+
+export let spotifyPlaylistTracksObj = [{
+    added_at: "2017-02-01T18:13:05Z",
+    added_by: {},
+    is_local: false,
+        track: {
+            album: {},
+            artists: [{
+                href: "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+                id: "0LyfQWJT6nXafLPZqxe9Of",
+                name: "Kanye West",
+                type: "artist",
+                uri: "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+            }],
+            available_markets: [],
+            disc_number: 1,
+            duration_ms: 8169,
+            explicit: false,
+            external_ids: {},
+            external_urls: {},
+            href: "https://api.spotify.com/v1/tracks/7CJrXIu3mwtSmxzmpe8NlX",
+            id: "7CJrXIu3mwtSmxzmpe8NlX",
+            name: "Bell Biv DeVoe - Black History Month",
+            popularity: 0,
+            preview_url: "https://p.scdn.co/mp3-preview/a476360e447b03a606c10e60b97067f1f127998a?cid=b3295b28bbbd4d598f32515c7fdad7bf",
+            track_number: 1,
+            type: "track",
+            uri: "spotify:track:7CJrXIu3mwtSmxzmpe8NlX"
+        }
+    }, {
+        added_at: "2017-01-01T18:13:05Z",
+        added_by: {},
+        is_local: false,
+        track: {
+            album: {},
+            artists: [{
+                href: "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+                id: "1A4LDKJF-9283JLDKF",
+                name: "Various Artists",
+                type: "artist",
+                uri: "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+            }],
+            available_markets: [],
+            disc_number: 1,
+            duration_ms: 8169,
+            explicit: false,
+            external_ids: {},
+            external_urls: {},
+            href: "https://api.spotify.com/v1/tracks/7CJrXIu3mwtSmxzmpe8NlX",
+            id: "0LyfQWJT6nXafLPZqxe9Of",
+            name: "Bell Biv DeVoe - Black History Month",
+            popularity: 0,
+            preview_url: "https://p.scdn.co/mp3-preview/a476360e447b03a606c10e60b97067f1f127998a?cid=b3295b28bbbd4d598f32515c7fdad7bf",
+            track_number: 1,
+            type: "track",
+            uri: "spotify:track:7CJrXIu3mwtSmxzmpe8NlX"
+        }
+}];
+
+export let justTracks = [{
+        album: {},
+        artists: [{
+            href: "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+            id: "0LyfQWJT6nXafLPZqxe9Of",
+            name: "Kanye West",
+            type: "artist",
+            uri: "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+        }],
+        available_markets: [],
+        disc_number: 1,
+        duration_ms: 8169,
+        explicit: false,
+        external_ids: {},
+        external_urls: {},
+        href: "https://api.spotify.com/v1/tracks/7CJrXIu3mwtSmxzmpe8NlX",
+        id: "7CJrXIu3mwtSmxzmpe8NlX",
+        name: "Bell Biv DeVoe - Black History Month",
+        popularity: 0,
+        preview_url: "https://p.scdn.co/mp3-preview/a476360e447b03a606c10e60b97067f1f127998a?cid=b3295b28bbbd4d598f32515c7fdad7bf",
+        track_number: 1,
+        type: "track",
+        uri: "spotify:track:7CJrXIu3mwtSmxzmpe8NlX"
+    },
+    {
+        album: {},
+        artists: [{
+            href: "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+            id: "1A4LDKJF-9283JLDKF",
+            name: "Various Artists",
+            type: "artist",
+            uri: "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+        }],
+        available_markets: [],
+        disc_number: 1,
+        duration_ms: 8169,
+        explicit: false,
+        external_ids: {},
+        external_urls: {},
+        href: "https://api.spotify.com/v1/tracks/7CJrXIu3mwtSmxzmpe8NlX",
+        id: "0LyfQWJT6nXafLPZqxe9Of",
+        name: "Bell Biv DeVoe - Black History Month",
+        popularity: 0,
+        preview_url: "https://p.scdn.co/mp3-preview/a476360e447b03a606c10e60b97067f1f127998a?cid=b3295b28bbbd4d598f32515c7fdad7bf",
+        track_number: 1,
+        type: "track",
+        uri: "spotify:track:7CJrXIu3mwtSmxzmpe8NlX"
+    }
+];
+
+export let audioFeatures = [{
+    acousticness: 0.0461,
+    analysis_url: "https://api.spotify.com/v1/audio-analysis/02uRToy7bttYcKCO3vIStA",
+    danceability: 0.896,
+    duration_ms: 203051,
+    energy: 0.684,
+    id: "02uRToy7bttYcKCO3vIStA",
+    instrumentalness: 0.051,
+    key: 1,
+    name: "Hit That Jive",
+    track_href: "https://api.spotify.com/v1/tracks/02uRToy7bttYcKCO3vIStA",
+    type: "audio_features",
+    uri: "spotify:track:02uRToy7bttYcKCO3vIStA",
+    valence: 0.686
+}];
+
+export let justTracksGramatik = [{
+    album: {},
+    artists: [{
+        external_urls: {},
+        href: "https://api.spotify.com/v1/artists/179BpmLkQCRIoU68Co80f5",
+        id: "179BpmLkQCRIoU68Co80f5",
+        name: "Gramatik",
+        type: "artist",
+        uri: "spotify:artist:179BpmLkQCRIoU68Co80f5"
+    }],
+    href: "https://api.spotify.com/v1/tracks/02uRToy7bttYcKCO3vIStA",
+    id: "02uRToy7bttYcKCO3vIStA",
+    name: "Hit That Jive",
+    popularity: 54,
+    preview_url: "https://p.scdn.co/mp3-preview/9bbdea65f69d8ea358b8b0cc99f4c782a9e71722?cid=b3295b28bbbd4d598f32515c7fdad7bf",
+    track_number: 16,
+    type: "track",
+    uri: "spotify:track:02uRToy7bttYcKCO3vIStA"
+}];

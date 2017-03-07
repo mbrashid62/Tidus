@@ -4,11 +4,10 @@ import * as spotifyActions from '../../actions/spotifyActions';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
-import SelectedTracksContainer from './SelectedTracksContainer';
 import AnalyzedTrackTable from './AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
 import DashJumboTron from '../common/DashJumboTron';
-import InstructionsForAudioAnalysis from './InstructionsForAudioAnalysis';
+// import InstructionsForAudioAnalysis from './InstructionsForAudioAnalysis';
 import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
 
@@ -49,15 +48,12 @@ export class Dashboard extends React.Component {
             });
         }
 
-        if(this.props.selectedPlaylistTracks.length > 0) {
-            this.setState({ shouldRenderSelectedPlaylistTracks: true });
-        }
-
         if(this.props.analyzedTracks.length > 0) {
             this.setState({ shouldShowAnalyzedData: true });
         }
     }
     componentDidMount() { // called after render method. DOM can be accessed in this method + data fetch
+
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
@@ -68,10 +64,6 @@ export class Dashboard extends React.Component {
 
         if(nextProps.playlists.length > 0) { // if we have fetched the playlists
             this.setState({ shouldRenderPlaylists: true });
-        }
-
-        if(nextProps.selectedPlaylistTracks.length > 0) { // if we have fetched the tracks for the user selected playlist
-            this.setState({ shouldRenderSelectedPlaylistTracks: true });
         }
 
         if(nextProps.analyzedTracks.length > 0) {
@@ -135,7 +127,7 @@ export class Dashboard extends React.Component {
         });
         const playListId = this.props.playlists[playListIndex].id;
         const spotifyUserId = this.props.spotifyUserID;
-        this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId);
+        this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId, playlistSelected);
     }
 
     sortTracks(event) {
@@ -143,6 +135,7 @@ export class Dashboard extends React.Component {
         const tracks = this.props.analyzedTracks;
         this.props.actions.sortTracks(attributeSelected, tracks);
     }
+
     render () {
         return (
             <div className="container-fluid">
@@ -152,7 +145,6 @@ export class Dashboard extends React.Component {
                                    shouldShowSpotifyButton={this.state.shouldShowSpotifyButton}
                     />
                 </div>
-
                 {
                     this.state.shouldHandleError &&
                         <div className="row">
@@ -162,29 +154,8 @@ export class Dashboard extends React.Component {
                         </div>
                 }
                 {
-                    this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <AnalyzedTrackTable tracks={this.props.analyzedTracks} playlistName={this.props.analyzedPlaylistName} sortTracks={this.sortTracks}/>
-                        </div>
-                    </div>
-                }
-
-                {
-                    this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <InstructionsForAudioAnalysis
-                                selectedPlaylistName={this.props.selectedPlaylistName}
-                                fetchAudioFeaturesDataForPlaylist={this.fetchAudioFeaturesDataForPlaylist}
-                            />
-                        </div>
-                    </div>
-                }
-
-                {
                     this.state.shouldRenderPlaylists &&
-                    <div className="col-lg-6">
+                    <div className="col-md-12 text-center">
                         <SpotifyPlaylistsContainer
                             playlists={this.props.playlists}
                             handlePlaylistSelect={this.handlePlaylistSelect}
@@ -192,15 +163,17 @@ export class Dashboard extends React.Component {
                     </div>
                 }
                 {
-                    this.state.shouldRenderSelectedPlaylistTracks && !this.state.shouldHandleError &&
-                    <div className="col-lg-6">
-                        <SelectedTracksContainer
-                            selectedPlaylistName={this.props.selectedPlaylistName}
-                            tracks={this.props.selectedPlaylistTracks}
-                        />
+                    this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            <AnalyzedTrackTable tracks={this.props.analyzedTracks}
+                                                playlistName={this.props.analyzedPlaylistName}
+                                                sortTracks={this.sortTracks}
+                                                loading={this.props.loading}
+                            />
+                        </div>
                     </div>
                 }
-
             </div>
         );
     }
@@ -221,12 +194,13 @@ Dashboard.propTypes = {
     location: React.PropTypes.object,
     loading: React.PropTypes.bool.isRequired
 };
+
 function mapStateToProps(store) { // connect props to global state object
     return {
         spotifyUrl: store.spotifyReducer.url,
         hasAccessToken: store.spotifyReducer.hasAccessToken,
         spotifyUserID: store.spotifyReducer.spotifyUserID,
-        hasSpotifyID: store.spotifyReducer.hasSpotifyID, // todo: unnecessary prop
+        hasSpotifyID: store.spotifyReducer.spotifyUserID !== '',
         playlists: spotifySelectors.playlistFormatted(store.spotifyReducer.playlists),
         selectedPlaylistName: store.spotifyReducer.selectedPlaylistName,
         selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),

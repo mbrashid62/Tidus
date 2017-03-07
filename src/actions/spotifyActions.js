@@ -15,7 +15,7 @@ export function createAccessToken(accessToken) {
 }
 
 export function fetchSpotifyIDSuccess(userID) {
-    return { type: types.FETCH_SPOTIFY_ID_SUCCESS, payload: { spotifyUserID: userID, hasSpotifyID: true }};
+    return { type: types.FETCH_SPOTIFY_ID_SUCCESS, payload: { spotifyUserID: userID }};
 }
 
 export function fetchSpotifyIDError(error) {
@@ -102,12 +102,14 @@ export function fetchSpotifyPlaylists(spotifyID) {
     };
 }
 
-export function fetchPlaylistTracks(spotifyUserId, playlistId) {
+export function fetchPlaylistTracks(spotifyUserId, playlistId, playlistSelected){
     return (dispatch) => {
         dispatch(beginAjaxCall());
         spotifyApi.getPlaylistTracks(spotifyUserId, playlistId)
             .then((tracks) => {
-                dispatch(fetchSpotifyPlaylistTracksSuccess(tracks.body.items));
+                const spotifyTracks = tracks.body.items;
+                dispatch(fetchSpotifyPlaylistTracksSuccess(spotifyTracks));
+                dispatch(fetchAudioFeaturesDataForPlaylist(playlistSelected, spotifyTracks));
             })
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistTracksError(error));
@@ -115,24 +117,17 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId) {
     };
 }
 
-export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracks) {
-    let trackIds = [];
+export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracksObj) {
+    const formattedTrackData = spotifySelectors.formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj);
+    const trackIds = formattedTrackData.trackIds;
+    const justTracks = formattedTrackData.justTracks;
 
-    _.forEach(spotifyPlaylistTracks, ((track) => {
-           trackIds.push(track.id);
-    }));
-
-    return(dispatch) => {
+    return (dispatch) => {
         dispatch(beginAjaxCall());
         spotifyApi.getAudioFeaturesForTracks(trackIds)
             .then((data) => {
-                _.forEach(data.body.audio_features, ((trackAudioData) => { // add track name and artist to trackAudioData array
-                    const id = trackAudioData.id;
-                    const track = _.find(spotifyPlaylistTracks, {id: id});
-                    trackAudioData.name = track.name;
-                    trackAudioData.artist = track.artist;
-                }));
-                dispatch(fetchAudioFeaturesForPlaylistSuccess(spotifyPlaylistName, data.body.audio_features));
+                const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks);
+                dispatch(fetchAudioFeaturesForPlaylistSuccess(spotifyPlaylistName, audioFeaturesWithNameAndArtists));
             }).catch((error) => {
                 dispatch(fetchAudiFeaturesForPlaylistError(error));
             });
