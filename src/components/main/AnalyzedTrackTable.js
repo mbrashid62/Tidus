@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip';
 
 const AnalyzedTrackTable = ({tracks, playlistName, sortTracks, loading}) => {
     return (
-        <div>
+        <div className="container-fluid">
             <div className="instructions"
                  ref={(c) => {
                      if(!loading) {
