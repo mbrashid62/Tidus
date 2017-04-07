@@ -31,7 +31,6 @@ export function formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj) {
 }
 
 export function addTrackNameAndArtist(audioFeaturesArray, justTracks) {
-    debugger;
     _.forEach(audioFeaturesArray, ((trackAudioData) => {
         const id = trackAudioData.id;
         const track = _.find(justTracks, {id: id});

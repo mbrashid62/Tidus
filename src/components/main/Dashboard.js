@@ -7,7 +7,6 @@ import SpotifyPlaylistsContainer from './SpotifyPlaylistsContainer';
 import AnalyzedTrackTable from './AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
 import DashJumboTron from '../common/DashJumboTron';
-// import InstructionsForAudioAnalysis from './InstructionsForAudioAnalysis';
 import * as spotifySelectors from '../../selectors/selectors';
 import _ from 'lodash';
 

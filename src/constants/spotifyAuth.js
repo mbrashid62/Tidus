@@ -1,7 +1,7 @@
 export let spotifyCredentials = {
     clientId: 'b3295b28bbbd4d598f32515c7fdad7bf',
     scope: 'user-read-private user-read-email',
-    redirect_uri: 'https://tidus-music.herokuapp.com/callback ', //  https://tidus-music.herokuapp.com/callback (for prod) and http://www.localhost:3000/callback for( dev)
+    redirect_uri: 'http://www.localhost:3000/callback', //  https://tidus-music.herokuapp.com/callback (for prod) and http://www.localhost:3000/callback for( dev)
     state: 'my-state'
 };
 
