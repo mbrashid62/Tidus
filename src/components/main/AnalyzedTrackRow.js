@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-
 const AnalyzedTrackRow = ({track}) => {
     return (
         <tr className="text-left">
