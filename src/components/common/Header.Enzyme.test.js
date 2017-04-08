@@ -15,11 +15,11 @@ describe('Header Component', () => {
     it('renders appropriate header items when done loading', () => {
         const wrapper = setup(false);
         const listItems = wrapper.find('li');
-        expect(listItems.length).toBe(3); // renders 4 'li' elements in nav
+        expect(listItems.length).toBe(2); // renders 4 'li' elements in nav
     });
 
     it('renders appropriate header items when loading', () => {
         const wrapper = setup(true);
-        expect(wrapper.find('li').length).toBe(3); // renders 5 'li' elements in nav
+        expect(wrapper.find('li').length).toBe(2); // renders 5 'li' elements in nav
     });
 });

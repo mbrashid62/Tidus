@@ -7,8 +7,7 @@ class AboutPage extends React.Component {
             <div className="jumbotron">
                 <h1>About</h1>
                 <p>This app uses the Spotify API to connect your account and fetch your playlists.</p>
-                <p>After you have fetched your playlists, you can then double click one of them to use Tidus's analytics features.</p>
-                <p>Click the Dashboard link to try it out.</p>
+                <p>After you have fetched your playlists, you can then double click one of them to use Tidus's features.</p>
                 <p>Below, some of these attributes are listed along with a brief description pulled straight from the Spotify developer API.</p>
             </div>
             <div className="container text-left attribute-info">
