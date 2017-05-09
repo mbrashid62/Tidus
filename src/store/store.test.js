@@ -8,7 +8,7 @@ describe('The single applciation state tree', function() {
     const store = createStore(rootReducer, initialState); // arrange
     it('Should handle creating a Spotify Authorize URL', function() {
         const expectedURL = '';
-        const action = spotifyActions.createSpotifyAuthorizeUrl(expectedURL);
+        const action = spotifyActions.createSpotifyAuthorizeUrlSuccess(expectedURL);
         store.dispatch(action);
         const actualURL = store.getState().spotifyReducer.url;
         expect(actualURL).toEqual(expectedURL);

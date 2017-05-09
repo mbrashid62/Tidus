@@ -6,8 +6,8 @@ import * as spotifySelectors from '.././selectors/selectors';
 import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAuth';
 
 // action creators
-export function createSpotifyAuthorizeUrl(url) {
-    return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL, payload: { url: url }};
+export function createSpotifyAuthorizeUrlSuccess(url) {
+    return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS, payload: { url: url }};
 }
 
 export function createAccessToken(accessToken) {
@@ -58,8 +58,11 @@ const spotifyApi = new SpotifyWebApi(wrapperCredentials);
 
 export function connectToSpotify() {
     return (dispatch) => {
+        dispatch(beginAjaxCall());
         const url = spotifySelectors.buildSpotifyAuthURL(spotifyCredentials);
-        dispatch(createSpotifyAuthorizeUrl(url));
+        setTimeout(()=> {
+            dispatch(createSpotifyAuthorizeUrlSuccess(url));
+        }, 1000);
     };
 }
 
