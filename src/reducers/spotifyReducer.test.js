@@ -17,9 +17,9 @@ const initialState = {
 };
 
 describe('Spotify Reducer', () => {
-    it('should add the spotify authorize url on CREATE_SPOTIFY_AUTHORIZE_URL', () => {
+    it('should add the spotify authorize url on CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS', () => {
         const url = 'https://example.com'; // mock data
-        const action = actions.createSpotifyAuthorizeUrl(url); // action
+        const action = actions.createSpotifyAuthorizeUrlSuccess(url); // action
         const newState = spotifyReducer(initialState, action); // mock
         expect(newState.url).toEqual(url);
         expect(newState.hasAccessToken).toNotEqual(true); // todo: figure out why this is undefined
