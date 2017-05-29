@@ -1,6 +1,7 @@
-import * as types from './actionTypes';
-import SpotifyWebApi from 'spotify-web-api-node';
 import _ from 'lodash';
+import SpotifyWebApi from 'spotify-web-api-node';
+
+import * as types from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import * as spotifySelectors from '.././selectors/selectors';
 import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAuth';
@@ -141,7 +142,7 @@ export function getOnlyUserPlaylists(playlists, id) {
     let userOnlyPlaylists = [];
 
     _.forEach(playlists, ((playlist) => {
-        if(playlist.owner.id == id) {
+        if(playlist.owner.id === id) {
             userOnlyPlaylists.push(playlist);
         }
     }));

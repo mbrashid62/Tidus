@@ -180,7 +180,48 @@ a.active {
     letter-spacing: 0.15rem;
 }
 
-span{
+span {
     font-family: 'Lato', sans-serif;
     letter-spacing: 0.15rem;
+}
+
+.loader {
+    display: block;
+    width: 50px;
+    height: 50px;
+    background: #eee;
+    position: relative;
+    margin: 50px auto;
+}
+
+.loader:after, .loader:before {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.spin:after {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    border: 4px solid transparent;
+    border-top-color: green;
+    border-bottom-color: green;
+    animation: spinny 1s linear infinite;
+}
+
+@keyframes spinny {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(45deg) scale(1.2);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
 }

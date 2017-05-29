@@ -24,7 +24,7 @@ export class HomePage extends React.Component {
             error: {}
         };
 
-        // this.redirectToHomePage = this.redirectToHomePage.bind(this);
+        this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.disconnectFromSpotify = this.disconnectFromSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
@@ -88,7 +88,7 @@ export class HomePage extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-        if(prevProps.spotifyUrl == '' && this.props.spotifyUrl !== '') { // if redirect url has been set and has not be cleared
+        if(_.isEqual(prevProps.spotifyUrl, '') && !_.isEqual(this.props.spotifyUrl, '')) { // if redirect url has been set and has not be cleared
             window.location = this.props.spotifyUrl;
         }
 
@@ -99,7 +99,7 @@ export class HomePage extends React.Component {
         }
 
         if(this.props.hasAccessToken && this.props.hasSpotifyID) { // if we have the access token and have fetched the user already
-            if(!this.props.loading  && this.props.playlists.length == 0) { // todo fix this for the case a user logs in and doesn't have any playlists
+            if(!this.props.loading  && this.props.playlists.length === 0) { // todo fix this for the case a user logs in and doesn't have any playlists
                 this.props.actions.fetchSpotifyPlaylists(this.props.spotifyUserID);
             }
         }
@@ -126,7 +126,7 @@ export class HomePage extends React.Component {
         const playlistSelected = event.target.innerHTML;
         this.props.actions.handlePlaylistSelect(playlistSelected);
         const playListIndex = _.findIndex(this.props.playlists, function (p) { // Lodash rules
-            return p.name == playlistSelected;
+            return p.name === playlistSelected;
         });
         const playListId = this.props.playlists[playListIndex].id;
         const spotifyUserId = this.props.spotifyUserID;
