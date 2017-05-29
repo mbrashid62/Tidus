@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Button from 'react-button';
-import Loading from 'react-loading-animation';
+import Loader from '../common/Loader';
 
 const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, shouldShowSpotifyButton}) => {
     return (
@@ -11,7 +11,6 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
                 <p>Spotify collects audio data for all of their songs. This helps them
                     suggest certain tracks for the gym, for a party, for a lazy sunday at home, etc.</p>
                 <p>This app lets you peak underneath the hood and see some of the audio data Spotify has for your playlists.</p>
-                {/*<p>Please visit the Dashboard to try it out.</p>*/}
 
                 {shouldShowSpotifyButton && <Button className="btn btn-lg action-btn"
                                                     onClick={connectToSpotify}
@@ -20,16 +19,16 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
                                                      onClick={disconnectFromSpotify}
                                                      theme={{overStyle:{background:'black'}}}>Disconnect from Spotify</Button>}
             </div>
-            <Loading isLoading={loading} />
+            <Loader loading={loading} />
         </div>
     );
 };
 
 HomeJumboTron.propTypes = {
-    connectToSpotify: React.PropTypes.func.isRequired,
-    disconnectFromSpotify: React.PropTypes.func.isRequired,
-    loading: React.PropTypes.bool.isRequired,
-    shouldShowSpotifyButton: React.PropTypes.bool.isRequired
+    connectToSpotify: PropTypes.func.isRequired,
+    disconnectFromSpotify: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    shouldShowSpotifyButton: PropTypes.bool.isRequired
 };
 
 export default HomeJumboTron;
