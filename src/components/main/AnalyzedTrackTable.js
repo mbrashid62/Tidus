@@ -27,10 +27,7 @@ const AnalyzedTrackTable = ({tracks, playlistName, sortTracks, loading}) => {
                     <th onClick={sortTracks} data-tip data-for="acousticness">Acousticness</th>
                     <th onClick={sortTracks} data-tip data-for="danceability">Danceability</th>
                     <th onClick={sortTracks} data-tip data-for="energy">Energy</th>
-                    <th onClick={sortTracks} data-tip data-for="liveness">Liveness</th>
                     <th onClick={sortTracks} data-tip data-for="loudness">Loudness</th>
-                    <th onClick={sortTracks} data-tip data-for="speechiness">Speechiness</th>
-                    <th onClick={sortTracks} data-tip data-for="tempo">Tempo</th>
                     <th onClick={sortTracks} data-tip data-for="valence">Valence</th>
                 </tr>
                 </thead>
@@ -50,22 +47,10 @@ const AnalyzedTrackTable = ({tracks, playlistName, sortTracks, loading}) => {
             <ReactTooltip id="energy">
                 <span>Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.<br/> Typically, energetic tracks feel fast, loud, and noisy.</span>
             </ReactTooltip>
-            <ReactTooltip id="liveness">
-                <span>Detects the presence of an audience in the recording.
-                    <br/>Higher liveness values represent an increased probability that the track was performed live.</span>
-            </ReactTooltip>
             <ReactTooltip id="loudness">
                 <span>The overall loudness of a track in decibels (dB).
                     <br/>Values typical range between -60 and 0 db
                 </span>
-            </ReactTooltip>
-            <ReactTooltip id="speechiness">
-                <span>Speechiness detects the presence of spoken words in a track.
-                    <br/>The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value.</span>
-            </ReactTooltip>
-            <ReactTooltip id="tempo">
-                <span>The overall estimated tempo of a track in beats per minute (BPM).
-                    <br/>In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.</span>
             </ReactTooltip>
             <ReactTooltip id="valence">
                 <span>A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.

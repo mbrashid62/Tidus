@@ -9,7 +9,7 @@ const SpotifyPlaylistsContainer = ({playlists, handlePlaylistSelect}) => {
                 <p className="text-left">Click to select one.</p>
             </div>
 
-            <div>
+            <div className="playlists-container">
                 {playlists.map(playlist =>
                     <SpotifyPlaylist key={playlist.id}
                                      playlist={playlist}

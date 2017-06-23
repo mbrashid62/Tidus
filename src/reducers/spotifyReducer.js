@@ -21,16 +21,16 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
         case types.FETCH_SPOTIFY_PLAYLISTS_ERROR:
             return Object.assign({}, state, action.payload);
 
-        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_SUCCESS:
+        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_COMPLETE:
             return Object.assign({}, state, action.payload);
 
-        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ERROR:
+        case types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ISSUE:
             return Object.assign({}, state , action.payload);
 
-        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_SUCCESS:
+        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_COMPLETE:
             return Object.assign({}, state, action.payload);
 
-        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ERROR:
+        case types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ISSUE:
             return Object.assign({}, state, action.payload);
 
         case types.SORT_SPOTIFY_ANALYZED_TRACKS:

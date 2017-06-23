@@ -14,10 +14,10 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
 
                 {shouldShowSpotifyButton && <Button className="btn btn-lg action-btn"
                                                     onClick={connectToSpotify}
-                                                    theme={{overStyle:{background:'black'}}}>Connect to Spotify</Button>}
+                                                    theme={{overStyle:{background:'black'}}}>Go</Button>}
                 {!shouldShowSpotifyButton && !loading && <Button className="btn btn-lg action-btn"
                                                      onClick={disconnectFromSpotify}
-                                                     theme={{overStyle:{background:'black'}}}>Disconnect from Spotify</Button>}
+                                                     theme={{overStyle:{background:'black'}}}>Quit</Button>}
             </div>
             <Loader loading={loading} />
         </div>

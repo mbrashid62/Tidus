@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Loader = ({loading}) => {
     return (
-        <div>
+        <div className="loader-container">
             {loading && <div className="loader spin" />}
         </div>
     );

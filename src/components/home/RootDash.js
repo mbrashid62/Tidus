@@ -10,8 +10,9 @@ import SpotifyPlaylistsContainer from '../main/SpotifyPlaylistsContainer';
 import AnalyzedTrackTable from '../main/AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
 import HomeJumboTron from '../common/HomeJumboTron';
+import NoPlaylist from '../common/NoPlaylist';
 
-export class HomePage extends React.Component {
+export class RootDash extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -146,7 +147,7 @@ export class HomePage extends React.Component {
     render() {
         return (
             <div className="container-fluid">
-                <div className="center-block">
+                <div className="home-jumbo-block">
                     <HomeJumboTron
                         connectToSpotify={this.connectToSpotify}
                         disconnectFromSpotify={this.disconnectFromSpotify}
@@ -164,7 +165,7 @@ export class HomePage extends React.Component {
                 }
                 {
                     this.state.shouldRenderPlaylists &&
-                    <div className="col-md-12 text-center">
+                    <div className="col-md-4 text-center">
                         <SpotifyPlaylistsContainer
                             playlists={this.props.playlists}
                             handlePlaylistSelect={this.handlePlaylistSelect}
@@ -172,15 +173,15 @@ export class HomePage extends React.Component {
                     </div>
                 }
                 {
-                    this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <AnalyzedTrackTable tracks={this.props.analyzedTracks}
-                                                playlistName={this.props.analyzedPlaylistName}
-                                                sortTracks={this.sortTracks}
-                                                loading={this.props.loading}
-                            />
-                        </div>
+                    <div className="analyzed-track-table col-md-8">
+                      {this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
+                        <AnalyzedTrackTable
+                            tracks={this.props.analyzedTracks}
+                            playlistName={this.props.analyzedPlaylistName}
+                            sortTracks={this.sortTracks}
+                            loading={this.props.loading}
+                        />
+                      } {!this.state.shouldShowAnalyzedData && this.props.hasSpotifyID && <NoPlaylist/>}
                     </div>
                 }
             </div>
@@ -190,7 +191,7 @@ export class HomePage extends React.Component {
     }
 }
 
-HomePage.propTypes = {
+RootDash.propTypes = {
     spotifyUrl: React.PropTypes.string,
     hasAccessToken: React.PropTypes.bool,
     spotifyUserID: React.PropTypes.string,
@@ -228,4 +229,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(RootDash);

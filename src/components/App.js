@@ -8,18 +8,12 @@ class App extends React.Component {
 
     constructor(props, context) {
         super(props, context);
-        // this.redirectToHomePage = this.redirectToHomePage.bind(this);
-    }
-
-    componentWillMount() {
     }
 
     render() {
       return (
           <div className="container-fluid">
-            <Header
-              loading={this.props.loading}
-            />
+            <Header />
             {this.props.children}
             <div className="tidus-footer">
                 <p>Tidus is built with React, Redux, ES6, and other cool technologies.</p>

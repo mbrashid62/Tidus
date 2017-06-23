@@ -8,9 +8,6 @@ const AnalyzedTrackRow = ({track}) => {
             <td>{track.danceability}</td>
             <td>{track.energy}</td>
             <td>{track.liveness}</td>
-            <td>{track.loudness}</td>
-            <td>{track.speechiness}</td>
-            <td>{track.tempo}</td>
             <td>{track.valence}</td>
         </tr>
     );
