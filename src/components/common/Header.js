@@ -1,29 +1,29 @@
-import React, {PropTypes} from 'react';
-import { Link, IndexLink } from 'react-router';
+import React from 'react';
+import { Link } from 'react-router';
+import cn from 'classnames';
 
-const Header = ({loading}) => {
-  return (
-    <nav className="navbar navbar-light">
+class Header extends React.Component {
+
+  constructor(props, context) {
+    super(props, context);
+  }
+
+  render () {
+    const pathName = window.location.pathname;
+    const isAboutActive = pathName === '/about';
+    const isHomeActive = !isAboutActive;
+
+    return (
+      <nav className="navbar navbar-light">
         <div className="container-fluid">
-            <ul className="nav navbar-nav navbar-right">
-                <li><IndexLink to="/" activeClassName="active">Home</IndexLink></li>
-                {/*{!isSignedIn && <li><Link to="/login" activeClassName="active">Login</Link></li>}*/}
-                {/*{!isSignedIn && <li><Link to="/register" activeClassName="active">Register</Link></li>}*/}
-                <li><Link to="/about" activeClassName="active">About</Link></li>
-                {/*{isSignedIn && <li><p className="navbar-text">You are logged in as <strong>{user.email}</strong>!</p></li>}*/}
-                {/*{isSignedIn && <li><Button className="btn btn-default btn-sm navbar-btn logout-btn" onClick={signOutFunc} theme={{overStyle:{background:'black'}}}>Logout</Button></li>}*/}
-            </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li><Link to="/" className={cn({'active': isHomeActive})}>Home</Link></li>
+            <li><Link to="/about" className={cn({'active': isAboutActive})}>About</Link></li>
+          </ul>
         </div>
-    </nav>
-  );
-};
-
-Header.defaultPropTypes = {
-    loading: false
-};
-
-Header.propTypes = {
-    loading: PropTypes.bool.isRequired
-};
+      </nav>
+    );
+  }
+}
 
 export default Header;

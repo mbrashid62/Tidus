@@ -4,7 +4,7 @@
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
   min-width: 600px;
-  max-width: 1100px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 html {
@@ -163,6 +163,9 @@ a.active {
 .data-table {
     font-family: 'Lato', sans-serif;
     letter-spacing: 0.05rem;
+    display: block;
+    max-height: 700px;
+    overflow-y: scroll;
 }
 
 .data-table tr th{
@@ -185,16 +188,16 @@ span {
     letter-spacing: 0.15rem;
 }
 
-.loader {
+.loader-container {
+    position: fixed;
+    top: 50%;
+    left: 47%;
     display: block;
-    width: 50px;
-    height: 50px;
-    background: #eee;
-    position: relative;
-    margin: 50px auto;
+    z-index: 100;
 }
 
-.loader:after, .loader:before {
+.loader:after,
+.loader:before {
     content: "";
     display: block;
     width: 100px;
@@ -224,4 +227,15 @@ span {
     100% {
         transform: rotate(360deg) scale(1);
     }
+}
+
+.home-jumbo-block {
+    width: 80%;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.playlists-container {
+    /*color: green;*/
 }

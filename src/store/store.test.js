@@ -24,7 +24,7 @@ describe('The single applciation state tree', function() {
             name: 'how deep is your love'
         }];
         const playlistName = 'my playlist';
-        const action = spotifyActions.fetchAudioFeaturesForPlaylistSuccess(playlistName, analyzedTracks); // action
+        const action = spotifyActions.fetchAudioFeaturesForPlaylistComplete(playlistName, analyzedTracks); // action
         store.dispatch(action);
         const actual = store.getState().spotifyReducer.analyzedTracks[0]; // assert
         const expected = {
@@ -36,7 +36,7 @@ describe('The single applciation state tree', function() {
     it('Should give us an error on fetchAudioFeatureForPlaylistFailure', function() {
         const store = createStore(rootReducer, initialState); // arrange
         const expectedError = {code: 404, msg: 'Uh Oh'};
-        const action = spotifyActions.fetchAudiFeaturesForPlaylistError(expectedError); // action
+        const action = spotifyActions.fetchAudioFeaturesForPlaylistIssue(expectedError); // action
         store.dispatch(action);
         const actualAnalyzedTracks = store.getState().spotifyReducer.analyzedTracks; // assert
         const emptyArray = [];
