@@ -12,12 +12,24 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
                     suggest certain tracks for the gym, for a party, for a lazy sunday at home, etc.</p>
                 <p>This app lets you peak underneath the hood and see some of the audio data Spotify has for your playlists.</p>
 
-                {shouldShowSpotifyButton && <Button className="btn btn-lg action-btn"
-                                                    onClick={connectToSpotify}
-                                                    theme={{overStyle:{background:'black'}}}>Go</Button>}
-                {!shouldShowSpotifyButton && !loading && <Button className="btn btn-lg action-btn"
-                                                     onClick={disconnectFromSpotify}
-                                                     theme={{overStyle:{background:'black'}}}>Quit</Button>}
+                {shouldShowSpotifyButton &&
+                  <Button
+                    className="btn btn-lg action-btn"
+                    onClick={connectToSpotify}
+                    theme={{overStyle:{background:'black'}}}
+                  >
+                    Go
+                  </Button>
+                }
+                {!shouldShowSpotifyButton && !loading &&
+                  <Button
+                    className="btn btn-lg action-btn"
+                    onClick={disconnectFromSpotify}
+                    theme={{overStyle:{background:'black'}}}
+                  >
+                  Quit
+                  </Button>
+                }
             </div>
             <Loader loading={loading} />
         </div>
