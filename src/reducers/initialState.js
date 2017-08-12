@@ -16,7 +16,7 @@ export default { // this is what the store looks like
       btnStatus: [
           {
               label: 'Acousticiness',
-              isClicked: false
+              isClicked: true
           },
           {
               label: 'Danceability',
@@ -34,7 +34,8 @@ export default { // this is what the store looks like
               label: 'Valence',
               isClicked: false
           }
-      ]
+      ],
+      selectedAttr: 'Acoustic'
     },
     ajaxCallsInProgress: 0
 };

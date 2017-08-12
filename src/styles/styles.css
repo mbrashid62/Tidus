@@ -139,7 +139,7 @@ a.active {
 
 /*Moving onto playlist stuff*/
 .instructions {
-    font-family: 'Merriweather', sans-serif;
+    font-family: 'Lato', sans-serif;
     border-bottom: 1px darkslategray solid;
     letter-spacing: 0.05rem;
 }
@@ -243,6 +243,10 @@ span {
 .divider {
     border-top: 1px solid black;
     opacity: 0.25
+}
+
+.optimize-container h1 {
+    font-family: 'Lato', sans-serif;
 }
 
 .radio-btn-group {

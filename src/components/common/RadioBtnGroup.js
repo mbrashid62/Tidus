@@ -16,6 +16,7 @@ export class RadioBtnGroup extends React.Component {
     handleBtnClick(e) {
         const { btnStatus, actions } = this.props;
         actions.handleOptimizeBtnChange(btnStatus,  e.target.id);
+        actions.handleSelectOptAttr(e.target.id);
     }
 
     render() {
