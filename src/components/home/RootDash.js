@@ -11,6 +11,7 @@ import AnalyzedTrackTable from '../main/AnalyzedTrackTable';
 import StatusMsg from '../common/StatusMsg';
 import HomeJumboTron from '../common/HomeJumboTron';
 import NoPlaylist from '../common/NoPlaylist';
+import OptimizeContainer from '../Optimize/OptimizeContainer';
 
 export class RootDash extends React.Component {
     constructor(props, context) {
@@ -182,6 +183,12 @@ export class RootDash extends React.Component {
                             loading={this.props.loading}
                         />
                       } {!this.state.shouldShowAnalyzedData && this.props.hasSpotifyID && <NoPlaylist/>}
+                    </div>
+                }
+                {
+                    <div className="col-md-12">
+                        <hr className="divider"/>
+                        <OptimizeContainer/>
                     </div>
                 }
             </div>

@@ -1,5 +1,5 @@
 export default { // this is what the store looks like
-  spotifyData: {
+    spotifyData: {
       url: '',
       code: '',
       accessToken: '',
@@ -11,6 +11,30 @@ export default { // this is what the store looks like
       selectedPlaylistTracks: [],
       hasFoundTracks: false,
       error: {}
-  },
-  ajaxCallsInProgress: 0
+    },
+    optimizeData: {
+      btnStatus: [
+          {
+              label: 'Acousticiness',
+              isClicked: false
+          },
+          {
+              label: 'Danceability',
+              isClicked: false
+          },
+          {
+              label: 'Energy',
+              isClicked: false
+          },
+          {
+              label: 'Loudness',
+              isClicked: false
+          },
+          {
+              label: 'Valence',
+              isClicked: false
+          }
+      ]
+    },
+    ajaxCallsInProgress: 0
 };

@@ -63,3 +63,23 @@ export function sortTracks(attribute, tracks) {
     }
     return newlySortedTracks;
 }
+
+export function getNewBtnStatus(oldBtnStatus, clickedBtnId) {
+    let newBtnStatus = [];
+
+    _.forEach(oldBtnStatus, (btn) => {
+        if (!_.isEqual(clickedBtnId, btn.label)) {
+            newBtnStatus.push({
+                label: btn.label,
+                isClicked: false
+            });
+        } else {
+            newBtnStatus.push({
+                label: btn.label,
+                isClicked: true
+          });
+        }
+      });
+
+   return newBtnStatus;
+}

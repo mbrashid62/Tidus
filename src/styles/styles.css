@@ -239,3 +239,24 @@ span {
 .playlists-container {
     /*color: green;*/
 }
+
+.divider {
+    border-top: 1px solid black;
+    opacity: 0.25
+}
+
+.radio-btn-group {
+    width: 100%;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    margin-top: 25px;
+}
+
+.radio-btn {
+    display: inline;
+    margin-right: 15px;
+}
+
+.radio-btn label {
+    padding-right: 10px;
+}
