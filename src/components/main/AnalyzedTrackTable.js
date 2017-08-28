@@ -11,12 +11,10 @@ export default class AnalyzedTrackTable extends React.Component {
 
   constructor(props) {
     super(props);
-    this.renderHeadRows = this.renderHeadRows.bind(this);
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     const { playlistName, loading } = this.props;
-
     if (!loading && !_.isEqual(playlistName, nextProps.playlistName)) {
       scrollToComponent(this.analyzedTrackTable, {
         offset: -25,

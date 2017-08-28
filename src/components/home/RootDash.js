@@ -36,6 +36,7 @@ export class RootDash extends React.Component {
 
     componentWillMount() { // called before render method
         const { location, actions, spotifyUserID, analyzedTracks } = this.props;
+
         if(location.hash.split('=')[1] !== undefined) { // if redirected with access token
             const accessToken = location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
             const pathname = location.pathname;
@@ -64,7 +65,9 @@ export class RootDash extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
-        if (this.props.hasSpotifyID) {
+        const { hasSpotifyID } = this.props;
+
+        if (hasSpotifyID) {
             this.setState({shouldShowSpotifyButton: false});
         }
 
@@ -92,19 +95,21 @@ export class RootDash extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) { // called immediately after updating occurs. good place for network requests
-        if(_.isEqual(prevProps.spotifyUrl, '') && !_.isEqual(this.props.spotifyUrl, '')) { // if redirect url has been set and has not be cleared
-            window.location = this.props.spotifyUrl;
+        const { loading, actions, spotifyUserID, hasSpotifyID, hasAccessToken, spotifyUrl, playlists } = this.props;
+
+        if(_.isEqual(prevProps.spotifyUrl, '') && !_.isEqual(spotifyUrl, '')) { // if redirect url has been set and has not be cleared
+            window.location = spotifyUrl;
         }
 
-        if(this.props.hasAccessToken && !this.props.hasSpotifyID) { // if we have the access token but haven't fetched the user yet
-            if(!this.props.loading) { // this prevents stacking multiple requests in call stack. same technique used below
-                this.props.actions.fetchSpotifyUserID();
+        if(hasAccessToken && !hasSpotifyID) { // if we have the access token but haven't fetched the user yet
+            if(!loading) { // this prevents stacking multiple requests in call stack. same technique used below
+                actions.fetchSpotifyUserID();
             }
         }
 
-        if(this.props.hasAccessToken && this.props.hasSpotifyID) { // if we have the access token and have fetched the user already
-            if(!this.props.loading  && this.props.playlists.length === 0) { // todo fix this for the case a user logs in and doesn't have any playlists
-                this.props.actions.fetchSpotifyPlaylists(this.props.spotifyUserID);
+        if(hasAccessToken && hasSpotifyID) { // if we have the access token and have fetched the user already
+            if(!loading  && playlists.length === 0) { // todo fix this for the case a user logs in and doesn't have any playlists
+                actions.fetchSpotifyPlaylists(spotifyUserID);
             }
         }
     }
@@ -114,7 +119,8 @@ export class RootDash extends React.Component {
     }
 
     connectToSpotify() {
-        this.props.actions.connectToSpotify();
+        const { actions } = this.props;
+        actions.connectToSpotify();
 
         if(_.isEmpty(this.state.error)) {
             this.setState({ shouldShowSpotifyButton: false });
@@ -127,24 +133,26 @@ export class RootDash extends React.Component {
     }
 
     handlePlaylistSelect(event) {
+        const { actions, spotifyUserID, playlists } = this.props;
+
         const playlistSelected = event.target.innerHTML;
-        this.props.actions.handlePlaylistSelect(playlistSelected);
-        const playListIndex = _.findIndex(this.props.playlists, function (p) { // Lodash rules
+        actions.handlePlaylistSelect(playlistSelected);
+        const playListIndex = _.findIndex(playlists, function (p) { // Lodash rules
             return p.name === playlistSelected;
         });
-        const playListId = this.props.playlists[playListIndex].id;
-        const spotifyUserId = this.props.spotifyUserID;
-        this.props.actions.fetchPlaylistTracks(spotifyUserId, playListId, playlistSelected);
+        const playListId = playlists[playListIndex].id;
+        actions.fetchPlaylistTracks(spotifyUserID, playListId, playlistSelected);
     }
 
     fetchAudioFeaturesDataForPlaylist() {
-        this.props.actions.fetchAudioFeaturesDataForPlaylist(this.props.selectedPlaylistName, this.props.selectedPlaylistTracks);
+        const { actions, selectedPlaylistName, selectedPlaylistTracks } = this.props;
+        actions.fetchAudioFeaturesDataForPlaylist(selectedPlaylistName, selectedPlaylistTracks);
     }
 
     sortTracks(event) {
+        const { actions, analyzedTracks } = this.props;
         const attributeSelected = event.target.innerHTML.toLowerCase();
-        const tracks = this.props.analyzedTracks;
-        this.props.actions.sortTracks(attributeSelected, tracks);
+        actions.sortTracks(attributeSelected, analyzedTracks);
     }
 
     render() {
