@@ -35,24 +35,26 @@ export class RootDash extends React.Component {
     }
 
     componentWillMount() { // called before render method
-        if(this.props.location.hash.split('=')[1] !== undefined) { // if redirected with access token
-            const accessToken = this.props.location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
-            const pathname = this.props.location.pathname;
+        const { location, actions, spotifyUserID, analyzedTracks } = this.props;
+        if(location.hash.split('=')[1] !== undefined) { // if redirected with access token
+            const accessToken = location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
+            const pathname = location.pathname;
             if(accessToken !== '' && accessToken !== undefined) {
                 if(pathname.includes('callback')) { // spotify redirect
-                    this.props.actions.handleSpotifyAccessToken(accessToken);
+                    actions.handleSpotifyAccessToken(accessToken);
                 }
             }
         }
-        // these if statements allows data to persist if user navigates away from the Dashboard and back
-        if(this.props.spotifyUserID !== "") {
+
+        // allow data to persist if user navigates away from the Dashboard and back
+        if(spotifyUserID !== "") {
             this.setState({
                 shouldRenderPlaylists: true,
                 shouldShowSpotifyButton: false
             });
         }
 
-        if(this.props.analyzedTracks.length > 0) {
+        if(analyzedTracks.length > 0) {
             this.setState({ shouldShowAnalyzedData: true });
         }
     }
@@ -146,43 +148,46 @@ export class RootDash extends React.Component {
     }
 
     render() {
+        const { loading, hasSpotifyID, playlists, analyzedTracks, analyzedPlaylistName } = this.props;
+        const { shouldShowSpotifyButton, shouldHandleError, errorMsg, errors, shouldShowAnalyzedData, shouldRenderPlaylists } = this.state;
+
         return (
             <div className="container-fluid">
                 <div className="home-jumbo-block">
                     <HomeJumboTron
                         connectToSpotify={this.connectToSpotify}
                         disconnectFromSpotify={this.disconnectFromSpotify}
-                        loading={this.props.loading}
-                        shouldShowSpotifyButton={this.state.shouldShowSpotifyButton}
+                        loading={loading}
+                        shouldShowSpotifyButton={shouldShowSpotifyButton}
                     />
                 </div>
                 {
-                    this.state.shouldHandleError &&
+                    shouldHandleError &&
                     <div className="row">
                         <div className="col-md-12 text-center">
-                            <StatusMsg msg={this.state.errorMsg} errors={this.state.errors}/>
+                            <StatusMsg msg={errorMsg} errors={errors}/>
                         </div>
                     </div>
                 }
                 {
-                    this.state.shouldRenderPlaylists &&
+                    shouldRenderPlaylists &&
                     <div className="col-md-4 text-center">
                         <SpotifyPlaylistsContainer
-                            playlists={this.props.playlists}
+                            playlists={playlists}
                             handlePlaylistSelect={this.handlePlaylistSelect}
                         />
                     </div>
                 }
                 {
                     <div className="analyzed-track-table col-md-8">
-                      {this.state.shouldShowAnalyzedData && !this.state.shouldHandleError &&
+                      {shouldShowAnalyzedData && !shouldHandleError &&
                         <AnalyzedTrackTable
-                            tracks={this.props.analyzedTracks}
-                            playlistName={this.props.analyzedPlaylistName}
+                            tracks={analyzedTracks}
+                            playlistName={analyzedPlaylistName}
                             sortTracks={this.sortTracks}
-                            loading={this.props.loading}
+                            loading={loading}
                         />
-                      } {!this.state.shouldShowAnalyzedData && this.props.hasSpotifyID && <NoPlaylist/>}
+                      } {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
                     </div>
                 }
                 {
