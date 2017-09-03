@@ -17,6 +17,7 @@ class OptimizeContainer extends React.Component {
     const { selectedAttr } = this.props;
     return (
       <div className="optimize-container">
+        <hr className="divider"/>
         <OptimizeTitle
           selectedAttr={selectedAttr}
         />

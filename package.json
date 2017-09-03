@@ -39,6 +39,7 @@
     "google-oauth2-web-client": "^0.1.2",
     "jquery": "2.2.3",
     "lodash": "^4.17.4",
+    "node-sass": "3.10.1",
     "open": "0.0.5",
     "react": "15.0.2",
     "react-button": "^1.2.1",
@@ -50,9 +51,11 @@
     "react-tooltip": "^3.2.7",
     "redux": "3.5.2",
     "redux-thunk": "2.0.1",
+    "sass-loader": "4.0.2",
     "spotify-web-api-js": "^0.21.2",
     "spotify-web-api-node": "^2.3.6",
-    "toastr": "2.1.2"
+    "toastr": "2.1.2",
+    "webpack": "^1.15.0"
   },
   "devDependencies": {
     "babel-cli": "6.8.0",
@@ -88,7 +91,7 @@
     "rimraf": "2.5.2",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "1.13.0",
+    "webpack": "^1.15.0",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.10.0"
   },

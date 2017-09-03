@@ -11,24 +11,59 @@ export default class AnalyzedTrackTable extends React.Component {
 
   constructor(props) {
     super(props);
+
+     this.state = {
+      rowWidth: 0
+    };
+
+    this.setHeaderWidths = this.setHeaderWidths.bind(this);
+    this.setHeaderWidthsThrottled = _.throttle(this.setHeaderWidths, 150);
   }
 
-  componentWillReceiveProps(nextProps, nextContext) {
+  componentDidMount() {
+    window.addEventListener('resize', this.setHeaderWidthsThrottled);
+
+    this.setHeaderWidths();
+  }
+
+
+  componentWillReceiveProps(nextProps) {
     const { playlistName, loading } = this.props;
+
     if (!loading && !_.isEqual(playlistName, nextProps.playlistName)) {
       scrollToComponent(this.analyzedTrackTable, {
         offset: -25,
         align: 'top',
         duration: 500
       });
+
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { playlistName, loading} = this.props;
+
+    if (!loading && !_.isEqual(prevProps.playlistName, playlistName)) {
+      this.setHeaderWidths();
+    }
+  }
+
+
+  setHeaderWidths() {
+    const dataTable = document.querySelector('.data-table');
+
+    this.setState({
+      rowWidth: dataTable.offsetWidth - 12
+    });
   }
 
   render () {
     const { playlistName, tracks, sortTracks } = this.props;
+    const { rowWidth } = this.state;
+
 
     return (
-      <div className="container-fluid"
+      <div className="analyzed-track-table"
            ref={(ref) => {
              this.analyzedTrackTable = ref;
            }}
@@ -39,14 +74,13 @@ export default class AnalyzedTrackTable extends React.Component {
         </div>
         <table className="table data-table">
           <thead className="data-table-header">
-          <tr>
-            <th onClick={sortTracks}>Artist</th>
-            <th onClick={sortTracks}>Name</th>
-            <th onClick={sortTracks} data-tip data-for="Acousticness">Acousticness</th>
-            <th onClick={sortTracks} data-tip data-for="Danceability">Danceability</th>
-            <th onClick={sortTracks} data-tip data-for="Energy">Energy</th>
-            <th onClick={sortTracks} data-tip data-for="Loudness">Loudness</th>
-            <th onClick={sortTracks} data-tip data-for="Valence">Valence</th>
+          <tr className="header-row" style={{width: rowWidth}}>
+            <th onClick={sortTracks} style={{width: '20%'}}>Artist</th>
+            <th onClick={sortTracks} style={{width: '32%'}}>Name</th>
+            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Acousticness">Acousticness</th>
+            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Danceability">Danceability</th>
+            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Energy">Energy</th>
+            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Valence">Valence</th>
           </tr>
           </thead>
           <tbody>
@@ -69,5 +103,9 @@ AnalyzedTrackTable.propTypes = {
     playlistName: PropTypes.string.isRequired,
     sortTracks: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired
+};
+
+AnalyzedTrackTable.defaultProps = {
+  playlistName: ''
 };
 

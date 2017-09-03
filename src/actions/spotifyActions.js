@@ -117,7 +117,6 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId, playlistSelected)
                 dispatch(fetchAudioFeaturesDataForPlaylist(playlistSelected, spotifyTracks));
             })
             .catch((error) => {
-                console.log(`error fetching playlist tracks: ${error}`);
                 dispatch(fetchSpotifyPlaylistTracksError(error));
             });
     };
@@ -135,7 +134,6 @@ export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPl
                 const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks);
                 dispatch(fetchAudioFeaturesForPlaylistComplete(spotifyPlaylistName, audioFeaturesWithNameAndArtists));
             }).catch((error) => {
-                console.log(`Error fetching audio feature data for playlist ${error}`);
                 dispatch(fetchAudioFeaturesForPlaylistIssue(error));
             });
     };
