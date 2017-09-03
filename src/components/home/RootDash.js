@@ -178,16 +178,17 @@ export class RootDash extends React.Component {
                     </div>
                 }
                 {
-                    shouldRenderPlaylists &&
-                    <div className="col-md-4 text-center">
+                    <div className="col-md-3 spotify-playlists-col text-center">
+                      {shouldRenderPlaylists &&
                         <SpotifyPlaylistsContainer
-                            playlists={playlists}
-                            handlePlaylistSelect={this.handlePlaylistSelect}
+                          playlists={playlists}
+                          handlePlaylistSelect={this.handlePlaylistSelect}
                         />
+                      }
                     </div>
                 }
                 {
-                    <div className="analyzed-track-table col-md-8">
+                    <div className="col-md-9 analyzed-track-table-col">
                       {shouldShowAnalyzedData && !shouldHandleError &&
                         <AnalyzedTrackTable
                             tracks={analyzedTracks}
@@ -200,8 +201,9 @@ export class RootDash extends React.Component {
                 }
                 {
                     <div className="col-md-12">
-                        <hr className="divider"/>
+                      {false &&
                         <OptimizeContainer/>
+                      }
                     </div>
                 }
             </div>
