@@ -189,14 +189,15 @@ export class RootDash extends React.Component {
                 }
                 {
                     <div className="col-md-9 analyzed-track-table-col">
-                      {shouldShowAnalyzedData && !shouldHandleError &&
+                      {shouldShowAnalyzedData && !shouldHandleError && (
                         <AnalyzedTrackTable
                             tracks={analyzedTracks}
                             playlistName={analyzedPlaylistName}
                             sortTracks={this.sortTracks}
                             loading={loading}
                         />
-                      } {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
+                      )}
+                      { !shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/> }
                     </div>
                 }
                 {

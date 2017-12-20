@@ -3,11 +3,9 @@ import ReactTooltip from 'react-tooltip';
 
 const ToolTip = ({ toolTipId, copy }) => {
   return (
-    <div>
-      <ReactTooltip id={toolTipId}>
-        <span>{copy}</span>
-      </ReactTooltip>
-    </div>
+    <ReactTooltip id={toolTipId} delayShow={1000}>
+      <span>{copy}</span>
+    </ReactTooltip>
   );
 };
 

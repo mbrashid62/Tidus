@@ -1,15 +1,15 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
 import PlaylistTitle from '../main/PlaylistTitle';
 
-const SpotifyPlaylist= ({playlist, handlePlaylistSelect}) => {
-    return (
-        <div className="col-md-12 text-left">
-            <PlaylistTitle
-                playlist={playlist}
-                handlePlaylistSelect={handlePlaylistSelect}
-            />
-        </div>
-    );
+const SpotifyPlaylist = ({playlist, handlePlaylistSelect}) => {
+  return (
+    <div className="col-md-12 text-left">
+      <PlaylistTitle
+        playlist={playlist}
+        handlePlaylistSelect={handlePlaylistSelect}
+      />
+    </div>
+  );
 };
 
 SpotifyPlaylist.propTypes = {
