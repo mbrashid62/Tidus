@@ -63,10 +63,11 @@ export default class AnalyzedTrackTable extends React.Component {
 
 
     return (
-      <div className="analyzed-track-table"
-           ref={(ref) => {
-             this.analyzedTrackTable = ref;
-           }}
+      <div
+        className="analyzed-track-table"
+         ref={(ref) => {
+           this.analyzedTrackTable = ref;
+         }}
       >
         <div className="instructions">
           <h1 className="text-center">You selected <strong>"{playlistName}"</strong></h1>
