@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { PropTypes } from 'react';
+import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
 import { TOOL_TIP_MARKUP } from'../../constants/const';
@@ -13,16 +14,16 @@ export default class AnalyzedTrackTable extends React.Component {
     super(props);
 
      this.state = {
-      rowWidth: 0
+       rowWidth: 0
     };
 
     this.setHeaderWidths = this.setHeaderWidths.bind(this);
     this.setHeaderWidthsThrottled = _.throttle(this.setHeaderWidths, 150);
+    this.handleTableSort = this.handleTableSort.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.setHeaderWidthsThrottled);
-
     this.setHeaderWidths();
   }
 
@@ -57,10 +58,17 @@ export default class AnalyzedTrackTable extends React.Component {
     });
   }
 
-  render () {
-    const { playlistName, tracks, sortTracks } = this.props;
-    const { rowWidth } = this.state;
+  handleTableSort(e) {
+    e.preventDefault();
+    this.props.sortTracks(e);
 
+    // hide our tooltips on sort
+    ReactTooltip.hide();
+  }
+
+  render () {
+    const { playlistName, tracks } = this.props;
+    const { rowWidth } = this.state;
 
     return (
       <div
@@ -76,12 +84,12 @@ export default class AnalyzedTrackTable extends React.Component {
         <table className="table data-table">
           <thead className="data-table-header">
           <tr className="header-row" style={{width: rowWidth}}>
-            <th onClick={sortTracks} style={{width: '20%'}}>Artist</th>
-            <th onClick={sortTracks} style={{width: '32%'}}>Name</th>
-            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Acousticness">Acousticness</th>
-            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Danceability">Danceability</th>
-            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Energy">Energy</th>
-            <th onClick={sortTracks} style={{width: '12%'}} data-tip data-for="Valence">Valence</th>
+            <th onClick={this.handleTableSort} style={{width: '20%'}}>Artist</th>
+            <th onClick={this.handleTableSort} style={{width: '32%'}}>Name</th>
+            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Acousticness">Acousticness</th>
+            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Danceability">Danceability</th>
+            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Energy">Energy</th>
+            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Valence">Valence</th>
           </tr>
           </thead>
           <tbody>
@@ -92,7 +100,7 @@ export default class AnalyzedTrackTable extends React.Component {
         </table>
 
         {TOOL_TIP_MARKUP.map(attribute =>
-            <ToolTip key={attribute.id} toolTipId={attribute.id} copy={attribute.copy}/>
+          <ToolTip key={attribute.id} toolTipId={attribute.id} copy={attribute.copy}/>
         )}
       </div>
     );
