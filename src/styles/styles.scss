@@ -152,7 +152,7 @@ a {
   bottom: 0;
   left: 0;
   padding: 2rem;
-  background-color: #dddddd;
+  background-color: #DDD;
   border-top: 1px darkslategrey solid;
   border-bottom: 1px darkslategrey solid;
   text-align: center;
@@ -344,4 +344,44 @@ span {
 
 .analyzed-track-table-col {
   padding-left: 25px;
+}
+
+.pagination-container {
+  .pagination > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    a {
+      color: #666;
+      background-color: white;
+      border-color: #EEE;
+      outline: none;
+
+      &:focus {
+        outline: none;
+        border-color: white;
+      }
+    }
+
+    &:hover {
+      a {
+        color: #EEE;
+      }
+    }
+
+    &.active {
+      a {
+        color: darkslategrey;
+        background-color: #EEEEEE;
+        border-color: white;
+      }
+
+      &:hover {
+        a {
+          color: #EEE;
+        }
+      }
+    }
+  }
 }

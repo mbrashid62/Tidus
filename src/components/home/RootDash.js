@@ -184,6 +184,7 @@ export class RootDash extends React.Component {
                           playlists={playlists}
                           handlePlaylistSelect={this.handlePlaylistSelect}
                         />
+
                       }
                     </div>
                 }
