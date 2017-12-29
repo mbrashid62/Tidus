@@ -1,8 +1,7 @@
-/* eslint-disable react/jsx-no-bind */
 import React, { PropTypes } from 'react';
 import scrollToComponent from 'react-scroll-to-component';
 
-import SpotifyPlaylist from '../main/SpotifyPlaylist';
+import CanonicalPagination from '../pagination/CanonicalPagination';
 
 export default class SpotifyPlaylistsContainer extends React.Component {
 
@@ -11,7 +10,7 @@ export default class SpotifyPlaylistsContainer extends React.Component {
   }
 
   componentDidMount() {
-    scrollToComponent(this.spotifyPlaylistsContainer, {
+    scrollToComponent(this.playlistsContainer, {
       align: 'top',
       duration: 500
     });
@@ -19,13 +18,13 @@ export default class SpotifyPlaylistsContainer extends React.Component {
 
 
   render() {
-    const { playlists, handlePlaylistSelect} = this.props;
+    const { playlists, handlePlaylistSelect } = this.props;
 
     return (
       <div
         className="spotify-playlists-container"
-         ref={(ref) => {
-           this.spotifyPlaylistsContainer = ref;
+         ref={(ref) => { // eslint-disable-line
+           this.playlistsContainer = ref;
          }}
       >
         <div className="instructions">
@@ -34,13 +33,7 @@ export default class SpotifyPlaylistsContainer extends React.Component {
         </div>
 
         <div className="playlists-list">
-          {playlists.map(playlist =>
-            <SpotifyPlaylist
-              key={playlist.id}
-              playlist={playlist}
-              handlePlaylistSelect={handlePlaylistSelect}
-            />
-          )}
+          <CanonicalPagination items={playlists} handleItemSelect={handlePlaylistSelect} />
         </div>
       </div>
     );
