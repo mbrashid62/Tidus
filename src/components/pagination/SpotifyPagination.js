@@ -1,23 +1,21 @@
 import React, { PropTypes } from 'react';
 import { chunk, map } from 'lodash';
 
-import {
-  PAGINATION_CONTROLS,
-  PLAYLISTS_LIMIT as LIMIT
-} from '../pagination/config';
+import { PAGINATION_CONTROLS, PLAYLISTS, TRACKS } from '../pagination/config';
 
 import Pagination from './Pagination';
-import SpotifyPlaylist from "../main/SpotifyPlaylist";
+import SpotifyPlaylist from '../main/SpotifyPlaylist';
+import AnalyzedTrackRow from '../main/AnalyzedTrackRow';
 
-export default class CanonicalPagination extends React.Component {
+
+export default class SpotifyPagination extends React.Component {
 
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       currentPage: 1,
-      limit: LIMIT,
-      totalPages: Math.ceil(this.props.items.length / LIMIT),
+      totalPages: Math.ceil(this.props.items.length / this.props.limit),
       chunkedItems: this.getChunkedItems(1)
     };
 
@@ -25,8 +23,8 @@ export default class CanonicalPagination extends React.Component {
     this.getChunkedItems = this.getChunkedItems.bind(this);
   }
 
-
   componentWillReceiveProps(nextProps) {
+    // once our items get passed down, let's update our state
     if (this.props.items !== nextProps.items) {
       this.setState({
         chunkedItems: this.getChunkedItems(this.state.currentPage)
@@ -58,15 +56,25 @@ export default class CanonicalPagination extends React.Component {
   }
 
   getChunkedItems(currentPage) {
-    return chunk(this.props.items, LIMIT)[currentPage - 1];
+    return chunk(this.props.items, this.props.limit)[currentPage - 1];
   }
 
   render() {
     return (
       <div>
-        {map(this.state.chunkedItems, (item) => (
-          <SpotifyPlaylist key={item.id} playlist={item} handlePlaylistSelect={this.props.handleItemSelect}/>
-        ))}
+        {this.props.type === PLAYLISTS.TYPE &&
+          map(this.state.chunkedItems, (item) => (
+              <SpotifyPlaylist key={item.id} playlist={item} handlePlaylistSelect={this.props.handleItemSelect} />
+            )
+          )
+        }
+
+        {this.props.type === TRACKS.TYPE &&
+          map(this.state.chunkedItems, (item) => (
+              <AnalyzedTrackRow key={item.id} track={item}/>
+            )
+          )
+        }
 
         <Pagination
           totalPages={this.state.totalPages}
@@ -78,11 +86,15 @@ export default class CanonicalPagination extends React.Component {
   }
 }
 
-CanonicalPagination.defaultProps = {
-  items: []
+SpotifyPagination.defaultProps = {
+  items: [],
+  type: {},
+  limit: 10
 };
 
-CanonicalPagination.propTypes = {
+SpotifyPagination.propTypes = {
   items: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
+  limit: PropTypes.number.isRequired,
   handleItemSelect: PropTypes.func
 };

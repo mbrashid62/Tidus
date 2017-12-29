@@ -1,14 +1,15 @@
-import React, {PropTypes} from 'react';
-const AnalyzedTrackRow = ({track}) => {
+import React, { PropTypes } from 'react';
+
+const AnalyzedTrackRow = ({ track }) => {
     return (
-        <tr className="text-left track-row">
-            <td className="track-artist" style={{width: '20%'}}>{track.artist}</td>
-            <td className="track-name" style={{width: '32%'}}>{track.name}</td>
-            <td className="track-acousticness" style={{width: '12%'}}>{track.acousticness}</td>
-            <td className="track-danceability" style={{width: '12%'}}>{track.danceability}</td>
-            <td className="track-energy" style={{width: '12%'}}>{track.energy}</td>
-            <td className="track-valence" style={{width: '12%'}}>{track.valence}</td>
-        </tr>
+        <div className="text-left track-row row">
+            <div className="track-artist col-md-2">{track.artist}</div>
+            <div className="track-name col-md-2">{track.name}</div>
+            <div className="track-acousticness col-md-2">{track.acousticness}</div>
+            <div className="track-danceability col-md-2">{track.danceability}</div>
+            <div className="track-energy col-md-2">{track.energy}</div>
+            <div className="track-valence col-md-2">{track.valence}</div>
+        </div>
     );
 };
 
