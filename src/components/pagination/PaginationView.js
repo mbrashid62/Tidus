@@ -27,7 +27,7 @@ export default class PaginationView extends React.Component {
    * @returns {React.Element}
    */
   renderPaginationLink (opts) {
-    const { namespace, handleClick, asCanonical } = this.props;
+    const { handleClick, asCanonical } = this.props;
     const { pageNum, className, ariaLabel, content, clickIndicator } = opts;
 
     const extras = asCanonical ? { rel: 'canonical' } : {};
@@ -53,6 +53,7 @@ export default class PaginationView extends React.Component {
     const pagination = [];
     let pageNum = null;
 
+    // if we are not on the first or the last page
     if (this.props.currentPage !== 1 && this.props.currentPage !== this.props.totalPages) {
       pageNum = this.props.currentPage;
       pagination.push(

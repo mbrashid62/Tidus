@@ -3,5 +3,5 @@ export const PAGINATION_CONTROLS = {
   PREVIOUS: 'prev'
 };
 
-export const PLAYLISTS_LIMIT = 3;
+export const PLAYLISTS_LIMIT = 10;
 export const TRACKS_LIMIT = 30;

@@ -383,5 +383,9 @@ span {
         }
       }
     }
+
+    &.divider {
+      border: none;
+    }
   }
 }

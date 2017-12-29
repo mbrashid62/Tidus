@@ -5,6 +5,7 @@ export default class Pagination extends React.Component {
 
   constructor(props, context) {
     super(props, context);
+
     this.state = {
       prevPage: (this.props.currentPage !== 1) ? this.props.currentPage - 1 : null,
       nextPage: (this.props.currentPage !== this.props.totalPages) ? this.props.currentPage + 1 : null
@@ -32,16 +33,14 @@ export default class Pagination extends React.Component {
   }
 
   render() {
-    const {
-      totalPages
-    } = this.props;
+    const { totalPages } = this.props;
 
     const {
       prevPage,
       nextPage
     } = this.state;
 
-    // Safeguard to kill pagination if initial is 0
+    // end pagination if we have 0 pages
     if (totalPages === 0) {
       return null;
     }
@@ -66,8 +65,6 @@ Pagination.propTypes = {
   handleClick: PropTypes.func,
   namespace: PropTypes.string,
   asCanonical: PropTypes.bool,
-  // @deprecated
-  itemsPerPage: PropTypes.number
 };
 
 Pagination.defaultProps = {

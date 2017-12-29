@@ -9,8 +9,6 @@ import {
 import Pagination from './Pagination';
 import SpotifyPlaylist from "../main/SpotifyPlaylist";
 
-// const LIMIT = 5;
-
 export default class CanonicalPagination extends React.Component {
 
   constructor(props, context) {
@@ -36,6 +34,11 @@ export default class CanonicalPagination extends React.Component {
     }
   }
 
+  /**
+   *
+   * @param e - event object
+   * @param page - int val of current page
+   */
   setCurrentPage (e, page) {
     e.preventDefault();
     let currentPage = page;
@@ -69,7 +72,6 @@ export default class CanonicalPagination extends React.Component {
           totalPages={this.state.totalPages}
           currentPage={this.state.currentPage}
           handleClick={this.setCurrentPage}
-          asCanonical={true} // eslint-disable-line
         />
       </div>
     );
@@ -77,8 +79,7 @@ export default class CanonicalPagination extends React.Component {
 }
 
 CanonicalPagination.defaultProps = {
-  items: [],
-  handleItemSelect: () => {}
+  items: []
 };
 
 CanonicalPagination.propTypes = {
