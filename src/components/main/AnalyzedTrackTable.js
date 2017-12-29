@@ -55,7 +55,7 @@ export default class AnalyzedTrackTable extends React.Component {
     const dataTable = document.querySelector('.data-table');
 
     this.setState({
-      rowWidth: dataTable.offsetWidth - 12
+      rowWidth: dataTable.offsetWidth
     });
   }
 

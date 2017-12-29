@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Merriweather|Open+Sans|Open+Sans+Condensed:300|Raleway');
 
 //== Media queries breakpoints
-// Small screen / tablet USE THIS ONE.
+// Small screen / tablet
 $screen-sm:                  540px !default; //em($sm-num, $font-size-base) !default;
 $screen-sm-min:              $screen-sm !default;
 
@@ -24,6 +24,8 @@ $screen-sm-max:              ($screen-md - 1) !default; //em(($md-num - 1)) !def
 $screen-md-max:              ($screen-lg - 1) !default; //em(($lg-num - 1)) !default;
 $screen-lg-max:              ($screen-xl - 1) !default; //em(($xl-num - 1)) !default;
 
+$light-gray-border: 1px solid rgba(0, 0, 0, 0.1);
+
 #app {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
@@ -35,7 +37,7 @@ html {
 }
 
 body {
-  background-color: #eeeeee;
+  background-color: #EEE;
   letter-spacing: 0;
   position: relative;
   margin: 0;
@@ -63,10 +65,6 @@ nav {
   padding-top: 20px;
 }
 
-.form {
-  width: 60%;
-}
-
 .error {
   color: red;
 }
@@ -76,7 +74,6 @@ a {
     height: 50px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     padding: 20px !important;
-    /*font-family: 'Raleway', sans-serif;*/
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 18px;
     font-weight: 300;
@@ -105,19 +102,6 @@ a {
     background-color: darkslategrey !important;
   }
 
-  .logout-btn {
-    font-family: 'Lato', sans-serif;
-    padding: 5px 25px !important;
-    background-color: #eee;
-    border-radius: 15px;
-    border: 1px solid darkslategrey !important;
-
-    &:hover {
-      background-color: black !important;
-      color: #eee !important;
-    }
-  }
-
   .navbar-text {
     color: black;
     font-family: 'Lato', sans-serif;
@@ -142,10 +126,10 @@ a {
   }
 }
 
-/* Moving onto playlist stuff */
+/* playlist stuff */
 .instructions {
   font-family: 'Lato', sans-serif;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: $light-gray-border
   letter-spacing: 0.05rem;
 
   h1 {
@@ -178,30 +162,6 @@ a {
   /*display: block;overflow-y: scroll;*!*/
   max-height: 570px;
   display: block;
-
-  tbody {
-    overflow-y: scroll;
-    max-height: 530px;
-    display: block;
-  }
-
-  tr {
-    th {
-      display: inline-block;
-      overflow-x: hidden;
-      letter-spacing: 0.15rem;
-
-      &:hover {
-        cursor: pointer;
-        background-color: darkslategrey;
-        color: #eee;
-      }
-    }
-
-    .track-name {
-      min-width: 285px;
-    }
-  }
 }
 
 /* About Page */
@@ -304,9 +264,11 @@ span {
 
   .header-row {
     display: inline-block;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: $light-gray-border
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
 
     div {
       padding-left: 0;
@@ -328,6 +290,10 @@ span {
       padding-left: 0;
       padding-right: 0;
     }
+
+    &:first-of-type {
+      padding-top: 15px;
+    }
   }
 }
 
@@ -344,7 +310,7 @@ span {
 
 .analyzed-track-table-col {
   padding-left: 25px;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: $light-gray-border;
 }
 
 .pagination-container {
