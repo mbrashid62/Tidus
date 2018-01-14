@@ -3,5 +3,12 @@ export const PAGINATION_CONTROLS = {
   PREVIOUS: 'prev'
 };
 
-export const PLAYLISTS_LIMIT = 10;
-export const TRACKS_LIMIT = 30;
+export const PLAYLISTS = {
+  TYPE: 'playlists',
+  LIMIT: 10
+};
+
+export const TRACKS = {
+  TYPE: 'tracks',
+  LIMIT: 10
+};

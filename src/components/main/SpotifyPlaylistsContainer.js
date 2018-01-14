@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import scrollToComponent from 'react-scroll-to-component';
 
-import CanonicalPagination from '../pagination/CanonicalPagination';
+import { PLAYLISTS } from '../pagination/config';
+import SpotifyPagination from '../pagination/SpotifyPagination';
 
 export default class SpotifyPlaylistsContainer extends React.Component {
 
@@ -15,7 +16,6 @@ export default class SpotifyPlaylistsContainer extends React.Component {
       duration: 500
     });
   }
-
 
   render() {
     const { playlists, handlePlaylistSelect } = this.props;
@@ -33,7 +33,12 @@ export default class SpotifyPlaylistsContainer extends React.Component {
         </div>
 
         <div className="playlists-list">
-          <CanonicalPagination items={playlists} handleItemSelect={handlePlaylistSelect} />
+          <SpotifyPagination
+            items={playlists}
+            type={PLAYLISTS.TYPE}
+            limit={PLAYLISTS.LIMIT}
+            handleItemSelect={handlePlaylistSelect}
+          />
         </div>
       </div>
     );

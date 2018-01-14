@@ -4,7 +4,8 @@ import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
 import { TOOL_TIP_MARKUP } from'../../constants/const';
-import AnalyzedTrackRow from '../main/AnalyzedTrackRow';
+import { TRACKS } from '../pagination/config';
+import SpotifyPagination from '../pagination/SpotifyPagination';
 import ToolTip from  '../common/ToolTip';
 import scrollToComponent from 'react-scroll-to-component';
 
@@ -42,7 +43,7 @@ export default class AnalyzedTrackTable extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { playlistName, loading} = this.props;
+    const { playlistName, loading } = this.props;
 
     if (!loading && !_.isEqual(prevProps.playlistName, playlistName)) {
       this.setHeaderWidths();
@@ -54,7 +55,7 @@ export default class AnalyzedTrackTable extends React.Component {
     const dataTable = document.querySelector('.data-table');
 
     this.setState({
-      rowWidth: dataTable.offsetWidth - 12
+      rowWidth: dataTable.offsetWidth
     });
   }
 
@@ -81,23 +82,17 @@ export default class AnalyzedTrackTable extends React.Component {
           <h1 className="text-center">You selected <strong>"{playlistName}"</strong></h1>
           <p className="text-center">Audio Feature data for this playlist is below. Click one of the table headers to sort this data.</p>
         </div>
-        <table className="table data-table">
-          <thead className="data-table-header">
-          <tr className="header-row" style={{width: rowWidth}}>
-            <th onClick={this.handleTableSort} style={{width: '20%'}}>Artist</th>
-            <th onClick={this.handleTableSort} style={{width: '32%'}}>Name</th>
-            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Acousticness">Acousticness</th>
-            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Danceability">Danceability</th>
-            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Energy">Energy</th>
-            <th onClick={(e) => this.handleTableSort(e)} style={{width: '12%'}} data-tip data-for="Valence">Valence</th>
-          </tr>
-          </thead>
-          <tbody>
-          {tracks.map(track =>
-            <AnalyzedTrackRow key={track.id} track={track}/>
-          )}
-          </tbody>
-        </table>
+        <div className="table data-table container">
+          <div className="header-row row" style={{ width: rowWidth }}>
+            <div className="col-md-2" onClick={this.handleTableSort}>Artist</div>
+            <div className="col-md-2" onClick={this.handleTableSort}>Name</div>
+            <div className="col-md-2" onClick={(e) => this.handleTableSort(e)} data-tip data-for="Acousticness">Acousticness</div>
+            <div className="col-md-2" onClick={(e) => this.handleTableSort(e)} data-tip data-for="Danceability">Danceability</div>
+            <div className="col-md-2" onClick={(e) => this.handleTableSort(e)} data-tip data-for="Energy">Energy</div>
+            <div className="col-md-2" onClick={(e) => this.handleTableSort(e)} data-tip data-for="Valence">Valence</div>
+          </div>
+          <SpotifyPagination items={tracks} type={TRACKS.TYPE} limit={TRACKS.LIMIT}/>
+        </div>
 
         {TOOL_TIP_MARKUP.map(attribute =>
           <ToolTip key={attribute.id} toolTipId={attribute.id} copy={attribute.copy}/>
