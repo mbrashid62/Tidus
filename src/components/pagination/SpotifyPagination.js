@@ -26,7 +26,6 @@ export default class SpotifyPagination extends React.Component {
   componentWillReceiveProps(nextProps) {
     // once our items get passed down, let's update our state
     if (this.props.items !== nextProps.items) {
-      console.log('items have changed...');
       this.setState({
         chunkedItems: this.getChunkedItems(this.state.currentPage, nextProps.items)
       });
