@@ -64,11 +64,12 @@ Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   handleClick: PropTypes.func,
   namespace: PropTypes.string,
-  asCanonical: PropTypes.bool,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
+  showEllipses: PropTypes.bool
 };
 
 Pagination.defaultProps = {
   handleClick: () => {},
-  namespace: 'p',
-  asCanonical: false
+  namespace: 'p'
 };

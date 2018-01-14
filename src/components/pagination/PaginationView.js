@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
 import cn from 'classnames';
 
 import { PAGINATION_CONTROLS } from '../pagination/config';
@@ -27,20 +26,17 @@ export default class PaginationView extends React.Component {
    * @returns {React.Element}
    */
   renderPaginationLink (opts) {
-    const { handleClick, asCanonical } = this.props;
+    const { handleClick } = this.props;
     const { pageNum, className, ariaLabel, content, clickIndicator } = opts;
 
-    const extras = asCanonical ? { rel: 'canonical' } : {};
     return (
-      <Link
+      <a
         aria-label={ariaLabel}
         className={className}
-        to={''}
         onClick={(e) => handleClick(e, clickIndicator || pageNum)} // eslint-disable-line
-        {...extras}
       >
         {content || pageNum}
-      </Link>
+      </a>
     );
   }
 
@@ -66,7 +62,8 @@ export default class PaginationView extends React.Component {
     }
 
     // Add previous
-    if (this.props.currentPage !== 2 && this.props.currentPage !== 1 && this.props.totalPages > 2) {
+    // if there are more than two pages and we are not on our first or second page
+    if (this.props.totalPages > 2 && this.props.currentPage !== 1 && this.props.currentPage !== 2) {
       pageNum = this.props.prevPage;
       pagination.unshift(
         <li key={pageNum}>
@@ -77,7 +74,8 @@ export default class PaginationView extends React.Component {
       );
     }
 
-    // Add previous + 1
+    // Add previous - 1
+    // if there are more than three pages and we are not on the last page
     if (this.props.currentPage === this.props.totalPages && this.props.totalPages > 3) {
       pageNum = this.props.prevPage - 1;
       pagination.unshift(
@@ -117,14 +115,18 @@ export default class PaginationView extends React.Component {
       );
     }
 
-    // Add previous ellipsis
-    if (this.props.currentPage > 3 && this.props.totalPages > 4) {
-      pagination.unshift(<li key="prev-jump" className="divider">...</li>);
-    }
+    // if there are more than four pages, let's handle ellipses
+    if (this.props.totalPages > 4) {
 
-    // Add next ellipsis
-    if (this.props.currentPage < (this.props.totalPages - 2) && this.props.totalPages > 4) {
-      pagination.push(<li key="next-jump" className="divider">...</li>);
+      // if the user is past the 3rd page,let's add previous ellipses
+      if (this.props.currentPage > 3) {
+        pagination.unshift(<li key="prev-jump" className="divider">...</li>);
+      }
+
+      // if there are more than two pages left, let's add next ellipses
+      if (this.props.currentPage < (this.props.totalPages -2)) {
+        pagination.push(<li key="next-jump" className="divider">...</li>);
+      }
     }
 
     return pagination;
@@ -135,60 +137,55 @@ export default class PaginationView extends React.Component {
       <ul className="pagination pagination-inner hidden-print">
         {(this.props.currentPage === 1)
           ? (
-            <li>
-              <a className="glyphicon glyphicon-chevron-left disabled" />
+            <li className="pagination-left">
+              <a className={cn(this.props.leftIcon, 'disabled')} />
             </li>
-          )
-          : (
-            <li>
+          ) : (
+            <li className="pagination-left">
               {this.renderPaginationLink({
                 ariaLabel: 'Previous',
-                className: 'pagination-left',
                 pageNum: this.props.prevPage,
-                content: <span aria-hidden="true"><i className="glyphicon glyphicon-chevron-left" /></span>,
+                content: <span aria-hidden="true"><i className={this.props.leftIcon} /></span>,
                 clickIndicator: PAGINATION_CONTROLS.PREVIOUS
               })}
             </li>
           )}
 
 
-        {/* Always show first page */}
+        {/* Show our first link */}
         <li className={cn('pagination-first', { active: (this.props.currentPage === 1) })}>
           {this.renderPaginationLink({
             pageNum: 1
           })}
         </li>
 
-        {/* Render the important things */}
+        {/* Render our middle links */}
         {this.renderPaginationItems()}
 
-        {/* Show last page  */}
-        {(this.props.totalPages !== 1) &&
-        <li className={cn('pagination-last', { active: (this.props.currentPage === this.props.totalPages) })}>
-          {this.renderPaginationLink({
-            pageNum: this.props.totalPages
-          })}
-        </li>
-        }
+        {/* if we have multiple pages, show our last link */}
+        {(this.props.totalPages !== 1) && (
+          <li className={cn('pagination-last', { active: (this.props.currentPage === this.props.totalPages) })}>
+            {this.renderPaginationLink({
+              pageNum: this.props.totalPages
+            })}
+          </li>
+        )}
 
-        {/* if current page and last page are the same, hide */}
+        {/* if current page and last page are the same, disable our right-icon, otherwise enable it */}
         {(this.props.currentPage === this.props.totalPages)
           ? (
-            <li>
-              <a className="glyphicon glyphicon-chevron-right disabled" />
+            <li className="pagination-right">
+              <a className={cn(this.props.rightIcon, 'disabled')}/>
             </li>
-          )
-          : (
-            <li>
+          ) : (
+            <li className="pagination-right">
               {this.renderPaginationLink({
                 ariaLabel: 'Next',
-                className: 'pagination-right',
                 pageNum: this.props.nextPage,
-                content: (<span aria-hidden="true"><i className="glyphicon glyphicon-chevron-right" /></span>),
+                content: (<span aria-hidden="true"><i className={this.props.rightIcon} /></span>),
                 clickIndicator: PAGINATION_CONTROLS.NEXT
               })}
             </li>
-
           )}
       </ul>
     );
@@ -200,7 +197,9 @@ PaginationView.propTypes = {
   totalPages: PropTypes.number.isRequired,
   namespace: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
-  asCanonical: PropTypes.bool.isRequired,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
+
   nextPage: PropTypes.number,
   prevPage: PropTypes.number
 };

@@ -58,7 +58,9 @@ export function buildSpotifyAuthURL(credentials) {
 
 export function sortTracks(attribute, tracks) {
     const newlySortedTracks = _.sortBy(tracks, [attribute]);
-    if (_.isEqual(newlySortedTracks, tracks)) { // if array is already sorted by selected attribute, reverse it
+
+    // if array is already sorted by selected attribute, reverse it
+    if (_.isEqual(newlySortedTracks, tracks)) {
         _.reverse(newlySortedTracks);
     }
     return newlySortedTracks;

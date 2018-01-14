@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { chunk, map } from 'lodash';
+import { chunk, map, isEmpty } from 'lodash';
 
 import { PAGINATION_CONTROLS, PLAYLISTS, TRACKS } from '../pagination/config';
 
@@ -13,10 +13,11 @@ export default class SpotifyPagination extends React.Component {
   constructor(props, context) {
     super(props, context);
 
+    debugger;
     this.state = {
       currentPage: 1,
       totalPages: Math.ceil(this.props.items.length / this.props.limit),
-      chunkedItems: this.getChunkedItems(1)
+      chunkedItems: this.getChunkedItems(1, this.props.items)
     };
 
     this.setCurrentPage = this.setCurrentPage.bind(this);
@@ -26,8 +27,9 @@ export default class SpotifyPagination extends React.Component {
   componentWillReceiveProps(nextProps) {
     // once our items get passed down, let's update our state
     if (this.props.items !== nextProps.items) {
+      console.log('items have changed...');
       this.setState({
-        chunkedItems: this.getChunkedItems(this.state.currentPage)
+        chunkedItems: this.getChunkedItems(this.state.currentPage, nextProps.items)
       });
     }
   }
@@ -50,13 +52,13 @@ export default class SpotifyPagination extends React.Component {
 
       this.setState({
         currentPage,
-        chunkedItems: this.getChunkedItems(currentPage)
+        chunkedItems: this.getChunkedItems(currentPage, this.props.items)
       });
     }
   }
 
-  getChunkedItems(currentPage) {
-    return chunk(this.props.items, this.props.limit)[currentPage - 1];
+  getChunkedItems(currentPage, items = []) {
+    return isEmpty(items) ? [] : chunk(items, this.props.limit)[currentPage - 1];
   }
 
   render() {
@@ -80,6 +82,9 @@ export default class SpotifyPagination extends React.Component {
           totalPages={this.state.totalPages}
           currentPage={this.state.currentPage}
           handleClick={this.setCurrentPage}
+          leftIcon="glyphicon glyphicon-chevron-left"
+          rightIcon="glyphicon glyphicon-chevron-right"
+          showEllipses={true} // eslint-disable-line
         />
       </div>
     );
@@ -96,5 +101,8 @@ SpotifyPagination.propTypes = {
   items: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
   limit: PropTypes.number.isRequired,
-  handleItemSelect: PropTypes.func
+  handleItemSelect: PropTypes.func,
+  leftIcon: PropTypes.string,
+  rightIcon: PropTypes.string,
+  showEllipses: PropTypes.bool
 };

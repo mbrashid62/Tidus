@@ -17,7 +17,6 @@ export default class SpotifyPlaylistsContainer extends React.Component {
     });
   }
 
-
   render() {
     const { playlists, handlePlaylistSelect } = this.props;
 

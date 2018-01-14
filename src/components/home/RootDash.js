@@ -16,6 +16,7 @@ import OptimizeContainer from '../Optimize/OptimizeContainer';
 export class RootDash extends React.Component {
     constructor(props, context) {
         super(props, context);
+
         this.state = {
             shouldRenderPlaylists: false,
             shouldRenderSelectedPlaylistTracks: false,
@@ -58,10 +59,6 @@ export class RootDash extends React.Component {
         if(analyzedTracks.length > 0) {
             this.setState({ shouldShowAnalyzedData: true });
         }
-    }
-
-    componentDidMount() {
-
     }
 
     componentWillReceiveProps(nextProps) { // only called when props have changed. can update the state depending on the upcoming props w/o triggering a re-render
@@ -146,12 +143,14 @@ export class RootDash extends React.Component {
 
     fetchAudioFeaturesDataForPlaylist() {
         const { actions, selectedPlaylistName, selectedPlaylistTracks } = this.props;
+
         actions.fetchAudioFeaturesDataForPlaylist(selectedPlaylistName, selectedPlaylistTracks);
     }
 
     sortTracks(event) {
         const { actions, analyzedTracks } = this.props;
-        const attributeSelected = event.target.innerHTML.toLowerCase();
+
+        const attributeSelected = event.target.innerHTML.toLowerCase() || '';
         actions.sortTracks(attributeSelected, analyzedTracks);
     }
 
