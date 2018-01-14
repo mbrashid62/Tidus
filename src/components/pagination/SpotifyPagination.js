@@ -13,7 +13,6 @@ export default class SpotifyPagination extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    debugger;
     this.state = {
       currentPage: 1,
       totalPages: Math.ceil(this.props.items.length / this.props.limit),
