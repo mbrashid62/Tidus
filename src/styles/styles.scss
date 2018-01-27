@@ -133,6 +133,7 @@ a {
   letter-spacing: 0.05rem;
 
   h1 {
+    font-size: 26px;
     margin-top: 15px;
   }
 }
@@ -229,6 +230,10 @@ span {
   max-height: 570px;
   overflow-y: auto;
   margin-top: 15px;
+
+  .col-md-12 {
+    padding-left: 0;
+  }
 }
 .divider {
   border-top: 1px solid black;
@@ -298,10 +303,7 @@ span {
 }
 
 .spotify-playlists-container {
-  h1,
-  p {
-    text-align: center;
-  }
+
 }
 
 .spotify-playlists-col {
@@ -310,7 +312,10 @@ span {
 
 .analyzed-track-table-col {
   padding-left: 25px;
-  border-left: $light-gray-border;
+
+  @media screen and (min-width: $screen-lg-min) {
+    border-left: $light-gray-border;
+  }
 }
 
 .pagination-container {
