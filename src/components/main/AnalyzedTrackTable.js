@@ -14,18 +14,11 @@ export default class AnalyzedTrackTable extends React.Component {
   constructor(props) {
     super(props);
 
-     this.state = {
-       rowWidth: 0
-    };
-
-    this.setHeaderWidths = this.setHeaderWidths.bind(this);
-    this.setHeaderWidthsThrottled = _.throttle(this.setHeaderWidths, 150);
     this.handleTableSort = this.handleTableSort.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.setHeaderWidthsThrottled);
-    this.setHeaderWidths();
+    // window.addEventListener('resize', this.setHeaderWidthsThrottled);
   }
 
 
@@ -42,23 +35,6 @@ export default class AnalyzedTrackTable extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { playlistName, loading } = this.props;
-
-    if (!loading && !_.isEqual(prevProps.playlistName, playlistName)) {
-      this.setHeaderWidths();
-    }
-  }
-
-
-  setHeaderWidths() {
-    const dataTable = document.querySelector('.data-table');
-
-    this.setState({
-      rowWidth: dataTable.offsetWidth
-    });
-  }
-
   handleTableSort(e) {
     e.preventDefault();
     this.props.sortTracks(e);
@@ -69,7 +45,6 @@ export default class AnalyzedTrackTable extends React.Component {
 
   render () {
     const { playlistName, tracks } = this.props;
-    const { rowWidth } = this.state;
 
     return (
       <div
@@ -83,7 +58,7 @@ export default class AnalyzedTrackTable extends React.Component {
           <p className="text-center">Audio Feature data for this playlist is below. Click one of the table headers to sort this data.</p>
         </div>
         <div className="table data-table container">
-          <div className="header-row row" style={{ width: rowWidth }}>
+          <div className="header-row row">
             <div className="col-md-2" onClick={this.handleTableSort}>Artist</div>
             <div className="col-md-2" onClick={this.handleTableSort}>Name</div>
             <div className="col-md-2" onClick={(e) => this.handleTableSort(e)} data-tip data-for="Acousticness">Acousticness</div>
