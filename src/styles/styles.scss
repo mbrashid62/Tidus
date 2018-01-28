@@ -29,7 +29,7 @@ $light-gray-border: 1px solid rgba(0, 0, 0, 0.1);
 #app {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
-  min-width: 600px;
+  min-width: 380px;
 }
 html {
   height: 100%;
@@ -54,6 +54,10 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   z-index: 1;
 
+  @media screen {
+    padding: 20px;
+  }
+
   h1 {
     color: black;
     font-family: 'Lato', sans-serif;
@@ -63,6 +67,12 @@ body {
 
 nav {
   padding-top: 20px;
+}
+
+.navbar {
+  @media screen and (max-width: $screen-xs-max) {
+    margin-bottom: 0;
+  }
 }
 
 .error {
@@ -85,6 +95,12 @@ a {
     margin: 25px auto !important;
     text-align: center;
     border-radius: 4px;
+
+    @media screen and (max-width: $screen-xs-max) {
+      height: 40px;
+      padding: 14px !important;
+      font-size: 14px;
+    }
   }
 
   &.action-btn:hover {
@@ -133,6 +149,7 @@ a {
   letter-spacing: 0.05rem;
 
   h1 {
+    font-size: 26px;
     margin-top: 15px;
   }
 }
@@ -157,11 +174,14 @@ a {
 
 /* Data table */
 .data-table {
+  display: block;
+  max-height: 570px;
   font-family: 'Lato', sans-serif;
   letter-spacing: 0.05rem;
-  /*display: block;overflow-y: scroll;*!*/
-  max-height: 570px;
-  display: block;
+
+  @media screen and (max-width: $screen-md-max) {
+    padding: 0;
+  }
 }
 
 /* About Page */
@@ -223,12 +243,41 @@ span {
   display: block;
   margin-right: auto;
   margin-left: auto;
+
+  @media screen and (max-width: $screen-md-max) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: $screen-sm-max) {
+    h1 {
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (max-width: $screen-xs-max) {
+    p {
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .container-fluid {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .playlists-list {
   max-height: 570px;
   overflow-y: auto;
   margin-top: 15px;
+
+  .col-md-12 {
+    padding-left: 0;
+  }
 }
 .divider {
   border-top: 1px solid black;
@@ -266,6 +315,7 @@ span {
     display: inline-block;
     padding-top: 10px;
     padding-bottom: 10px;
+    width: 100%;
     border-bottom: $light-gray-border;
     font-family: 'Raleway', sans-serif;
     font-weight: 600;
@@ -273,18 +323,37 @@ span {
     div {
       padding-left: 0;
       padding-right: 0;
-      font-size: 18px;
+      font-size: 14px;
+
+      @media screen and(max-width: $screen-md-max) {
+        width: 100px;
+      }
+
+      @media screen and(max-width: $screen-sm-max) {
+        font-size: 12px;
+      }
+
+      @media screen and(max-width: $screen-xs-max) {
+        font-size: 8px;
+      }
 
       &:hover {
         cursor: pointer;
         color: #DDD;
       }
     }
+
+    @media screen and(max-width: $screen-lg-min) {
+      display: flex;
+      justify-content: space-between;
+      margin: 0;
+    }
   }
 
   .track-row {
     padding-top: 5px;
     padding-bottom: 5px;
+    font-size: 12px;
 
     div {
       padding-left: 0;
@@ -294,14 +363,24 @@ span {
     &:first-of-type {
       padding-top: 15px;
     }
+
+    @media screen and(max-width: $screen-lg-min) {
+      display: flex;
+      justify-content: space-between;
+
+      .col-md-2 {
+        width: 90px;
+      }
+    }
+
+    @media screen and(max-width: $screen-xs-max) {
+      font-size: 8px;
+    }
   }
 }
 
 .spotify-playlists-container {
-  h1,
-  p {
-    text-align: center;
-  }
+
 }
 
 .spotify-playlists-col {
@@ -310,7 +389,14 @@ span {
 
 .analyzed-track-table-col {
   padding-left: 25px;
-  border-left: $light-gray-border;
+
+  @media screen and (min-width: $screen-lg-min) {
+    border-left: $light-gray-border;
+  }
+
+  @media screen and(max-width: $screen-md-max) {
+    padding-left: 15px;
+  }
 }
 
 .pagination-container {
@@ -354,5 +440,20 @@ span {
     &.divider {
       border: none;
     }
+  }
+}
+
+.pagination-parent {
+  width: 100%;
+}
+
+.paginated-items {
+  @media screen and (max-width: $screen-md-max) {
+    max-height: 460px;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-width: $screen-sm-max) {
+    padding-left: 20px;
   }
 }

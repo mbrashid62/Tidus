@@ -61,20 +61,22 @@ export default class SpotifyPagination extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.type === PLAYLISTS.TYPE &&
-          map(this.state.chunkedItems, (item) => (
-              <SpotifyPlaylist key={item.id} playlist={item} handlePlaylistSelect={this.props.handleItemSelect} />
+      <div className="pagination-parent">
+        <div className="paginated-items">
+          {this.props.type === PLAYLISTS.TYPE &&
+            map(this.state.chunkedItems, (item) => (
+                <SpotifyPlaylist key={item.id} playlist={item} handlePlaylistSelect={this.props.handleItemSelect} />
+              )
             )
-          )
-        }
+          }
 
-        {this.props.type === TRACKS.TYPE &&
-          map(this.state.chunkedItems, (item) => (
-              <AnalyzedTrackRow key={item.id} track={item}/>
+          {this.props.type === TRACKS.TYPE &&
+            map(this.state.chunkedItems, (item) => (
+                <AnalyzedTrackRow key={item.id} track={item}/>
+              )
             )
-          )
-        }
+          }
+        </div>
 
         <Pagination
           totalPages={this.state.totalPages}

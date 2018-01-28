@@ -28,7 +28,7 @@ export default class SpotifyPlaylistsContainer extends React.Component {
          }}
       >
         <div className="instructions">
-          <h1 className="text-left">Your Spotify Playlists</h1>
+          <h1 className="text-left">Spotify Playlists</h1>
           <p className="text-left">Click to select one.</p>
         </div>
 
