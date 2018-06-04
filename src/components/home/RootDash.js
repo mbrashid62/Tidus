@@ -215,9 +215,7 @@ export class RootDash extends React.Component {
                 }
                 {
                     <div className="col-md-12">
-                      {true &&
-                        <OptimizeContainer/>
-                      }
+                      <OptimizeContainer/>
                     </div>
                 }
             </div>

@@ -5,7 +5,6 @@ import * as types from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import * as spotifySelectors from '.././selectors/selectors';
 import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAuth';
-import {SET_ACTIVE_TRACKS} from "./actionTypes";
 
 // action creators
 export function createSpotifyAuthorizeUrlSuccess(url) {
@@ -71,12 +70,6 @@ export function handleSpotifyAccessToken(accessToken) {
     };
 }
 
-export function handlePlaylistSelect(selectedPlaylist, playlistId) {
-    return (dispatch) => {
-      dispatch(handleSelectedPlaylist(selectedPlaylist, playlistId));
-    };
-}
-
 export function fetchSpotifyUserID() {
     return (dispatch) => {
         dispatch(beginAjaxCall());
@@ -112,7 +105,7 @@ export function setActivePlaylistName(name) {
 
 export function setActiveTracks(playlistId) {
     return {
-        type: SET_ACTIVE_TRACKS,
+        type: types.SET_ACTIVE_TRACKS,
         payload: {
             playlistId
         }
