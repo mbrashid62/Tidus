@@ -288,6 +288,26 @@ span {
   h1 {
     font-family: 'Lato', sans-serif;
   }
+
+  .optimize-display {
+    padding: 15px;
+
+    .top-track {
+      padding: 20px 10px;
+    }
+
+    .artist {
+      font-size: 22px;
+    }
+
+    .track {
+      font-size: 18px;
+    }
+
+    .rating {
+      text-align: right;
+    }
+  }
 }
 
 .radio-btn-group {

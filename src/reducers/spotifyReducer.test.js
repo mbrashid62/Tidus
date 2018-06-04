@@ -68,12 +68,11 @@ describe('Spotify Reducer', () => {
         expect(newState.error).toEqual(error);
     });
 
-    it('should add selected playlist tracks on FETCH_PLAYLIST_TRACKS_SUCCESS', () => {
+    it('should update our hasFoundTracks correctly FETCH_PLAYLIST_TRACKS_SUCCESS', () => {
         const tracks = [{trackOne: 'sample'}, {trackTwo: 'other sample'}];
         const action = actions.fetchSpotifyPlaylistTracksSuccess(tracks);
         const newState= spotifyReducer(initialState, action);
         expect(newState.hasFoundTracks).toEqual(true);
-        expect(newState.selectedPlaylistTracks).toEqual(tracks);
     });
 
     it('should add an error on FETCH_PLAYLIST_TRACKS_ERROR', () => {

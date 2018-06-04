@@ -5,6 +5,7 @@ import * as types from './actionTypes';
 import { beginAjaxCall } from './ajaxStatusActions';
 import * as spotifySelectors from '.././selectors/selectors';
 import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAuth';
+import {SET_ACTIVE_TRACKS} from "./actionTypes";
 
 // action creators
 export function createSpotifyAuthorizeUrlSuccess(url) {
@@ -32,7 +33,7 @@ export function fetchSpotifyPlaylistsError(error) {
 }
 
 export function fetchSpotifyPlaylistTracksSuccess(tracks) {
-    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_COMPLETE, payload: { selectedPlaylistTracks: tracks, hasFoundTracks: true,  error: {}  }};
+    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_COMPLETE, payload: { hasFoundTracks: true,  error: {}  }};
 }
 
 export function fetchSpotifyPlaylistTracksError(error) {
@@ -48,14 +49,10 @@ export function fetchAudioFeaturesForPlaylistIssue(error) {
 }
 
 export function sortSpotifyAnalyzedTracks(sortedTracks) {
-    return { type: types.SORT_SPOTIFY_ANALYZED_TRACKS, payload: { analyzedTracks: sortedTracks }};
+    return { type: types.SORT_SPOTIFY_ANALYZED_TRACKS, payload: { activeAnalyzedTracks: sortedTracks }};
 }
 
-export function handleSelectedPlaylist(selectedPlaylist) {
-    return { type: types.HANDLE_PLAYLIST_SELECT, payload: { selectedPlaylistName: selectedPlaylist }};
-}
-
-const spotifyApi = new SpotifyWebApi(wrapperCredentials);
+export const spotifyApi = new SpotifyWebApi(wrapperCredentials);
 
 export function connectToSpotify() {
     return (dispatch) => {
@@ -74,9 +71,9 @@ export function handleSpotifyAccessToken(accessToken) {
     };
 }
 
-export function handlePlaylistSelect(selectedPlaylist) {
+export function handlePlaylistSelect(selectedPlaylist, playlistId) {
     return (dispatch) => {
-      dispatch(handleSelectedPlaylist(selectedPlaylist));
+      dispatch(handleSelectedPlaylist(selectedPlaylist, playlistId));
     };
 }
 
@@ -106,15 +103,31 @@ export function fetchSpotifyPlaylists(spotifyID) {
     };
 }
 
+export function setActivePlaylistName(name) {
+    return {
+        type: types.SET_ACTIVE_PLAYLIST_NAME,
+        payload: { activePlaylistName: name }
+    };
+}
+
+export function setActiveTracks(playlistId) {
+    return {
+        type: SET_ACTIVE_TRACKS,
+        payload: {
+            playlistId
+        }
+    };
+}
+
 export function fetchPlaylistTracks(spotifyUserId, playlistId, playlistSelected){
     return (dispatch) => {
         // dispatch(beginAjaxCall());
-
         spotifyApi.getPlaylistTracks(spotifyUserId, playlistId)
             .then((tracks) => {
                 const spotifyTracks = tracks.body.items;
+                // dispatch(setActivePlaylistName(playlistSelected));
                 dispatch(fetchSpotifyPlaylistTracksSuccess(spotifyTracks));
-                dispatch(fetchAudioFeaturesDataForPlaylist(playlistSelected, spotifyTracks));
+                dispatch(fetchAudioFeaturesDataForPlaylist(playlistSelected, spotifyTracks, playlistId));
             })
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistTracksError(error));
@@ -122,7 +135,7 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId, playlistSelected)
     };
 }
 
-export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracksObj) {
+export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracksObj, playListId) {
     const formattedTrackData = spotifySelectors.formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj);
     const trackIds = formattedTrackData.trackIds;
     const justTracks = formattedTrackData.justTracks;
@@ -131,7 +144,7 @@ export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPl
         // dispatch(beginAjaxCall());
         spotifyApi.getAudioFeaturesForTracks(trackIds)
             .then((data) => {
-                const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks);
+                const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks, playListId);
                 dispatch(fetchAudioFeaturesForPlaylistComplete(spotifyPlaylistName, audioFeaturesWithNameAndArtists));
             }).catch((error) => {
                 dispatch(fetchAudioFeaturesForPlaylistIssue(error));

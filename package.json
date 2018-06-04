@@ -4,7 +4,7 @@
   "description": "Spotify App built with react, redux, es6, and more",
   "scripts": {
     "start": "babel-node tools/distServer.js",
-    "start-local": "npm-run-all --parallel test:watch open:src lint:watch",
+    "start-local": "npm-run-all --parallel test:watch lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
@@ -41,6 +41,7 @@
     "lodash": "^4.17.4",
     "node-sass": "3.10.1",
     "open": "0.0.5",
+    "prop-types": "^15.6.1",
     "react": "15.0.2",
     "react-button": "^1.2.1",
     "react-dom": "15.0.2",
@@ -94,6 +95,9 @@
     "webpack": "^1.15.0",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.10.0"
+  },
+  "globals": {
+    "__DEVELOPMENT__": true
   },
   "repository": {
     "type": "git",

@@ -30,7 +30,7 @@ export function formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj) {
     return {trackIds, justTracks};
 }
 
-export function addTrackNameAndArtist(audioFeaturesArray, justTracks) {
+export function addTrackNameAndArtist(audioFeaturesArray, justTracks, associatedPlaylistId) {
     _.forEach(audioFeaturesArray, ((trackAudioData) => {
         const id = trackAudioData.id;
         const track = _.find(justTracks, {id: id});
@@ -41,6 +41,8 @@ export function addTrackNameAndArtist(audioFeaturesArray, justTracks) {
         } else {
             trackAudioData.artist = track.artists[0].name;
         }
+
+        trackAudioData.playlistId = associatedPlaylistId;
     }));
     return audioFeaturesArray;
 }

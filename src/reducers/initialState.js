@@ -5,18 +5,18 @@ export default { // this is what the store looks like
       accessToken: '',
       spotifyUserID: '',
       playlists: [],
-      analyzedPlaylistName: '',
-      analyzedTracks: [],
+      activePlaylistName: '',
+      activeAnalyzedTracks: [],
       selectedPlaylistName: '',
-      selectedPlaylistTracks: [],
+      allAnalyzedTracks: [],
       hasFoundTracks: false,
       error: {}
     },
     optimizeData: {
       btnStatus: [
           {
-              label: 'Acousticiness',
-              isClicked: true
+              label: 'Acousticness',
+              isClicked: false
           },
           {
               label: 'Danceability',
@@ -35,7 +35,7 @@ export default { // this is what the store looks like
               isClicked: false
           }
       ],
-      selectedAttr: 'Acoustic'
+      selectedAttr: ''
     },
     ajaxCallsInProgress: 0
 };

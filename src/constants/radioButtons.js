@@ -1,6 +1,6 @@
 export const btnStatus = [
     {
-        label: 'Acousticiness',
+        label: 'Acousticness',
         isClicked: false
     },
     {
