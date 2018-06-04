@@ -6,7 +6,7 @@ import _ from 'lodash';
 import * as optimizeActions from '../../actions/optimizeActions';
 import RadioBtn from '../common/RadioBtn';
 
-export class RadioBtnGroup extends React.Component {
+class RadioBtnGroup extends React.Component {
     constructor(props) {
         super(props);
 

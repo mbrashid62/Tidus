@@ -6,10 +6,6 @@ import SpotifyPagination from '../pagination/SpotifyPagination';
 
 export default class SpotifyPlaylistsContainer extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     scrollToComponent(this.playlistsContainer, {
       align: 'top',

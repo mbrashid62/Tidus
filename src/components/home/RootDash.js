@@ -19,7 +19,6 @@ export class RootDash extends React.Component {
 
         this.state = {
             shouldRenderPlaylists: false,
-            shouldRenderSelectedPlaylistTracks: false,
             shouldShowAnalyzedData: false,
             shouldShowSpotifyButton: true,
             shouldHandleError: false,
@@ -31,12 +30,12 @@ export class RootDash extends React.Component {
         this.connectToSpotify = this.connectToSpotify.bind(this);
         this.disconnectFromSpotify = this.disconnectFromSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
-        this.fetchAudioFeaturesDataForPlaylist = this.fetchAudioFeaturesDataForPlaylist.bind(this);
         this.sortTracks = this.sortTracks.bind(this);
+        this.handleFetchAllPlaylistData = this.handleFetchAllPlaylistData.bind(this);
     }
 
     componentWillMount() { // called before render method
-        const { location, actions, spotifyUserID, analyzedTracks } = this.props;
+        const { location, actions, spotifyUserID, activeAnalyzedTracks } = this.props;
 
         if(location.hash.split('=')[1] !== undefined) { // if redirected with access token
             const accessToken = location.hash.split('=')[1].split('&')[0]; // todo: fix this with regex or something...
@@ -56,7 +55,7 @@ export class RootDash extends React.Component {
             });
         }
 
-        if(analyzedTracks.length > 0) {
+        if(activeAnalyzedTracks.length > 0) {
             this.setState({ shouldShowAnalyzedData: true });
         }
     }
@@ -69,11 +68,11 @@ export class RootDash extends React.Component {
         }
 
         if (nextProps.playlists.length > 0) { // if we have fetched the playlists
-            this.setState({shouldRenderPlaylists: true});
+            this.setState({ shouldRenderPlaylists: true });
         }
 
-        if (nextProps.analyzedTracks.length > 0) {
-            this.setState({shouldShowAnalyzedData: true});
+        if (nextProps.activeAnalyzedTracks.length > 0) {
+            this.setState({ shouldShowAnalyzedData: true });
         }
 
         if (!_.isEmpty(nextProps.error)) {
@@ -109,6 +108,11 @@ export class RootDash extends React.Component {
                 actions.fetchSpotifyPlaylists(spotifyUserID);
             }
         }
+
+        // if playlists have loaded
+        if (!_.isEqual(prevProps.playlists, playlists) && playlists.length) {
+            this.handleFetchAllPlaylistData(playlists);
+        }
     }
 
     redirectToHomePage() {
@@ -130,32 +134,40 @@ export class RootDash extends React.Component {
     }
 
     handlePlaylistSelect(event) {
-        const { actions, spotifyUserID, playlists } = this.props;
+        const { actions, playlists } = this.props;
 
         const playlistSelected = event.target.innerHTML;
-        actions.handlePlaylistSelect(playlistSelected);
-        const playListIndex = _.findIndex(playlists, function (p) { // Lodash rules
+        const playListIndex = _.findIndex(playlists, function (p) {
             return p.name === playlistSelected;
         });
         const playListId = playlists[playListIndex].id;
-        actions.fetchPlaylistTracks(spotifyUserID, playListId, playlistSelected);
+
+        actions.setActivePlaylistName(playlistSelected);
+        actions.setActiveTracks(playListId);
     }
 
-    fetchAudioFeaturesDataForPlaylist() {
-        const { actions, selectedPlaylistName, selectedPlaylistTracks } = this.props;
+    handleFetchAllPlaylistData (playlists) {
+        const {
+            spotifyUserID,
+            actions
+        } = this.props;
 
-        actions.fetchAudioFeaturesDataForPlaylist(selectedPlaylistName, selectedPlaylistTracks);
+        // sets in motion a series of calls that will
+        // eventually set our `allAnalyzedTracks` array in the store
+        _.forEach(playlists, (playlist) => {
+            actions.fetchPlaylistTracks(spotifyUserID, playlist.id, playlist.name);
+        });
     }
 
     sortTracks(event) {
-        const { actions, analyzedTracks } = this.props;
-
+        const { actions, activeAnalyzedTracks } = this.props;
         const attributeSelected = event.target.innerHTML.toLowerCase() || '';
-        actions.sortTracks(attributeSelected, analyzedTracks);
+
+        actions.sortTracks(attributeSelected, activeAnalyzedTracks);
     }
 
     render() {
-        const { loading, hasSpotifyID, playlists, analyzedTracks, analyzedPlaylistName } = this.props;
+        const { loading, hasSpotifyID, playlists, activeAnalyzedTracks, activePlaylistName } = this.props;
         const { shouldShowSpotifyButton, shouldHandleError, errorMsg, errors, shouldShowAnalyzedData, shouldRenderPlaylists } = this.state;
 
         return (
@@ -167,6 +179,8 @@ export class RootDash extends React.Component {
                         loading={loading}
                         shouldShowSpotifyButton={shouldShowSpotifyButton}
                     />
+                  {
+                  }
                 </div>
                 {
                     shouldHandleError &&
@@ -190,20 +204,18 @@ export class RootDash extends React.Component {
                     <div className="col-md-9 analyzed-track-table-col">
                       {shouldShowAnalyzedData && !shouldHandleError && (
                         <AnalyzedTrackTable
-                            tracks={analyzedTracks}
-                            playlistName={analyzedPlaylistName}
+                            tracks={activeAnalyzedTracks}
+                            playlistName={activePlaylistName}
                             sortTracks={this.sortTracks}
                             loading={loading}
                         />
                       )}
-                      { !shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/> }
+                      {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
                     </div>
                 }
                 {
                     <div className="col-md-12">
-                      {false &&
-                        <OptimizeContainer/>
-                      }
+                      <OptimizeContainer/>
                     </div>
                 }
             </div>
@@ -217,10 +229,8 @@ RootDash.propTypes = {
     spotifyUserID: React.PropTypes.string,
     hasSpotifyID: React.PropTypes.bool,
     playlists: React.PropTypes.array,
-    selectedPlaylistName: React.PropTypes.string,
-    selectedPlaylistTracks: React.PropTypes.array,
-    analyzedPlaylistName: React.PropTypes.string,
-    analyzedTracks: React.PropTypes.array,
+    activePlaylistName: React.PropTypes.string,
+    activeAnalyzedTracks: React.PropTypes.array,
     error: React.PropTypes.object,
     actions: React.PropTypes.object,
     location: React.PropTypes.object,
@@ -234,10 +244,8 @@ function mapStateToProps(store) { // connect props to global state object
         spotifyUserID: store.spotifyReducer.spotifyUserID,
         hasSpotifyID: store.spotifyReducer.spotifyUserID !== '',
         playlists: spotifySelectors.playlistFormatted(store.spotifyReducer.playlists),
-        selectedPlaylistName: store.spotifyReducer.selectedPlaylistName,
-        selectedPlaylistTracks: spotifySelectors.selectedTracksFormatted(store.spotifyReducer.selectedPlaylistTracks),
-        analyzedPlaylistName: store.spotifyReducer.analyzedPlaylistName,
-        analyzedTracks: store.spotifyReducer.analyzedTracks,
+        activePlaylistName: store.spotifyReducer.activePlaylistName,
+        activeAnalyzedTracks: store.spotifyReducer.activeAnalyzedTracks,
         error: store.spotifyReducer.error,
         loading: store.ajaxCallsInProgress > 0
     };

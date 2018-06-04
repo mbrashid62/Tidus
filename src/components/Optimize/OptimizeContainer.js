@@ -1,39 +1,44 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import OptimizeTitle from './OptimizeTitle';
 import RadioBtnGroup from '../common/RadioBtnGroup';
+import OptimizeTitle from './OptimizeTitle';
+import OptimizeDisplay from './OptimizeDisplay';
 
-class OptimizeContainer extends React.Component {
-  constructor(props) {
-      super(props);
-  }
-
-  componentWillReceiveProps(nextProps, nextContext) {
-
-  }
-
+class OptimizeContainer extends Component {
   render () {
-    const { selectedAttr } = this.props;
+    const {
+      selectedAttr,
+      allAnalyzedTracks
+    } = this.props;
+
     return (
       <div className="optimize-container">
-        <hr className="divider"/>
+        <hr className="divider" />
         <OptimizeTitle
           selectedAttr={selectedAttr}
         />
         <RadioBtnGroup/>
+        <hr className="divider" />
+        <OptimizeDisplay
+          attribute={selectedAttr}
+          allAnalyzedTracks={allAnalyzedTracks}
+        />
       </div>
     );
   }
 }
 
 OptimizeContainer.propTypes = {
-  selectedAttr: PropTypes.string.isRequired
+  selectedAttr: PropTypes.string.isRequired,
+  allAnalyzedTracks: PropTypes.array.isRequired
 };
 
 function mapStateToProps(store) {
   return {
-    selectedAttr: store.optimizeReducer.selectedAttr
+    selectedAttr: store.optimizeReducer.selectedAttr,
+    allAnalyzedTracks: store.spotifyReducer.allAnalyzedTracks
   };
 }
 export default connect(mapStateToProps)(OptimizeContainer);
