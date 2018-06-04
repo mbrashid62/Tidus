@@ -210,7 +210,7 @@ export class RootDash extends React.Component {
                             loading={loading}
                         />
                       )}
-                      { !shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/> }
+                      {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
                     </div>
                 }
                 {
