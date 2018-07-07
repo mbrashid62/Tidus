@@ -88,8 +88,8 @@ a {
     font-size: 18px;
     font-weight: 300;
     line-height: 5px;
-    border: 3px solid darkslategrey !important;
-    color: darkslategrey !important;
+    border: 3px solid #144E2D !important;
+    color: #144E2D !important;
     display: block !important;
     width: 30%;
     margin: 25px auto !important;
@@ -104,18 +104,18 @@ a {
   }
 
   &.action-btn:hover {
-    background-color: darkslategrey !important;
+    background-color: #144E2D !important;
     color: #eeeeee !important;
   }
 
   &:hover {
     color: #eee;
-    background-color: darkslategrey !important;
+    background-color: #144E2D !important;
   }
 
   &.active {
     color: #eee;
-    background-color: darkslategrey !important;
+    background-color: #144E2D !important;
   }
 
   .navbar-text {
@@ -132,8 +132,8 @@ a {
   left: 0;
   padding: 2rem;
   background-color: #DDD;
-  border-top: 1px darkslategrey solid;
-  border-bottom: 1px darkslategrey solid;
+  border-top: 1px #144E2D solid;
+  border-bottom: 1px #144E2D solid;
   text-align: center;
 
   p {
@@ -445,7 +445,7 @@ span {
 
     &.active {
       a {
-        color: darkslategrey;
+        color: #144E2D;
         background-color: #EEEEEE;
         border-color: white;
       }

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const PlaylistTitle= ({playlist, handlePlaylistSelect}) => {
     return (
@@ -11,8 +12,8 @@ const PlaylistTitle= ({playlist, handlePlaylistSelect}) => {
 };
 
 PlaylistTitle.propTypes = {
-    playlist: React.PropTypes.object.isRequired,
-    handlePlaylistSelect: React.PropTypes.func.isRequired
+    playlist: PropTypes.object.isRequired,
+    handlePlaylistSelect: PropTypes.func.isRequired
 };
 
 export default PlaylistTitle;

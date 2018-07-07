@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
@@ -38,8 +39,8 @@ class RadioBtnGroup extends React.Component {
 }
 
 RadioBtnGroup.propTypes = {
-  btnStatus: React.PropTypes.array.isRequired,
-  actions: React.PropTypes.object.isRequired
+  btnStatus: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(store) {

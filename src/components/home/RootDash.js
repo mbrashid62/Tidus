@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
@@ -224,17 +225,17 @@ export class RootDash extends React.Component {
 }
 
 RootDash.propTypes = {
-    spotifyUrl: React.PropTypes.string,
-    hasAccessToken: React.PropTypes.bool,
-    spotifyUserID: React.PropTypes.string,
-    hasSpotifyID: React.PropTypes.bool,
-    playlists: React.PropTypes.array,
-    activePlaylistName: React.PropTypes.string,
-    activeAnalyzedTracks: React.PropTypes.array,
-    error: React.PropTypes.object,
-    actions: React.PropTypes.object,
-    location: React.PropTypes.object,
-    loading: React.PropTypes.bool.isRequired
+    spotifyUrl: PropTypes.string,
+    hasAccessToken: PropTypes.bool,
+    spotifyUserID: PropTypes.string,
+    hasSpotifyID: PropTypes.bool,
+    playlists: PropTypes.array,
+    activePlaylistName: PropTypes.string,
+    activeAnalyzedTracks: PropTypes.array,
+    error: PropTypes.object,
+    actions: PropTypes.object,
+    location: PropTypes.object,
+    loading: PropTypes.bool.isRequired
 };
 
 function mapStateToProps(store) { // connect props to global state object

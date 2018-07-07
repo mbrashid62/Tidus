@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import TrackTitle from './TrackTitle';
 
 const SpotifyTrack= ({track}) => {
@@ -14,7 +15,7 @@ const SpotifyTrack= ({track}) => {
 };
 
 SpotifyTrack.propTypes = {
-    track: React.PropTypes.object.isRequired
+    track: PropTypes.object.isRequired
 };
 
 export default SpotifyTrack;

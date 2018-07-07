@@ -1,4 +1,5 @@
 import React  from 'react';
+import PropTypes from 'prop-types';
 import PlaylistTitle from '../main/PlaylistTitle';
 
 const SpotifyPlaylist = ({playlist, handlePlaylistSelect}) => {
@@ -13,8 +14,8 @@ const SpotifyPlaylist = ({playlist, handlePlaylistSelect}) => {
 };
 
 SpotifyPlaylist.propTypes = {
-    playlist: React.PropTypes.object.isRequired,
-    handlePlaylistSelect: React.PropTypes.func.isRequired
+    playlist: PropTypes.object.isRequired,
+    handlePlaylistSelect: PropTypes.func.isRequired
 };
 
 export default SpotifyPlaylist;

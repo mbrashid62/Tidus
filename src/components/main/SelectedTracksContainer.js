@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import SpotifyTrack from '../main/SpotifyTrack';
 
 const SelectedTracksContainer = ({tracks, selectedPlaylistName}) => {
@@ -19,8 +20,8 @@ const SelectedTracksContainer = ({tracks, selectedPlaylistName}) => {
 };
 
 SelectedTracksContainer.propTypes = {
-    tracks: React.PropTypes.array.isRequired,
-    selectedPlaylistName: React.PropTypes.string.isRequired
+    tracks: PropTypes.array.isRequired,
+    selectedPlaylistName: PropTypes.string.isRequired
 };
 
 export default SelectedTracksContainer;

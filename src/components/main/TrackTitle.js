@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 
 const TrackTitle= ({track}) => {
     return (
@@ -9,7 +10,7 @@ const TrackTitle= ({track}) => {
 };
 
 TrackTitle.propTypes = {
-    track: React.PropTypes.object.isRequired
+    track: PropTypes.object.isRequired
 };
 
 export default TrackTitle;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 const RadioBtn = ({ btn, onClick }) => {
@@ -19,8 +20,8 @@ const RadioBtn = ({ btn, onClick }) => {
 };
 
 RadioBtn.propTypes = {
-  btn: React.PropTypes.object.isRequired,
-  onClick: React.PropTypes.func.isRequired
+  btn: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default RadioBtn;
