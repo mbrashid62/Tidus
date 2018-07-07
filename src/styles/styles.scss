@@ -79,50 +79,49 @@ nav {
   color: red;
 }
 
-a {
-  &.action-btn {
-    height: 50px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    padding: 20px !important;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 5px;
-    border: 3px solid #144E2D !important;
-    color: #144E2D !important;
-    display: block !important;
-    width: 30%;
-    margin: 25px auto !important;
-    text-align: center;
-    border-radius: 4px;
+.action-btn {
 
-    @media screen and (max-width: $screen-xs-max) {
-      height: 40px;
-      padding: 14px !important;
-      font-size: 14px;
-    }
-  }
+}
 
-  &.action-btn:hover {
-    background-color: #144E2D !important;
-    color: #eeeeee !important;
+
+.action-btn {
+  display: block;
+  height: 50px;
+  min-width: 200px;
+  margin: 25px auto;
+  border: 3px solid #144E2D;
+  border-radius: 4px;
+  background-color: #EEEEEE;
+  color: #144E2D;
+  text-align: center;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
+  @media screen and (max-width: $screen-xs-max) {
+    height: 40px;
+    min-width: 100px;
+    padding: 14px;
+    font-size: 14px;
   }
 
   &:hover {
     color: #eee;
-    background-color: #144E2D !important;
+    background-color: #144E2D;
   }
 
   &.active {
     color: #eee;
-    background-color: #144E2D !important;
+    background-color: #144E2D;
   }
+}
 
-  .navbar-text {
-    color: black;
-    font-family: 'Lato', sans-serif;
-    letter-spacing: 0.15rem;
-  }
+.navbar-text {
+  color: black;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 0.15rem;
 }
 
 .tidus-footer {
