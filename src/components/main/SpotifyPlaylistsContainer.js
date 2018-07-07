@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import scrollToComponent from 'react-scroll-to-component';
 
 import { PLAYLISTS } from '../pagination/config';

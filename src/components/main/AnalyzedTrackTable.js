@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import _ from 'lodash';
 
