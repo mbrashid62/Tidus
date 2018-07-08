@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { chunk, map, isEmpty } from 'lodash';
 
 import { PAGINATION_CONTROLS, PLAYLISTS, TRACKS } from '../pagination/config';

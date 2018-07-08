@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { PAGINATION_CONTROLS } from '../pagination/config';
@@ -199,7 +200,6 @@ PaginationView.propTypes = {
   handleClick: PropTypes.func.isRequired,
   leftIcon: PropTypes.string,
   rightIcon: PropTypes.string,
-
   nextPage: PropTypes.number,
   prevPage: PropTypes.number
 };

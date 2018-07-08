@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import Button from 'react-button';
+import React  from 'react';
+import PropTypes from 'prop-types';
 import Loader from '../common/Loader';
 
 const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, shouldShowSpotifyButton}) => {
@@ -13,22 +13,21 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
                 <p>This app lets you peak underneath the hood and see some of the audio data Spotify has for your playlists.</p>
 
                 {shouldShowSpotifyButton &&
-                  <Button
+                  <button
                     className="btn btn-lg action-btn"
                     onClick={connectToSpotify}
-                    theme={{overStyle:{background:'black'}}}
                   >
                     Go
-                  </Button>
+                  </button>
                 }
                 {!shouldShowSpotifyButton && !loading &&
-                  <Button
+                  <button
                     className="btn btn-lg action-btn"
                     onClick={disconnectFromSpotify}
-                    theme={{overStyle:{background:'black'}}}
                   >
-                  Quit
-                  </Button>
+                    Quit
+                  </button>
+
                 }
             </div>
             <Loader loading={loading} />
