@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import RadioBtnGroup from '../common/RadioBtnGroup';
 import OptimizeTitle from './OptimizeTitle';
 import OptimizeDisplay from './OptimizeDisplay';
+import Portal from "../common/Portal";
+
 
 class OptimizeContainer extends Component {
   render () {
@@ -25,6 +27,11 @@ class OptimizeContainer extends Component {
           attribute={selectedAttr}
           allAnalyzedTracks={allAnalyzedTracks}
         />
+        {/*<Portal*/}
+          {/*rootClass="container-fluid"*/}
+        {/*>*/}
+          {/*<div>I am a portal...</div>*/}
+        {/*</Portal>*/}
       </div>
     );
   }
