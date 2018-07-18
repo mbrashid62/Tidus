@@ -7,7 +7,6 @@ import OptimizeTitle from './OptimizeTitle';
 import OptimizeDisplay from './OptimizeDisplay';
 import Portal from "../common/Portal";
 
-
 class OptimizeContainer extends Component {
   render () {
     const {
