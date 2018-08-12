@@ -47,15 +47,8 @@ export function addTrackNameAndArtist(audioFeaturesArray, justTracks, associated
     return audioFeaturesArray;
 }
 
-export function buildSpotifyAuthURL(credentials) {
-    let url = 'https://accounts.spotify.com/authorize';
-    url += '?response_type=token';
-    url += '&client_id=' + encodeURIComponent(credentials.clientId);
-    url += '&scope=' + encodeURIComponent(credentials.scope);
-    url += '&redirect_uri=' + encodeURIComponent(credentials.redirect_uri);
-    url += '&state=' + encodeURIComponent(credentials.state);
-
-    return url;
+export function buildSpotifyAuthURL (credentials) {
+    return `https://accounts.spotify.com/authorize?response_type=token&client_id=${encodeURIComponent(credentials.clientId)}&scope=${credentials.scope}&redirect_uri=${encodeURIComponent(credentials.redirect_uri)}&state=${encodeURIComponent(credentials.state)}`;
 }
 
 export function sortTracks(attribute, tracks) {

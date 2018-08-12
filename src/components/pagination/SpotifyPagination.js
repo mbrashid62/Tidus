@@ -22,15 +22,22 @@ export default class SpotifyPagination extends React.Component {
 
     this.setCurrentPage = this.setCurrentPage.bind(this);
     this.getChunkedItems = this.getChunkedItems.bind(this);
+    this.resetPaginationState = this.resetPaginationState.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    // once our items get passed down, let's update our state
-    if (this.props.items !== nextProps.items) {
-      this.setState({
-        chunkedItems: this.getChunkedItems(this.state.currentPage, nextProps.items)
-      });
+  componentDidUpdate(prevProps) {
+    // if we have received a new set of items to paginate, let's re-initialize our state
+    if (prevProps.items !== this.props.items) {
+      this.resetPaginationState(this.props);
     }
+  }
+
+  resetPaginationState (props) {
+    this.setState({
+      currentPage: 1,
+      chunkedItems: this.getChunkedItems(1, props.items),
+      totalPages: Math.ceil(props.items.length / props.limit)
+    });
   }
 
   /**
