@@ -26,11 +26,12 @@ class OptimizeContainer extends Component {
           attribute={selectedAttr}
           allAnalyzedTracks={allAnalyzedTracks}
         />
-        {/*<Portal*/}
-          {/*rootClass="container-fluid"*/}
-        {/*>*/}
-          {/*<div>I am a portal...</div>*/}
-        {/*</Portal>*/}
+        <Portal
+          rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
+          uniqPortalClass="optimize-container-modal"
+        >
+          <div><h1>I am a portal...</h1></div>
+        </Portal>
       </div>
     );
   }

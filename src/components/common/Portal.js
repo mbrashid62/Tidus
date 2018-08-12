@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 class Portal extends Component {
   constructor(props, context) {
     super(props, context);
+    this.isPortalReady = false;
     this.portalRootEl = null;
     this.portalContainer = document.createElement('div');
     this.portalContainer.classList.add('portal');
+    this.portalContainer.classList.add(props.uniqPortalClass);
   }
 
-  componentDidMount() {
-    const { rootClass } = this.props;
+  componentDidUpdate(prevProps) {
+    const { rootEl } = this.props;
 
-    if (rootClass) {
-      this.portalRootEl = document.getElementsByClassName(rootClass)[0];
-      this.portalRootEl.appendChild(this.portalContainer);
+    // setup append children to portal root
+    if (rootEl && isEmpty(prevProps.rootEl) && !this.isPortalReady) {
+      rootEl.appendChild(this.portalContainer);
     }
   }
+
 
   componentWillUnmount() {
     if (this.portalRootEl) {
       this.portalRootEl.removeChild(this.portalContainer);
+      this.isPortalReady = false;
     }
   }
 
@@ -31,8 +36,9 @@ class Portal extends Component {
 }
 
 Portal.propTypes = {
-  rootClass: PropTypes.string.isRequired,
-  children: PropTypes.array.isRequired
+  rootEl: PropTypes.object.isRequired,
+  uniqPortalClass: PropTypes.string.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 export default Portal;

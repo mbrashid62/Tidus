@@ -28,6 +28,7 @@ class RadioBtnGroup extends React.Component {
               {_.map(btnStatus, (btn) => (
                 <RadioBtn
                     btn={btn}
+                    key={`btn-${btn.label}`}
                     id={`btn-${btn.label}`}
                     onClick={this.handleBtnClick}
                 />
