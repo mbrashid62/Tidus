@@ -10,6 +10,10 @@ const config = {
     'webpack-hot-middleware/client?reload=true', //note that it reloads the page if hot module reloading fails.
     './src/index'
   ],
+  resolve: {
+    root: path.join(__dirname, 'src'),
+    extensions: ['', '.js', '.jsx']
+  },
   target: 'web',
   output: {
     path: __dirname + '/dist', // Note: Physical files are only output by the production build task `npm run build`.
@@ -30,7 +34,7 @@ const config = {
   ],
   module: {
     loaders: [
-      {test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel']},
+      {test: /\.(js|jsx)$/, include: path.join(__dirname, 'src'), loaders: ['babel']},
       {test: /\.(scss|css)$/, loaders: ['style', 'css', 'sass']},
       {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"},
       {test: /\.(woff|woff2)$/, loader: "url?prefix=font/&limit=5000"},
