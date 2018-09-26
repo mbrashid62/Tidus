@@ -437,6 +437,8 @@ span {
     }
 
     &:hover {
+      cursor: pointer;
+
       a {
         color: #EEE;
       }

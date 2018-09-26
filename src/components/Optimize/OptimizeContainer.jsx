@@ -7,9 +7,6 @@ import OptimizeTitle from './OptimizeTitle';
 import OptimizeDisplay from './OptimizeDisplay';
 import Portal from "../common/Portal";
 
-function doSomething() {
-
-}
 class OptimizeContainer extends Component {
   render () {
     const {
@@ -20,12 +17,6 @@ class OptimizeContainer extends Component {
     return (
       <div className="optimize-container">
         <hr className="divider" />
-        <button
-          className="btn btn-lg action-btn"
-          onClick={doSomething}
-        >
-          Do something cool...
-        </button>
         <OptimizeTitle
           selectedAttr={selectedAttr}
         />
@@ -39,7 +30,7 @@ class OptimizeContainer extends Component {
           rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
           uniqPortalClass="optimize-container-modal"
         >
-          <div><h1>I am a portal...</h1></div>
+          {/*<div><h1>I am a portal...</h1></div>*/}
         </Portal>
       </div>
     );
