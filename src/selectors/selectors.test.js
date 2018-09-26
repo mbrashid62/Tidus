@@ -24,8 +24,8 @@ describe('formatTacksObjForIdsAndJustTracks function', () => {
 
 describe('buildSpotifyAuthURL function', () => {
     it('should return a properly formatted url for spotify redirect', () => {
-        const expectedURLDev = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private%20user-read-email&redirect_uri=http%3A%2F%2Fwww.localhost%3A3000%2Fcallback&state=my-state';
-        const expectedURLProd = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private%20user-read-email&redirect_uri=https%3A%2F%2Ftidus-music.herokuapp.com%2Fcallback&state=my-state';
+        const expectedURLDev = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private user-read-email&redirect_uri=https%3A%2F%2Fwww.localhost%3A3000%2Fcallback&state=my-state';
+        const expectedURLProd = 'https://accounts.spotify.com/authorize?response_type=token&client_id=b3295b28bbbd4d598f32515c7fdad7bf&scope=user-read-private user-read-email&redirect_uri=https%3A%2F%2Ftidus-music.herokuapp.com%2Fcallback&state=my-state';
         const actualURL = spotifySelectors.buildSpotifyAuthURL(spotifyCredentials);
 
         if(spotifyCredentials.redirect_uri.includes("localhost")) {
