@@ -18,11 +18,6 @@ export default class AnalyzedTrackTable extends React.Component {
     this.handleTableSort = this.handleTableSort.bind(this);
   }
 
-  componentDidMount() {
-    // window.addEventListener('resize', this.setHeaderWidthsThrottled);
-  }
-
-
   componentWillReceiveProps(nextProps) {
     const { playlistName, loading } = this.props;
 

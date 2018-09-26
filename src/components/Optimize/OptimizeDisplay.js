@@ -55,7 +55,7 @@ class OptimizeDisplay extends Component {
       <div className="optimize-display">
         {!_.isEmpty(attribute) && (
           _.map(topTracks, (track) => (
-            <div className="top-track">
+            <div className="top-track" key={`${track.name}-${Date.now()}`}>
               <span className="artist">{track.artist}</span> - <span className="track">{track.name}</span>
               <span className="rating">({track[ATTRIBUTE_MAPPING[attribute.toUpperCase()]]})</span>
             </div>

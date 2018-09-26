@@ -87,8 +87,7 @@ export function fetchSpotifyPlaylists(spotifyID) {
         dispatch(beginAjaxCall());
         spotifyApi.getUserPlaylists(spotifyID)
             .then((data) => {
-                const userOnlyPlaylists = getOnlyUserPlaylists(data.body.items, spotifyID);
-                dispatch(fetchSpotifyPlaylistsSuccess(userOnlyPlaylists));
+                dispatch(fetchSpotifyPlaylistsSuccess(data.body.items));
             })
             .catch((error) => {
                 dispatch(fetchSpotifyPlaylistsError(error));

@@ -30,7 +30,7 @@ class OptimizeContainer extends Component {
           rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
           uniqPortalClass="optimize-container-modal"
         >
-          <div><h1>I am a portal...</h1></div>
+          {/*<div><h1>I am a portal...</h1></div>*/}
         </Portal>
       </div>
     );
