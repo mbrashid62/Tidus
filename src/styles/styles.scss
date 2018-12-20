@@ -26,6 +26,12 @@ $screen-lg-max:              ($screen-xl - 1) !default; //em(($xl-num - 1)) !def
 
 $light-gray-border: 1px solid rgba(0, 0, 0, 0.1);
 
+/* The animation code */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 #app {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #4d4d4d;
@@ -177,6 +183,8 @@ nav {
   max-height: 570px;
   font-family: 'Lato', sans-serif;
   letter-spacing: 0.05rem;
+  animation-name: fadeIn;
+  animation-duration: 2s;
 
   @media screen and (max-width: $screen-md-max) {
     padding: 0;
@@ -191,7 +199,7 @@ nav {
 
 span {
   font-family: 'Lato', sans-serif;
-  letter-spacing: 0.15rem;
+  letter-spacing: 1px;
 }
 
 .loader-container {
@@ -267,6 +275,10 @@ span {
       margin-bottom: 0;
     }
   }
+  &.is-unauth {
+    animation-name: fadeIn;
+    animation-duration: 2s;
+  }
 }
 
 .playlists-list {
@@ -285,22 +297,20 @@ span {
 
 .optimize-container {
   h1 {
-    font-family: 'Lato', sans-serif;
+    margin-top: 10px;
+    font-weight: 400;
   }
 
   .optimize-display {
-    padding: 15px;
+    padding: 0 15px 15px 15px;
 
     .top-track {
-      padding: 20px 10px;
+      padding: 10px;
     }
 
     .artist {
-      font-size: 22px;
-    }
-
-    .track {
       font-size: 18px;
+      font-weight: 600;
     }
 
     .rating {
@@ -313,16 +323,17 @@ span {
   width: 100%;
   text-align: center;
   font-family: 'Lato', sans-serif;
-  margin-top: 25px;
+  margin-top: 15px;
 }
 
 .radio-btn {
   display: inline;
   margin-right: 15px;
-}
 
-.radio-btn {
   label {
+    letter-spacing: 0.4px;
+    font-size: 16px;
+    font-weight: 500;
     padding-right: 10px;
   }
 }
@@ -336,7 +347,7 @@ span {
     padding-bottom: 10px;
     width: 100%;
     border-bottom: $light-gray-border;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 600;
 
     div {
@@ -396,10 +407,18 @@ span {
       font-size: 8px;
     }
   }
+
+  .pagination {
+    position: relative;
+    right: 25px;
+  }
 }
 
 .spotify-playlists-container {
-
+  .pagination {
+    position: relative;
+    right: 35px;
+  }
 }
 
 .spotify-playlists-col {

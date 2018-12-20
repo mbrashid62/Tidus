@@ -50,7 +50,7 @@ export default class AnalyzedTrackTable extends React.Component {
          }}
       >
         <div className="instructions">
-          <h1 className="text-center">You selected <strong>"{playlistName}"</strong></h1>
+          <h1 className="text-center"><strong>{playlistName}</strong></h1>
           <p className="text-center">Audio Feature data for this playlist is below. Click one of the table headers to sort this data.</p>
         </div>
         <div className="table data-table container">
