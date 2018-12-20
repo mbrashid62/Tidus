@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
+import _ from 'lodash';
+import cn from 'classnames';
 import * as spotifyActions from '../../actions/spotifyActions';
 import * as spotifySelectors from '../../selectors/selectors';
-import _ from 'lodash';
 
 import SpotifyPlaylistsContainer from '../main/SpotifyPlaylistsContainer';
 import AnalyzedTrackTable from '../main/AnalyzedTrackTable';
@@ -168,57 +169,64 @@ export class RootDash extends React.Component {
     }
 
     render() {
-        const { loading, hasSpotifyID, playlists, activeAnalyzedTracks, activePlaylistName } = this.props;
-        const { shouldShowSpotifyButton, shouldHandleError, errorMsg, errors, shouldShowAnalyzedData, shouldRenderPlaylists } = this.state;
+        const {
+          loading,
+          hasSpotifyID,
+          playlists,
+          activeAnalyzedTracks,
+          activePlaylistName,
+          hasAccessToken,
+        } = this.props;
+        const {
+          shouldShowSpotifyButton,
+          shouldHandleError,
+          errorMsg,
+          errors,
+          shouldShowAnalyzedData,
+          shouldRenderPlaylists
+        } = this.state;
 
         return (
             <div className="container-fluid">
-                <div className="home-jumbo-block">
+                <div className={cn('home-jumbo-block', { 'is-unauth': !hasAccessToken})}>
                     <HomeJumboTron
                         connectToSpotify={this.connectToSpotify}
                         disconnectFromSpotify={this.disconnectFromSpotify}
                         loading={loading}
                         shouldShowSpotifyButton={shouldShowSpotifyButton}
                     />
-                  {
-                  }
                 </div>
-                {
-                    shouldHandleError &&
+                {shouldHandleError && (
                     <div className="row">
                         <div className="col-md-12 text-center">
                             <StatusMsg msg={errorMsg} errors={errors}/>
                         </div>
                     </div>
-                }
-                {
-                    <div className="col-md-3 spotify-playlists-col text-center">
-                      {shouldRenderPlaylists &&
-                        <SpotifyPlaylistsContainer
-                          playlists={playlists}
-                          handlePlaylistSelect={this.handlePlaylistSelect}
-                        />
-                      }
-                    </div>
-                }
-                {
-                    <div className="col-md-9 analyzed-track-table-col">
-                      {shouldShowAnalyzedData && !shouldHandleError && (
-                        <AnalyzedTrackTable
-                            tracks={activeAnalyzedTracks}
-                            playlistName={activePlaylistName}
-                            sortTracks={this.sortTracks}
-                            loading={loading}
-                        />
-                      )}
-                      {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
-                    </div>
-                }
-                {
+                )}
+                <div className="col-md-3 spotify-playlists-col text-center">
+                  {shouldRenderPlaylists &&
+                    <SpotifyPlaylistsContainer
+                      playlists={playlists}
+                      handlePlaylistSelect={this.handlePlaylistSelect}
+                    />
+                  }
+                </div>
+                <div className="col-md-9 analyzed-track-table-col">
+                  {shouldShowAnalyzedData && !shouldHandleError && (
+                    <AnalyzedTrackTable
+                        tracks={activeAnalyzedTracks}
+                        playlistName={activePlaylistName}
+                        sortTracks={this.sortTracks}
+                        loading={loading}
+                    />
+                  )}
+                  {!shouldShowAnalyzedData && hasSpotifyID && <NoPlaylist/>}
+                </div>
+                {!_.isEmpty(playlists) && (
                     <div className="col-md-12">
                       <OptimizeContainer/>
                     </div>
-                }
+                )}
             </div>
         );
     }

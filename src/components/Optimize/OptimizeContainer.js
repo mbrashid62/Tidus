@@ -26,6 +26,7 @@ class OptimizeContainer extends Component {
           attribute={selectedAttr}
           allAnalyzedTracks={allAnalyzedTracks}
         />
+        <hr className="divider" />
         <Portal
           rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
           uniqPortalClass="optimize-container-modal"
