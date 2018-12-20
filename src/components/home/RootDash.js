@@ -175,7 +175,7 @@ export class RootDash extends React.Component {
           playlists,
           activeAnalyzedTracks,
           activePlaylistName,
-          hasAccessToken,
+          hasAccessToken
         } = this.props;
         const {
           shouldShowSpotifyButton,
