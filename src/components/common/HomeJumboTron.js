@@ -2,7 +2,7 @@ import React  from 'react';
 import PropTypes from 'prop-types';
 import Loader from '../common/Loader';
 
-const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, shouldShowSpotifyButton}) => {
+const HomeJumboTron = ({connectToSpotify, loading, shouldShowSpotifyButton}) => {
     return (
         <div className="container-fluid">
             <div className="jumbotron">
@@ -20,15 +20,6 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
                     Go
                   </button>
                 }
-                {!shouldShowSpotifyButton && !loading &&
-                  <button
-                    className="btn btn-lg action-btn"
-                    onClick={disconnectFromSpotify}
-                  >
-                    Quit
-                  </button>
-
-                }
             </div>
             <Loader loading={loading} />
         </div>
@@ -37,7 +28,6 @@ const HomeJumboTron = ({connectToSpotify, disconnectFromSpotify, loading, should
 
 HomeJumboTron.propTypes = {
     connectToSpotify: PropTypes.func.isRequired,
-    disconnectFromSpotify: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     shouldShowSpotifyButton: PropTypes.bool.isRequired
 };

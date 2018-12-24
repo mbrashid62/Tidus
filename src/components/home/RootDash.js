@@ -30,7 +30,6 @@ export class RootDash extends React.Component {
 
         this.redirectToHomePage = this.redirectToHomePage.bind(this);
         this.connectToSpotify = this.connectToSpotify.bind(this);
-        this.disconnectFromSpotify = this.disconnectFromSpotify.bind(this);
         this.handlePlaylistSelect = this.handlePlaylistSelect.bind(this);
         this.sortTracks = this.sortTracks.bind(this);
         this.handleFetchAllPlaylistData = this.handleFetchAllPlaylistData.bind(this);
@@ -130,11 +129,6 @@ export class RootDash extends React.Component {
         }
     }
 
-    disconnectFromSpotify() {
-        this.redirectToHomePage();
-        location.reload(true);
-    }
-
     handlePlaylistSelect(event) {
         const { actions, playlists } = this.props;
 
@@ -191,7 +185,6 @@ export class RootDash extends React.Component {
                 <div className={cn('home-jumbo-block', { 'is-unauth': !hasAccessToken})}>
                     <HomeJumboTron
                         connectToSpotify={this.connectToSpotify}
-                        disconnectFromSpotify={this.disconnectFromSpotify}
                         loading={loading}
                         shouldShowSpotifyButton={shouldShowSpotifyButton}
                     />
@@ -246,7 +239,7 @@ RootDash.propTypes = {
     loading: PropTypes.bool.isRequired
 };
 
-function mapStateToProps(store) { // connect props to global state object
+function mapStateToProps(store) {
     return {
         spotifyUrl: store.spotifyReducer.url,
         hasAccessToken: store.spotifyReducer.hasAccessToken,
