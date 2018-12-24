@@ -18,7 +18,7 @@ class OptimizeContainer extends Component {
       <div className="optimize-container">
         <hr className="divider" />
         <OptimizeTitle
-          selectedAttr={selectedAttr}
+          selectedAttr={selectedAttr} q
         />
         <RadioBtnGroup/>
         <hr className="divider" />
@@ -26,7 +26,6 @@ class OptimizeContainer extends Component {
           attribute={selectedAttr}
           allAnalyzedTracks={allAnalyzedTracks}
         />
-        <hr className="divider" />
         <Portal
           rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
           uniqPortalClass="optimize-container-modal"

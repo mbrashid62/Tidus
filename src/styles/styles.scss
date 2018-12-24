@@ -59,6 +59,7 @@ body {
   overflow:hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   z-index: 1;
+  padding-bottom: 50px !important;
 
   @media screen {
     padding: 20px;
@@ -247,6 +248,7 @@ span {
 
 .home-jumbo-block {
   display: block;
+  width: 80%;
   margin-right: auto;
   margin-left: auto;
 

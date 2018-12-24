@@ -2,13 +2,12 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import _ from 'lodash';
 
 import { TOOL_TIP_MARKUP } from'../../constants/const';
 import { TRACKS } from '../pagination/config';
+
 import SpotifyPagination from '../pagination/SpotifyPagination';
 import ToolTip from  '../common/ToolTip';
-import scrollToComponent from 'react-scroll-to-component';
 
 export default class AnalyzedTrackTable extends React.Component {
 
@@ -16,19 +15,6 @@ export default class AnalyzedTrackTable extends React.Component {
     super(props);
 
     this.handleTableSort = this.handleTableSort.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { playlistName, loading } = this.props;
-
-    if (!loading && !_.isEqual(playlistName, nextProps.playlistName)) {
-      scrollToComponent(this.analyzedTrackTable, {
-        offset: -25,
-        align: 'top',
-        duration: 500
-      });
-
-    }
   }
 
   handleTableSort(e) {
@@ -41,14 +27,8 @@ export default class AnalyzedTrackTable extends React.Component {
 
   render () {
     const { playlistName, tracks } = this.props;
-
     return (
-      <div
-        className="analyzed-track-table"
-         ref={(ref) => {
-           this.analyzedTrackTable = ref;
-         }}
-      >
+      <div className="analyzed-track-table">
         <div className="instructions">
           <h1 className="text-center"><strong>{playlistName}</strong></h1>
           <p className="text-center">Audio Feature data for this playlist is below. Click one of the table headers to sort this data.</p>

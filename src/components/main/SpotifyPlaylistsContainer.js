@@ -1,6 +1,6 @@
 import React from 'react';
+import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import scrollToComponent from 'react-scroll-to-component';
 
 import { PLAYLISTS } from '../pagination/config';
 import SpotifyPagination from '../pagination/SpotifyPagination';
@@ -8,12 +8,18 @@ import SpotifyPagination from '../pagination/SpotifyPagination';
 export default class SpotifyPlaylistsContainer extends React.Component {
 
   componentDidMount() {
-    scrollToComponent(this.playlistsContainer, {
-      align: 'top',
-      duration: 500
-    });
+    this.scrollToComponent();
   }
 
+  scrollToComponent = () => { // eslint-disable-line
+    const el = ReactDom.findDOMNode(this.playlistsContainer);
+    window.scrollTo({
+      top: el.offsetHeight - 150,
+      left: 0,
+      duration: 500,
+      behavior: 'smooth',
+    });
+  };
   render() {
     const { playlists, handlePlaylistSelect } = this.props;
 

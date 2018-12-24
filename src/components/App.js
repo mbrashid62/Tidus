@@ -33,8 +33,8 @@ class App extends Component {
 App.defaultPropTypes = {
     actions: {},
     children: {},
-    loading: false
-
+    loading: false,
+    hasAccessToken: false,
 };
 
 App.propTypes = {
