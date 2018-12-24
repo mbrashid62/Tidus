@@ -52,6 +52,7 @@ body {
 }
 .container-fluid {
   margin-bottom: 5rem;
+  width: 90%;
 }
 
 .jumbotron {
@@ -248,7 +249,6 @@ span {
 
 .home-jumbo-block {
   display: block;
-  width: 80%;
   margin-right: auto;
   margin-left: auto;
 
@@ -280,6 +280,11 @@ span {
     animation-name: fadeIn;
     animation-duration: 2s;
   }
+
+  .container-fluid {
+    width: 100%;
+    margin-bottom: 25px;
+  }
 }
 
 .playlists-list {
@@ -303,7 +308,8 @@ span {
   }
 
   .optimize-display {
-    padding: 0 15px 15px 15px;
+    padding: 0;
+    margin-bottom: 25px;
 
     .top-track {
       padding: 10px;
@@ -325,6 +331,7 @@ span {
   text-align: center;
   font-family: 'Lato', sans-serif;
   margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .radio-btn {
@@ -346,7 +353,7 @@ span {
     display: inline-block;
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 100%;
+    width: 103.3%;
     border-bottom: $light-gray-border;
     font-family: 'Lato', sans-serif;
     font-weight: 600;
@@ -418,7 +425,6 @@ span {
 .spotify-playlists-container {
   .pagination {
     position: relative;
-    right: 35px;
   }
 }
 
