@@ -8,51 +8,100 @@ import { spotifyCredentials, wrapperCredentials } from '.././constants/spotifyAu
 
 // action creators
 export function createSpotifyAuthorizeUrlSuccess(url) {
-    return { type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS, payload: { url: url }};
+  return {
+    type: types.CREATE_SPOTIFY_AUTHORIZE_URL_SUCCESS,
+    payload: { url }
+  };
 }
 
 export function createAccessToken(accessToken) {
-    return { type: types.CREATE_SPOTIFY_ACCESS_TOKEN, payload: { accessToken: accessToken, hasAccessToken: true }};
+  return {
+    type: types.CREATE_SPOTIFY_ACCESS_TOKEN,
+    payload: {
+      accessToken,
+      hasAccessToken: true,
+    },
+  };
 }
 
 export function fetchSpotifyIDSuccess(userID) {
-    return { type: types.FETCH_SPOTIFY_ID_SUCCESS, payload: { spotifyUserID: userID }};
+  return {
+    type: types.FETCH_SPOTIFY_ID_SUCCESS,
+    payload: {
+      spotifyUserID: userID
+    }
+  };
 }
 
 export function fetchSpotifyIDError(error) {
-    return { type: types.FETCH_SPOTIFY_ID_ERROR, payload: { error: error }};
+  return {
+    type: types.FETCH_SPOTIFY_ID_ERROR,
+    payload: { error }
+  };
 }
 
 export function fetchSpotifyPlaylistsSuccess(playlists) {
-    return { type: types.FETCH_SPOTIFY_PLAYLISTS_SUCCESS, payload: { playlists: playlists}};
+  return {
+    type: types.FETCH_SPOTIFY_PLAYLISTS_SUCCESS,
+    payload: { playlists }
+  };
 }
 
 export function fetchSpotifyPlaylistsError(error) {
-    return { type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR, payload: { error }};
+  return {
+    type: types.FETCH_SPOTIFY_PLAYLISTS_ERROR,
+    payload: { error }
+  };
 }
 
 export function fetchSpotifyPlaylistTracksSuccess(tracks) {
-    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_COMPLETE, payload: { hasFoundTracks: true,  error: {}  }};
+  return {
+    type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_COMPLETE,
+    payload: {
+      hasFoundTracks: true,
+      error: {},
+    },
+  };
 }
 
 export function fetchSpotifyPlaylistTracksError(error) {
-    return { type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ISSUE, payload: { error: error }};
+  return {
+    type: types.FETCH_SPOTIFY_PLAYLIST_TRACKS_ISSUE,
+    payload: { error },
+  };
 }
 
 export function fetchAudioFeaturesForPlaylistComplete(playlistName, analyzedTracks) {
-    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_COMPLETE, payload: { analyzedPlaylistName: playlistName, analyzedTracks: analyzedTracks }};
+  return {
+    type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_COMPLETE,
+    payload: {
+      analyzedPlaylistName: playlistName,
+      analyzedTracks,
+    }
+  };
 }
 
 export function fetchAudioFeaturesForPlaylistIssue(error) {
-    return { type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ISSUE, payload: { error: error }};
+  return {
+    type: types.FETCH_AUDIO_FEATURES_FOR_PLAYLIST_ISSUE,
+    payload: { error },
+  };
 }
 
 export function sortSpotifyAnalyzedTracks(sortedTracks) {
-    return { type: types.SORT_SPOTIFY_ANALYZED_TRACKS, payload: { activeAnalyzedTracks: sortedTracks }};
+  return {
+    type: types.SORT_SPOTIFY_ANALYZED_TRACKS,
+    payload: {
+      activeAnalyzedTracks: sortedTracks,
+    },
+  };
 }
 
 export function createPlaylistSuccess(playlistId) {
-    return { type: types.CREATE_PLAYLIST_SUCCESS, payload: { playlistId }};
+  return {
+    type: types.CREATE_PLAYLIST_SUCCESS,
+    payload: { playlistId },
+  };
 }
 export const spotifyApi = new SpotifyWebApi(wrapperCredentials);
 
@@ -86,16 +135,16 @@ export function fetchSpotifyUserID() {
 }
 
 export function fetchSpotifyPlaylists(spotifyID) {
-    return (dispatch) => {
-        dispatch(beginAjaxCall());
-        spotifyApi.getUserPlaylists(spotifyID)
-            .then((data) => {
-                dispatch(fetchSpotifyPlaylistsSuccess(data.body.items));
-            })
-            .catch((error) => {
-                dispatch(fetchSpotifyPlaylistsError(error));
-            });
-    };
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    spotifyApi.getUserPlaylists(spotifyID)
+      .then((data) => {
+        dispatch(fetchSpotifyPlaylistsSuccess(data.body.items));
+      })
+      .catch((error) => {
+        dispatch(fetchSpotifyPlaylistsError(error));
+      });
+  };
 }
 
 export function setActivePlaylistName(name) {
@@ -129,72 +178,71 @@ export function fetchPlaylistTracks(spotifyUserId, playlistId, playlistSelected)
 }
 
 export function fetchAudioFeaturesDataForPlaylist(spotifyPlaylistName, spotifyPlaylistTracksObj, playListId) {
-    const formattedTrackData = spotifySelectors.formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj);
-    const trackIds = formattedTrackData.trackIds;
-    const justTracks = formattedTrackData.justTracks;
+  const formattedTrackData = spotifySelectors.formatTracksObjForIdsAndJustTracks(spotifyPlaylistTracksObj);
+  const trackIds = formattedTrackData.trackIds;
+  const justTracks = formattedTrackData.justTracks;
 
-    return (dispatch) => {
-        spotifyApi.getAudioFeaturesForTracks(trackIds)
-            .then((data) => {
-                const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks, playListId);
-                dispatch(fetchAudioFeaturesForPlaylistComplete(spotifyPlaylistName, audioFeaturesWithNameAndArtists));
-            }).catch((error) => {
-                dispatch(fetchAudioFeaturesForPlaylistIssue(error));
-            });
-    };
+  return (dispatch) => {
+    spotifyApi.getAudioFeaturesForTracks(trackIds)
+      .then((data) => {
+        const audioFeaturesWithNameAndArtists = spotifySelectors.addTrackNameAndArtist(data.body.audio_features, justTracks, playListId);
+        dispatch(fetchAudioFeaturesForPlaylistComplete(spotifyPlaylistName, audioFeaturesWithNameAndArtists));
+      }).catch((error) => {
+        dispatch(fetchAudioFeaturesForPlaylistIssue(error));
+      });
+  };
 }
 
 export function getOnlyUserPlaylists(playlists, id) {
-    let userOnlyPlaylists = [];
+  let userOnlyPlaylists = [];
 
-    _.forEach(playlists, ((playlist) => {
-        if (playlist.owner.id === id) {
-            userOnlyPlaylists.push(playlist);
-        }
-    }));
+  _.forEach(playlists, ((playlist) => {
+    if (playlist.owner.id === id) {
+      userOnlyPlaylists.push(playlist);
+    }
+  }));
 
-    return userOnlyPlaylists;
+  return userOnlyPlaylists;
 }
 
 export function sortTracks(attribute, tracks) {
-    return (dispatch) => {
-        const sortedTracks = spotifySelectors.sortTracks(attribute, tracks);
-        dispatch(sortSpotifyAnalyzedTracks(sortedTracks));
-    };
+  return (dispatch) => {
+    const sortedTracks = spotifySelectors.sortTracks(attribute, tracks);
+    dispatch(sortSpotifyAnalyzedTracks(sortedTracks));
+  };
 }
 
 export const formatTracksForApi = (tracks) => _.map(tracks, (track) => `spotify:track:${track.id}`);
 
 export const createPlaylist = (userId = '', tracks = [], name = 'My Cool Playlist') => {
-    return (dispatch) => {
-      spotifyApi.createPlaylist(userId, name, { public: false })
-        .then((response) => {
-            const playlistId = response.body.id;
-            const tracksFormattedForApi = formatTracksForApi(tracks);
-            spotifyApi.addTracksToPlaylist(userId, playlistId, tracksFormattedForApi)
-              .then(() => dispatch(createPlaylistSuccess(playlistId)))
-              .catch((error) => {
-                  throw new Error(error);
-              });
-        })
-        .catch((error) => {
-            throw new Error(error);
-        });
-    };
+  return (dispatch) => {
+    spotifyApi.createPlaylist(userId, name, { public: false })
+      .then((response) => {
+        const playlistId = response.body.id;
+        const tracksFormattedForApi = formatTracksForApi(tracks);
+        spotifyApi.addTracksToPlaylist(userId, playlistId, tracksFormattedForApi)
+          .then(() => dispatch(createPlaylistSuccess(playlistId)))
+          .catch((error) => {
+              throw new Error(error);
+          });
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  };
 };
 
-
 export const setTopTracks = (topTracks) => {
-    return {
-        type: types.SET_TOP_TRACKS,
-        payload: {
-            topTracks,
-        },
-    };
+  return {
+    type: types.SET_TOP_TRACKS,
+    payload: {
+        topTracks,
+    },
+  };
 };
 
 export const resetCreatePlaylistStatus = () => {
-    return {
-        type: types.CREATE_PLAYLIST_RESET,
-    };
+  return {
+    type: types.CREATE_PLAYLIST_RESET,
+  };
 };

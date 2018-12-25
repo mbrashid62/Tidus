@@ -14,14 +14,36 @@ const ATTRIBUTE_MAPPING = {
 
 const SONG_NUM = 10;
 
-// TODO: Refactor this so that it's not firing after we
-// process every playlists one by one. Only fire when we have finished processing
 function findTopSongs(attribute, allAnalyzedTracks) {
-  if (_.isEmpty(allAnalyzedTracks)) return [];
+  if (_.isEmpty(allAnalyzedTracks)) {
+    return [];
+  }
 
+  // TODO: resolve bug in here...
   const mappedAttribute = ATTRIBUTE_MAPPING[attribute.toUpperCase()];
   const sortedTracks = _.reverse(_.sortBy(allAnalyzedTracks, [mappedAttribute]));
-  return _.dropRight(sortedTracks, sortedTracks.length - SONG_NUM);
+
+  let cache = {};
+  const result = [];
+  for (let i = 0; i < SONG_NUM; i++) {
+    const track = sortedTracks[i];
+    let numOfUniqTracks = 0;
+    if (!cache[track.id]) {
+      cache = {
+        ...cache,
+        [track.id]: track.id,
+      };
+      result.push(track);
+      numOfUniqTracks++;
+    }
+
+    // if we have found repeats exit with same number
+    if (numOfUniqTracks > SONG_NUM) {
+      return;
+    }
+  }
+
+  return result;
 }
 
 class OptimizeDisplay extends Component {
@@ -32,34 +54,22 @@ class OptimizeDisplay extends Component {
     };
   }
 
-
   componentWillReceiveProps(nextProps) {
-    const {
-      allAnalyzedTracks,
-      attribute
-    } = this.props;
-
-    if (
-      !_.isEqual(allAnalyzedTracks, nextProps.allAnalyzedTracks) ||
-      !_.isEqual(attribute, nextProps.attribute)) {
-
+    if (!_.isEqual(this.props.attribute, nextProps.attribute)) {
       const topTracks = findTopSongs(nextProps.attribute, nextProps.allAnalyzedTracks);
       this.setState({ topTracks });
       this.props.setTopTracks(topTracks);
     }
   }
 
-
   render() {
-    const { topTracks } = this.state;
-    const { attribute } = this.props;
     return (
       <div className="optimize-display col-md-6">
-        {!_.isEmpty(attribute) && (
-          _.map(topTracks, (track) => (
+        {!_.isEmpty(this.props.attribute) && (
+          _.map(this.state.topTracks, (track) => (
             <div className="top-track" key={`${track.name}-${Date.now()}`}>
               <span className="artist">{track.artist}</span> - <span className="track">{track.name}</span>
-              <span className="rating">({track[ATTRIBUTE_MAPPING[attribute.toUpperCase()]]})</span>
+              <span className="rating">({track[ATTRIBUTE_MAPPING[this.props.attribute.toUpperCase()]]})</span>
             </div>
           ))
         )}

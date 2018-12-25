@@ -120,7 +120,6 @@ class MakePlaylistButton extends Component {
             <span>You already made a playlist for {this.props.selectedAttribute}. Try something else.</span>
           </div>
         )}
-
       </div>
     );
   }
