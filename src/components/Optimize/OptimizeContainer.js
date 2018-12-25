@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import RadioBtnGroup from '../common/RadioBtnGroup';
 import OptimizeTitle from './OptimizeTitle';
 import OptimizeDisplay from './OptimizeDisplay';
+import MakePlaylistButton from './MakePlaylistButton';
 import Portal from "../common/Portal";
 
 class OptimizeContainer extends Component {
@@ -18,14 +19,19 @@ class OptimizeContainer extends Component {
       <div className="optimize-container">
         <hr className="divider" />
         <OptimizeTitle
-          selectedAttr={selectedAttr} q
+          selectedAttr={selectedAttr}
         />
         <RadioBtnGroup/>
         <hr className="divider" />
-        <OptimizeDisplay
-          attribute={selectedAttr}
-          allAnalyzedTracks={allAnalyzedTracks}
-        />
+        <div className="row">
+          <OptimizeDisplay
+            attribute={selectedAttr}
+            allAnalyzedTracks={allAnalyzedTracks}
+          />
+          {selectedAttr && (
+            <MakePlaylistButton />
+          )}
+        </div>
         <Portal
           rootEl={document.getElementsByClassName('container-fluid')[0] || {}}
           uniqPortalClass="optimize-container-modal"

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import * as spotifyActions from "../../actions/spotifyActions";
 
 const ATTRIBUTE_MAPPING = {
   ACOUSTICNESS: 'acousticness',
@@ -41,9 +43,9 @@ class OptimizeDisplay extends Component {
       !_.isEqual(allAnalyzedTracks, nextProps.allAnalyzedTracks) ||
       !_.isEqual(attribute, nextProps.attribute)) {
 
-      this.setState({
-        topTracks: findTopSongs(nextProps.attribute, nextProps.allAnalyzedTracks)
-      });
+      const topTracks = findTopSongs(nextProps.attribute, nextProps.allAnalyzedTracks);
+      this.setState({ topTracks });
+      this.props.setTopTracks(topTracks);
     }
   }
 
@@ -52,7 +54,7 @@ class OptimizeDisplay extends Component {
     const { topTracks } = this.state;
     const { attribute } = this.props;
     return (
-      <div className="optimize-display">
+      <div className="optimize-display col-md-6">
         {!_.isEmpty(attribute) && (
           _.map(topTracks, (track) => (
             <div className="top-track" key={`${track.name}-${Date.now()}`}>
@@ -70,8 +72,10 @@ OptimizeDisplay.displayName = 'components/Optimize/OptimizeDisplay';
 
 OptimizeDisplay.propTypes = {
   attribute: PropTypes.string.isRequired,
-  allAnalyzedTracks: PropTypes.array.isRequired
+  allAnalyzedTracks: PropTypes.array.isRequired,
+  setTopTracks: PropTypes.func.isRequired,
 };
 
-export default OptimizeDisplay;
-
+export default connect(() => ({}), ({
+  setTopTracks: spotifyActions.setTopTracks,
+}))(OptimizeDisplay);

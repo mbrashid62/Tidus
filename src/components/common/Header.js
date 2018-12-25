@@ -12,7 +12,7 @@ class Header extends React.Component {
     const pathName = window.location.pathname;
     const isAboutActive = pathName === '/about';
     const isHomeActive = !isAboutActive;
-
+    return null;
     return (
       <nav className="navbar navbar-light">
         <div className="container-fluid">

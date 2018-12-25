@@ -10,7 +10,9 @@ export default { // this is what the store looks like
       selectedPlaylistName: '',
       allAnalyzedTracks: [],
       hasFoundTracks: false,
-      error: {}
+      error: {},
+      createPlaylistStatus: 'IDLE',
+      topTracks: [],
     },
     optimizeData: {
       btnStatus: [
