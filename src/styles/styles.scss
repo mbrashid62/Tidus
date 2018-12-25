@@ -73,16 +73,6 @@ body {
   }
 }
 
-nav {
-  padding-top: 20px;
-}
-
-.navbar {
-  @media screen and (max-width: $screen-xs-max) {
-    margin-bottom: 0;
-  }
-}
-
 .error {
   color: red;
 }
