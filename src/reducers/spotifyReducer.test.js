@@ -40,7 +40,7 @@ describe('Spotify Reducer', () => {
         expect(newState.url).toEqual(undefined);
     });
 
-    it('should add the spotify userId on FETCH_SPOTIFY_ID_SUCCESS', () => {
+    it('should add the spotify spotifyUserID on FETCH_SPOTIFY_ID_SUCCESS', () => {
         const spotifyUserId = '123456';
         const action = actions.fetchSpotifyIDSuccess(spotifyUserId);
         const newState = spotifyReducer(initialState, action);

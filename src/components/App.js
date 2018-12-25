@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from './common/Header';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -15,7 +14,6 @@ class App extends Component {
   render() {
     return (
       <div className="container-fluid">
-        <Header />
         {this.props.children}
         <div className="tidus-footer">
             <p>Tidus is built with React, Redux, ES6, and other cool technologies.</p>

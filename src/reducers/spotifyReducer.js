@@ -46,6 +46,22 @@ export default function spotifyReducer(state = initialState.spotifyData, action)
             return Object.assign({}, state, {
                 activeAnalyzedTracks: _.filter(state.allAnalyzedTracks, (track) => track.playlistId === action.payload.playlistId)
             });
+        case types.CREATE_PLAYLIST_SUCCESS:
+            return Object.assign({}, state, {
+              createPlaylistStatus: 'SUCCESS',
+            });
+        case types.CREATE_PLAYLIST_ERROR:
+          return Object.assign({}, state, {
+            createPlaylistStatus: 'ERROR',
+          });
+        case types.CREATE_PLAYLIST_RESET:
+            return Object.assign({}, state, {
+            createPlaylistStatus: 'IDLE',
+        });
+        case types.SET_TOP_TRACKS:
+            return Object.assign({}, state, {
+                topTracks: action.payload.topTracks
+            });
         default:
             return state;
     }
