@@ -17,7 +17,7 @@
     "prebuild": "npm-run-all clean-dist test lint build:html",
     "build": "babel-node tools/build.js",
     "postbuild": "babel-node tools/distServer.js",
-    "ship-it": "npm run prebuild && npm run build && npm run postbuild && git add . && git commit -m 'production build && git push origin master && git push heroku master'",
+    "ship-it": "npm run prebuild && npm run build && git add . && git commit -m 'production build' && git push origin master && git push heroku master",
     "webpack": "webpack"
   },
   "author": "Bill Rashid",
