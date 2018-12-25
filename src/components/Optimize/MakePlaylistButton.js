@@ -68,6 +68,24 @@ class MakePlaylistButton extends Component {
 
   setSuccessMsgState = (show) => this.setState({ displaySuccessMessage: show });
 
+  getPlaylistSuggestion = (attr) => {
+    switch (attr) {
+      case 'Acousticness':
+        return 'Awesome Acousticness';
+      case 'Danceability':
+        return 'Lose Yourself to Dance';
+      case 'Energy':
+        return 'For the Gym';
+      case 'Loudness':
+        return 'Blow The Top Off!';
+      case 'Valence':
+        return 'Happy Sounds';
+      default:
+        return '';
+    }
+  };
+
+
   render() {
     const isAttrInCache = this.state.cache[this.props.selectedAttribute];
     return (
@@ -83,7 +101,7 @@ class MakePlaylistButton extends Component {
             <div>
               <input
                 type="text"
-                placeholder={`Enter a Playlist name. How about, 'My Top ${this.props.selectedAttribute} Songs'?`}
+                placeholder={`Enter a Playlist name. How about, '${this.getPlaylistSuggestion(this.props.selectedAttribute)}'?`}
                 onChange={this.onInputChange}
                 ref={(ref) => this.inputRef = ref}
               />
